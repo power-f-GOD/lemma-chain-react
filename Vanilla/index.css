@@ -10,7 +10,9 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  font-size: 17px;
+  font-size: 16px;
+  background: #333;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
 }
 
 * {
@@ -19,14 +21,17 @@ body {
 }
 
 .app {
-  border: 1px solid red;
   width: 80%;
   min-width: 350px;
   max-width: 650px;
+  background: gainsboro;
+  border-radius: 8px;
+  overflow: hidden;
+  -webkit-box-shadow: 0 5px 10px #111,  0 10px 20px #111, 0 15px 30px #111;
+          box-shadow: 0 5px 10px #111,  0 10px 20px #111, 0 15px 30px #111;
 }
 
-.ref-dropdown-wrapper {
-  border: 1px solid blue;
+.app .ref-dropdown-wrapper {
   padding: 12px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -34,60 +39,69 @@ body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  background: royalblue;
+  color: white;
   cursor: pointer;
 }
 
-.top-toggle-wrapper {
+.app .top-toggle-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.top-toggle-wrapper button {
+.app .top-toggle-wrapper button {
   width: 50%;
   padding: 14px;
   border: none;
   cursor: pointer;
   font-size: 15px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  background: white;
 }
 
-.top-toggle-wrapper button.required-btn {
-  border-right: 1px solid darkgrey;
+.app .top-toggle-wrapper button.back-btn, .app .top-toggle-wrapper button.star-btn {
+  width: 40px;
+  font-size: 22px;
+  font-weight: bold;
+  padding: 0;
+  background: #74c9eb;
+  color: white;
 }
 
-.top-toggle-wrapper button.active {
-  background: orange;
+.app .top-toggle-wrapper button.active {
+  background: gainsboro;
 }
 
-ul {
+.app ul {
   padding: 0;
   margin: 0;
-  border: 1px solid darkcyan;
-  max-height: 600px;
+  max-height: 304px;
   overflow-y: auto;
+  cursor: pointer;
 }
 
-ul .dropdown-items-wrapper {
-  border: 1px solid yellow;
-  padding: 15px 12px;
+.app ul .dropdown-items-wrapper {
+  padding: 16px 13px;
+  border-top: 1px solid #c4c4c4;
 }
 
-ul li {
-  margin-left: 15px;
+.app ul .dropdown-items-wrapper li {
+  margin-left: 18px;
   list-style-type: decimal;
   padding-left: 10px;
 }
 
-ul li span {
+.app ul .dropdown-items-wrapper li span {
   display: block;
 }
 
-ul li span.title {
+.app ul .dropdown-items-wrapper li span.title {
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-ul li span.author {
+.app ul .dropdown-items-wrapper li span.author {
   font-style: italic;
 }
 /*# sourceMappingURL=index.css.map */

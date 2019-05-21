@@ -1,4 +1,5 @@
 
+$font: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 
 body
 {
@@ -7,7 +8,9 @@ body
   height: 100vh;
   justify-content: center;
   align-items: center;
-  font-size: 17px;
+  font-size: 16px;
+  background: #333;
+  font-family: $font;
 }
 
 *
@@ -15,82 +18,102 @@ body
 
 .app
 {
-  border: 1px solid red;
+  // border: 1px solid red;
   width: 80%;
   min-width: 350px;
   max-width: 650px;
+  background: gainsboro;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 5px 10px #111, 
+              0 10px 20px #111,
+              0 15px 30px #111;
   
-}
-
-.ref-dropdown-wrapper
-{
-  border: 1px solid blue;
-  padding: 12px;
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-}
-
-.top-toggle-wrapper
-{ 
-  display: flex;
-
-  button
+  
+  .ref-dropdown-wrapper
   {
-    width: 50%;
-    padding: 14px;
-    border: none;
+    // border: 1px solid blue;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    background: royalblue;
+    color: white;
     cursor: pointer;
-    font-size: 15px;
-
-    &.required-btn
-    {
-      border-right: 1px solid darkgrey;
-    }
-
-    &.active
-    {
-      background: orange;
-    }
-  }
-}
-
-ul
-{
-  padding: 0;
-  margin: 0;
-  border: 1px solid darkcyan;
-  max-height: 600px;
-  overflow-y: auto;
-  
-  .dropdown-items-wrapper
-  {
-    border: 1px solid yellow;
-    padding: 15px 12px;
   }
 
-  li
-  {
+  .top-toggle-wrapper
+  { 
+    display: flex;
     
-    margin-left: 15px;
-    list-style-type: decimal;
-    padding-left: 10px; 
 
-    span
+    button
     {
-      display: block;
+      width: 50%;
+      padding: 14px;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      font-family: $font;
+      background: white;
+      // border-bottom: 1px solid darkgray;
 
-      &.title
+      &.back-btn,
+      &.star-btn
       {
+        width: 40px;
+        font-size: 22px;
         font-weight: bold;
-        margin-bottom: 5px;
+        padding: 0;
+        background: rgb(116, 201, 235);color: white;
       }
+      // &.required-btn
+      // { border-right: 1px solid darkgrey; }
 
-      &.author
-      { font-style: italic; }
+      &.active
+      { background: gainsboro; }
+    }
+  }
+
+  ul
+  {
+    padding: 0;
+    margin: 0;
+    // border: 1px solid darkcyan;
+    max-height: 304px;
+    overflow-y: auto;
+    cursor: pointer;
+    
+    .dropdown-items-wrapper
+    {
+      // border: 1px solid yellow;
+      padding: 16px 13px;
+      border-top: 1px solid rgb(196, 196, 196);
+
+      li
+      {
+        
+        margin-left: 18px;
+        list-style-type: decimal;
+        padding-left: 10px;
+
+        span
+        {
+          display: block;
+
+          &.title
+          {
+            font-weight: bold;
+            margin-bottom: 5px;
+          }
+
+          &.author
+          { font-style: italic; }
+        }
+      }
     }
   }
 }
+
 
 
 
