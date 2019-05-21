@@ -120,4 +120,11 @@
   margin-bottom: 2rem;
   padding: 0.3rem 2rem;
 }
+
+.svg-img {
+  width: 1.5rem;
+  height: auto;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
 /*# sourceMappingURL=style.css.map */
