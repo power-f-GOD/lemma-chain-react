@@ -6,7 +6,7 @@
 .main-container {
   width: 100%;
   height: 100vh;
-  background-color: darkgray;
+  background-color: white;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -30,79 +30,36 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   color: white;
   font-size: 1.2rem;
   background-color: #2a2a2a;
   padding: 0.5rem 2rem;
 }
 
-.main-container .top-toggle > * {
-  margin-right: 2rem;
-}
-
-.main-container .top-toggle .dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.main-container .top-toggle .dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.main-container .top-toggle .dropdown:hover .dropbtn {
-  background-color: #3e8e41;
-}
-
-.main-container .top-toggle .dropdown .dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  -webkit-box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-          box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-
-.main-container .top-toggle .dropdown .dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.main-container .top-toggle .dropdown .dropdown-content a:hover {
-  background-color: #ddd;
-}
-
-.main-container .top-toggle .dropdown .dropbtn {
-  background-color: #4caf50;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-}
-
 .main-container .ref_body {
-  width: 50vw;
-  margin-top: 2rem;
+  width: 464px;
+  margin-top: 1rem;
   background: grey;
-  padding: 1rem 2rem;
   border-radius: 3px;
 }
 
 .main-container .ref_body .ref_body_nav {
   display: -ms-grid;
   display: grid;
-  grid-auto-flow: column;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-grid-columns: 50px 1fr 1fr 50px;
+      grid-template-columns: 50px 1fr 1fr 50px;
   color: white;
   font-size: 1.2rem;
   border-bottom: 1px solid #ffffff21;
+}
+
+.main-container .ref_body .ref_body_nav > * {
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
 }
 
 .main-container .ref_body .main {
@@ -112,7 +69,6 @@
   -ms-grid-columns: (minmax(200px, 1fr))[auto-fit];
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   min-height: 150px;
-  padding: 0.5rem 4rem;
   justify-items: center;
 }
 
