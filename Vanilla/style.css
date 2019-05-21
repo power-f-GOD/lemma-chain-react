@@ -37,13 +37,19 @@
   font-size: 1.2rem;
   background-color: #2a2a2a;
   padding: 0.5rem 2rem;
+  cursor: pointer;
 }
 
 .main-container .ref_body {
+  display: none;
   width: 464px;
   margin-top: 1rem;
   background: grey;
   border-radius: 3px;
+}
+
+.main-container .ref_body.active {
+  display: block;
 }
 
 .main-container .ref_body .ref_body_nav {
@@ -60,19 +66,36 @@
   display: -ms-grid;
   display: grid;
   place-items: center;
+  cursor: pointer;
+}
+
+.main-container .ref_body .ref_body_nav .tablink:hover {
+  background-color: rgba(42, 42, 42, 0.294);
+}
+
+.main-container .ref_body .ref_body_nav .tablink.active {
+  background-color: rgba(42, 42, 42, 0.79);
 }
 
 .main-container .ref_body .main {
   margin-top: 1rem;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (minmax(200px, 1fr))[auto-fit];
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   min-height: 150px;
-  justify-items: center;
+  padding: 0 2rem;
 }
 
-.main-container .ref_body .main .ref-item {
+.main-container .ref_body .main .tab-content {
+  display: none;
+  justify-items: center;
+  -ms-grid-columns: (minmax(200px, 1fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.main-container .ref_body .main .tab-content.active {
+  display: -ms-grid;
+  display: grid;
+}
+
+.main-container .ref_body .main .tab-content .ref-item {
   margin-bottom: 2rem;
   padding: 0.3rem 2rem;
 }

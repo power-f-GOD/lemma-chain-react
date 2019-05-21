@@ -22,12 +22,17 @@
     font-size: 1.2rem;
     background-color: #2a2a2a;
     padding: 0.5rem 2rem;
+    cursor: pointer;
   }
   .ref_body {
+    display: none;
     width: 464px;
     margin-top: 1rem;
     background: grey;
     border-radius: 3px;
+    &.active {
+      display: block;
+    }
     .ref_body_nav {
       display: grid;
       grid-template-columns: 50px 1fr 1fr 50px;
@@ -37,17 +42,32 @@
       & > * {
         display: grid;
         place-items: center;
+        cursor: pointer;
+      }
+      .tablink {
+        &:hover {
+          background-color: rgba(42, 42, 42, 0.294);
+        }
+        &.active {
+          background-color: rgba(42, 42, 42, 0.79);
+        }
       }
     }
     .main {
       margin-top: 1rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       min-height: 150px;
-      justify-items: center;
-      .ref-item {
-        margin-bottom: 2rem;
-        padding: 0.3rem 2rem;
+      padding: 0 2rem;
+      .tab-content {
+        display: none;
+        justify-items: center;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        &.active {
+          display: grid;
+        }
+        .ref-item {
+          margin-bottom: 2rem;
+          padding: 0.3rem 2rem;
+        }
       }
     }
   }
