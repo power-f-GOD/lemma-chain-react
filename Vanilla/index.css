@@ -1,1 +1,93 @@
-/* No CSS *//*# sourceMappingURL=index.css.map */
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0;
+  height: 100vh;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 17px;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.app {
+  border: 1px solid red;
+  width: 80%;
+  min-width: 350px;
+  max-width: 650px;
+}
+
+.ref-dropdown-wrapper {
+  border: 1px solid blue;
+  padding: 12px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  cursor: pointer;
+}
+
+.top-toggle-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.top-toggle-wrapper button {
+  width: 50%;
+  padding: 14px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.top-toggle-wrapper button.required-btn {
+  border-right: 1px solid darkgrey;
+}
+
+.top-toggle-wrapper button.active {
+  background: orange;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  border: 1px solid darkcyan;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+ul .dropdown-items-wrapper {
+  border: 1px solid yellow;
+  padding: 15px 12px;
+}
+
+ul li {
+  margin-left: 15px;
+  list-style-type: decimal;
+  padding-left: 10px;
+}
+
+ul li span {
+  display: block;
+}
+
+ul li span.title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+ul li span.author {
+  font-style: italic;
+}
+/*# sourceMappingURL=index.css.map */
