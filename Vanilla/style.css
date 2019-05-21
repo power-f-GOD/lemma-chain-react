@@ -40,6 +40,16 @@
   cursor: pointer;
 }
 
+.main-container .top-toggle .down-arrow svg {
+  -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+}
+
+.main-container .top-toggle .down-arrow svg.active {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
 .main-container .ref_body {
   display: none;
   width: 464px;

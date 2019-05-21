@@ -1,7 +1,7 @@
 class TabLink {
   constructor(element) {
     this.element = element;
-    this.toggle = document.querySelector('.top-toggle');
+    this.toggleBtn = document.querySelector('.top-toggle');
     this.dataset = element.dataset.tab;
     this.tabContentElem = document.querySelector(
       `.tab-content[data-tab="${this.dataset}"]`
@@ -14,9 +14,11 @@ class TabLink {
 
     //Events
     this.element.addEventListener('click', this.select.bind(this));
-    this.toggle.addEventListener('click', this.activate);
+    this.toggleBtn.addEventListener('click', this.toggle);
   }
-  activate() {
+  toggle() {
+    const arrow = document.querySelector('.down-arrow svg');
+    arrow.classList.toggle('active');
     const body = document.querySelector('.ref_body');
     body.classList.toggle('active');
   }
