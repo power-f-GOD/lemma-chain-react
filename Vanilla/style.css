@@ -115,4 +115,9 @@
   padding: 0.5rem 4rem;
   justify-items: center;
 }
+
+.main-container .ref_body .main .ref-item {
+  margin-bottom: 2rem;
+  padding: 0.3rem 2rem;
+}
 /*# sourceMappingURL=style.css.map */
