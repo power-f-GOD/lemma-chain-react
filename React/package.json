@@ -1,0 +1,26 @@
+{
+  "name": "lemma-chain",
+  "version": "1.0.0",
+  "description": "React App for lemma Chain Front-end",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thehonestscoop/lemma-chain-react.git"
+  },
+  "keywords": [
+    "lemma-chain",
+    "lemma",
+    "chain",
+    "react",
+    "front-end"
+  ],
+  "author": "lemma-chain",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thehonestscoop/lemma-chain-react/issues"
+  },
+  "homepage": "https://github.com/thehonestscoop/lemma-chain-react#readme"
+}
