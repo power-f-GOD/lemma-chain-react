@@ -17,9 +17,9 @@
       <section class='dropdown-container hide'>
         <div class='top-toggle-wrapper'>
           <button class="back-btn">❮</button>
-          <button class='required-btn active'>› Required ‹</button>
-          <button class='recommended-btn'>Recommended</button>
-          <button class="star-btn">★</button>
+          <button class='required-btn active dropdown-btn' data-dropdown-name='required-dropdown'>Required</button>
+          <button class='recommended-btn dropdown-btn' data-dropdown-name='recommended-dropdown'>Recommended</button>
+          <button class="star-btn dropdown-btn" data-dropdown-name='graph-dropdown'>★</button>
         </div>
         <div class='dropdown-wrapper'>
           <ul class='dropdown required-dropdown active-dropdown'>
@@ -42,6 +42,11 @@
                 <span class='title'>Title: Another Placeholder title</span>
                 <span class='author'>Author: Placeholder author</span>
               </li>
+            </div>
+          </ul>
+          <ul class='dropdown graph-dropdown'>
+            <div class='dropdown-items-wrapper graph-wrapper'>
+              <h1 class='title'>GRAPH ZONE!</h1>
             </div>
           </ul>
         </div>

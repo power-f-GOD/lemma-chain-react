@@ -8,52 +8,31 @@ let Q = document.querySelector.bind(document),
 //load script when DOM is ready
 this.addEventListener('DOMContentLoaded', function()
 {
-  let rec = Q('.recommended-dropdown'),
-      req = Q('.required-dropdown');
-
-
   //toggle between hiding and showing dropdown menu
   Q('.ref-dropdown-wrapper').addEventListener('click', function()
   {
     Q('.dropdown-container').classList.toggle('hide');
     Q('.ref-dropdown-icon').classList.toggle('icon-flip');
-
-    if (Q('.dropdown-container').classList.contains('hide'))
-      resizeDropdownHeight(0);
-    else
-      resizeDropdownHeight([Q('.active-dropdown')]);
+    resizeDropdownHeight(!/hide/.test(Q('.dropdown-container').className) ? [Q('.active-dropdown')] : 0);
   });
 
 
-  //display required references
-  Q('.required-btn').addEventListener('click', function()
-  { toggleReferences(this, this.nextElementSibling, req, rec); });
+  //add dropdown references and sections event listener
+  QAll('.dropdown-btn').forEach((btn) => btn.addEventListener('click', toggleDropdowns));
 
 
-  //display recommended references
-  Q('.recommended-btn').addEventListener('click', function()
-  { toggleReferences(this.previousElementSibling, this, rec, req); });
-
-
-  // references toggler
-  function toggleReferences(btn0, btn1, activDrop, inactivDrop)
+  function toggleDropdowns()
   {
-    if (/act/.test(btn0.className))
-      btn0.classList.remove('active'),
-      btn1.classList.add('active'),
-      btn0.innerHTML = 'Required',
-      btn1.innerHTML = '› Recommended ‹';
-    else
-      btn0.classList.add('active'),
-      btn1.classList.remove('active'),
-      btn0.innerHTML = '› Required ‹',
-      btn1.innerHTML = 'Recommended';
-    
-    inactivDrop.classList.remove('active-dropdown');
-    inactivDrop.classList.add('inactive-dropdown');
-    activDrop.classList.remove('inactive-dropdown');
-    activDrop.classList.add('active-dropdown');
-    resizeDropdownHeight([activDrop]);
+    let dropdownName = this.getAttribute('data-dropdown-name');
+
+    QAll('.dropdown-btn').forEach((btn) => 
+    {
+      btn.classList.remove('active'),
+      Q(`.${btn.getAttribute('data-dropdown-name')}`).classList.add('inactive-dropdown');
+    });
+    this.classList.add('active');
+    Q(`.${dropdownName}`).classList.remove('inactive-dropdown'); 
+    resizeDropdownHeight([Q(`.${dropdownName}`)]);
   }
 
 

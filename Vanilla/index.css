@@ -1,9 +1,9 @@
+@charset "UTF-8";
 body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   margin: 0;
-  margin-top: 50px;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -23,6 +23,7 @@ body {
 
 .app {
   width: 80%;
+  margin: 50px 0;
   min-width: 350px;
   max-width: 600px;
   background: gainsboro;
@@ -81,16 +82,8 @@ body {
   background: white;
 }
 
-.app .top-toggle-wrapper button.active {
-  background: gainsboro;
-}
-
-.app .top-toggle-wrapper button:hover {
-  background: #c0c0c0;
-}
-
 .app .top-toggle-wrapper button.back-btn, .app .top-toggle-wrapper button.star-btn {
-  width: 40px;
+  width: 45px;
   font-size: 22px;
   padding: 0;
   background: #54c1ec;
@@ -99,6 +92,22 @@ body {
 
 .app .top-toggle-wrapper button.back-btn:hover, .app .top-toggle-wrapper button.star-btn:hover {
   background: #58a9c9;
+}
+
+.app .top-toggle-wrapper button.recommended-btn.active, .app .top-toggle-wrapper button.required-btn.active {
+  background: gainsboro;
+}
+
+.app .top-toggle-wrapper button.recommended-btn.active:before, .app .top-toggle-wrapper button.required-btn.active:before {
+  content: '› ';
+}
+
+.app .top-toggle-wrapper button.recommended-btn.active:after, .app .top-toggle-wrapper button.required-btn.active:after {
+  content: ' ‹';
+}
+
+.app .top-toggle-wrapper button:hover {
+  background: #c0c0c0;
 }
 
 .app ul {
@@ -141,6 +150,14 @@ body {
   height: 0;
   opacity: 0;
   visibility: hidden;
+}
+
+.app ul .graph-wrapper {
+  text-align: center;
+}
+
+.app ul .graph-wrapper h1 {
+  margin: 100px 0;
 }
 
 .hide {
