@@ -83,7 +83,7 @@ body {
 }
 
 .app .top-toggle-wrapper button.back-btn, .app .top-toggle-wrapper button.star-btn {
-  width: 45px;
+  width: 50px;
   font-size: 22px;
   padding: 0;
   background: #54c1ec;
@@ -91,10 +91,10 @@ body {
 }
 
 .app .top-toggle-wrapper button.back-btn:hover, .app .top-toggle-wrapper button.star-btn:hover {
-  background: #58a9c9;
+  background: #c0c0c0;
 }
 
-.app .top-toggle-wrapper button.recommended-btn.active, .app .top-toggle-wrapper button.required-btn.active {
+.app .top-toggle-wrapper button.active {
   background: gainsboro;
 }
 
@@ -116,11 +116,14 @@ body {
   max-height: 304px;
   overflow-y: auto;
   cursor: pointer;
+  opacity: 0;
+  height: 0;
+  visibility: hidden;
 }
 
 .app ul.dropdown .dropdown-items-wrapper {
   padding: 16px 13px;
-  border-top: 1px solid #c0c0c0;
+  border-bottom: 1px solid #c0c0c0;
 }
 
 .app ul.dropdown .dropdown-items-wrapper li {
@@ -146,10 +149,10 @@ body {
   background: #c0c0c0;
 }
 
-.app ul.inactive-dropdown {
-  height: 0;
-  opacity: 0;
-  visibility: hidden;
+.app ul.active-dropdown {
+  height: auto;
+  opacity: 1;
+  visibility: visible;
 }
 
 .app ul .graph-wrapper {

@@ -13,27 +13,24 @@ this.addEventListener('DOMContentLoaded', function()
   {
     Q('.dropdown-container').classList.toggle('hide');
     Q('.ref-dropdown-icon').classList.toggle('icon-flip');
-    resizeDropdownHeight(!/hide/.test(Q('.dropdown-container').className) ? [Q('.active-dropdown')] : 0);
+    resizeDropdownHeight(/hide/.test(Q('.dropdown-container').className) ? 0 : [Q('.active-dropdown')]);
   });
 
 
-  //add dropdown references and sections event listener
-  QAll('.dropdown-btn').forEach((btn) => btn.addEventListener('click', toggleDropdowns));
-
-
-  function toggleDropdowns()
+  //add dropdown references/sections toggle event listener
+  QAll('.dropdown-btn').forEach((btn) => btn.addEventListener('click', () =>
   {
-    let dropdownName = this.getAttribute('data-dropdown-name');
+    let dropdownName = btn.getAttribute('data-dropdown-name');
 
     QAll('.dropdown-btn').forEach((btn) => 
     {
       btn.classList.remove('active'),
-      Q(`.${btn.getAttribute('data-dropdown-name')}`).classList.add('inactive-dropdown');
+      Q(`.${btn.getAttribute('data-dropdown-name')}`).classList.remove('active-dropdown');
     });
-    this.classList.add('active');
-    Q(`.${dropdownName}`).classList.remove('inactive-dropdown'); 
-    resizeDropdownHeight([Q(`.${dropdownName}`)]);
-  }
+    btn.classList.add('active');
+    Q(`.${dropdownName}`).classList.add('active-dropdown');
+    resizeDropdownHeight(/active/.test(Q(`.${dropdownName}`).className) ? [Q(`.${dropdownName}`)] : 0);
+  }));
 
 
   function resizeDropdownHeight(refs, cons = Q('.top-toggle-wrapper'))
@@ -42,3 +39,10 @@ this.addEventListener('DOMContentLoaded', function()
     Q('.dropdown-container').style.height = `${height}px`;
   }
 });
+
+
+
+
+
+
+

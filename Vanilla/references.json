@@ -1,0 +1,60 @@
+{
+  "name": "@alpha",
+  "email": "alpha@gmail.com",
+  "refs": [
+    {
+      "id": "@alpha/43rsyjtzt8",
+      "data": "{\"title\":\"The Bible\"}",
+      "searchable": true,
+      "search_title": "Bible",
+      "search_synopsis": "most popular religious text",
+      "created_at": "2019-03-25T07:40:30.284795+11:00"
+    },
+    {
+      "id": "@alpha/9v7s4gtgt9",
+      "data": "{\"title\":\"Dictionary\"}",
+      "searchable": true,
+      "search_title": "common book",
+      "search_synopsis": "you can check definitions",
+      "created_at": "2019-03-25T07:39:45.714502+11:00"
+    },
+    {
+      "id": "23js45tbtl4",
+      "data": {
+        "custom_data": "abcdef"
+      },
+      "refs": 
+      [
+        {
+          "data": {
+          },
+          "id": "y2zsbpt8tdd",
+          "ref_type": "recommended"
+        },
+        {
+          "data": {
+            "Title": "required reading"
+          },
+          "id": "@beta/p8rsy7tjt7y",
+          "ref_type": "required",
+          "refs": [
+            {
+              "data": {
+                "title": "Dictionary"
+              },
+              "id": "@alpha/9v7s4gtgt9",
+              "ref_type": "required"
+            },
+            {
+              "data": {
+                "title": "The Bible"
+              },
+              "id": "@alpha/43rsyjtzt8",
+              "ref_type": "recommended"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
