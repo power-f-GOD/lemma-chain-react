@@ -27,7 +27,7 @@ body {
   min-width: 350px;
   max-width: 600px;
   background: gainsboro;
-  border-radius: 8px;
+  border-radius: 5px;
   overflow: hidden;
   -webkit-box-shadow: 0 5px 10px #111,  0 10px 20px #111, 0 15px 30px #111;
           box-shadow: 0 5px 10px #111,  0 10px 20px #111, 0 15px 30px #111;
@@ -83,9 +83,9 @@ body {
 }
 
 .app .top-toggle-wrapper button.back-btn, .app .top-toggle-wrapper button.star-btn {
-  width: 50px;
-  font-size: 22px;
-  padding: 0;
+  width: 55px;
+  font-size: 18px;
+  padding: 1.5px;
   background: #54c1ec;
   color: yellow;
 }
@@ -98,12 +98,16 @@ body {
   background: gainsboro;
 }
 
-.app .top-toggle-wrapper button.recommended-btn.active:before, .app .top-toggle-wrapper button.required-btn.active:before {
+.app .top-toggle-wrapper button.recommended-btn.active:before, .app .top-toggle-wrapper button.required-btn.active:before, .app .top-toggle-wrapper button.star-btn.active:before {
   content: '› ';
+  font-size: 15px;
+  color: black;
 }
 
-.app .top-toggle-wrapper button.recommended-btn.active:after, .app .top-toggle-wrapper button.required-btn.active:after {
+.app .top-toggle-wrapper button.recommended-btn.active:after, .app .top-toggle-wrapper button.required-btn.active:after, .app .top-toggle-wrapper button.star-btn.active:after {
   content: ' ‹';
+  font-size: 15px;
+  color: black;
 }
 
 .app .top-toggle-wrapper button:hover {
@@ -119,6 +123,8 @@ body {
   opacity: 0;
   height: 0;
   visibility: hidden;
+  -webkit-transition: 1.5s;
+  transition: 1.5s;
 }
 
 .app ul.dropdown .dropdown-items-wrapper {

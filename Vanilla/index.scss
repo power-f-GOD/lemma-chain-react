@@ -28,7 +28,7 @@ body
   min-width: 350px;
   max-width: 600px;
   background: gainsboro;
-  border-radius: 8px;
+  border-radius: 5px;
   overflow: hidden;
   box-shadow: 0 5px 10px #111, 
               0 10px 20px #111,
@@ -81,9 +81,9 @@ body
       &.back-btn,
       &.star-btn
       {
-        width: 50px;
-        font-size: 22px;
-        padding: 0;
+        width: 55px;
+        font-size: 18px;
+        padding: 1.5px;
         background: rgb(84, 193, 236);
         color: yellow;
         
@@ -95,14 +95,23 @@ body
       { background: gainsboro; }
 
       &.recommended-btn,
-      &.required-btn
+      &.required-btn,
+      &.star-btn
       {
         &.active
         {
           &:before
-          { content: '› ';}
+          {
+            content: '› ';
+            font-size: 15px;
+            color: black;
+          }
           &:after
-          { content: ' ‹';}
+          {
+            content: ' ‹';
+            font-size: 15px;
+            color: black;
+          }
         }
       }
 
@@ -122,6 +131,7 @@ body
     opacity: 0;
     height: 0;
     visibility: hidden;
+    transition: 1.5s;
     
     
     &.dropdown
