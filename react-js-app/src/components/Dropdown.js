@@ -28,12 +28,31 @@ function Dropdown(props)
         >★</button>
       </div>
       <div className='tabs-wrapper'>
-        <ul className='tab required-tab active-tab'>
-          <Item />
+        <ul className='tab required-tab active-tab'> 
+          {
+            props.state.payload.map((ref, key) => 
+              ref.ref_type === 'required' ? 
+              <Item
+                title={ref.title}
+                author={ref.author}
+                id={ref.id}
+                key={key}
+                handleReferenceClick={props.handleReferenceClick}
+              /> : null)
+          }
         </ul>
         <ul className='tab recommended-tab'>
-          <Item />
-          <Item />
+          {
+            props.state.payload.map((ref, key) => 
+              ref.ref_type === 'recommended' ? 
+              <Item
+                title={ref.title}
+                author={ref.author}
+                id={ref.id}
+                key={key}
+                handleReferenceClick={props.handleReferenceClick}
+              /> : null)
+          }
         </ul>
         <ul className='tab graph-tab'>
           <div className='tab-items-wrapper graph-wrapper'>

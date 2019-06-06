@@ -18,7 +18,7 @@ body
 *
 { 
   box-sizing: border-box;
-  transition: 0.3s;
+  transition: 0.3s, transform 0.15s;
   outline: none;
   opacity: 1;
 }
@@ -93,7 +93,7 @@ body
         font-size: 18px;
         padding: 1.5px;
         background: rgb(84, 193, 236);
-        color: yellow;
+        color: rgb(255, 255, 0);
         
         &:hover
         { background: $hover-grey; }
@@ -126,7 +126,10 @@ body
       }
 
       &:hover
-      { background: $hover-grey;}
+      {
+        background: $hover-grey; 
+        transform: scale(1.04);
+      }
     }
   }
 
@@ -141,7 +144,7 @@ body
     opacity: 0;
     height: 0;
     visibility: hidden;
-    transition: 1s;
+    transition: 1s, opacity 0.6s;
     
     
     &.tab
@@ -150,6 +153,7 @@ body
       {
         // border: 1px solid yellow;
         padding: 16px 13px;
+        width: 100%;
         border-bottom: 1px solid $hover-grey;
 
         li
@@ -178,7 +182,10 @@ body
         }
 
         &:hover
-        { background: $hover-grey; }
+        {
+          background: $hover-grey;
+          padding-left: 20px;
+        }
       }
     }
 

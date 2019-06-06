@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Dropdown from './components/Dropdown';
+import JSON_MockUp from './JSON_MockUp';
 
 
 
@@ -12,7 +13,9 @@ class Widget extends React.Component
     this.state = 
     {
       dropdownIsCollapsed: true,              //Boolean for dropdown toggle
-      dropdownCurHeight: 0                    //holds dropdown height value change
+      dropdownCurHeight: 0,                   //holds dropdown height value change
+      refID: '9v7s4',
+      payload: JSON_MockUp
     };
     this.height = 0;                          //holds constant actual value of Widget height 
     this.dropdown = undefined;                //child element of Widget   
@@ -64,6 +67,12 @@ class Widget extends React.Component
   }
 
 
+  handleReferenceClick(e)
+  {
+    alert(e.currentTarget.className)
+  }
+
+
   resizeDropdownHeightTo(activeTab, constHeight = this.height)
   {
     //i.e. if the argument, activeTab, is an element and not a number (0)...
@@ -101,12 +110,13 @@ class Widget extends React.Component
           onClick={this.handleDropdownToggle.bind(this)}
         >
           <span>LC</span>
-          <span className='ref-identifier'>9v7s4</span>
+          <span className='ref-identifier'>{this.state.refID}</span>
           <span className={`caret-icon ${this.state.dropdownIsCollapsed ? 'flip-caret-icon' : ''}`}>❮</span>
         </section>
         <Dropdown
           state={this.state}
           handleTabToggle={this.handleTabToggle.bind(this)}
+          handleReferenceClick={this.handleReferenceClick.bind(this)}
         />
       </div>
     );
