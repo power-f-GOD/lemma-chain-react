@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Dropdown from './components/Dropdown';
-import JSON_MockUp from './JSON_MockUp';
+import Gen_JSON_Mockup from './JSON_MockUp';
 
 
 
@@ -15,7 +15,7 @@ class Widget extends React.Component
       dropdownIsCollapsed: true,              //Boolean for dropdown toggle
       dropdownCurHeight: 0,                   //holds dropdown height value change
       refID: '9v7s4',
-      payload: JSON_MockUp
+      payload: Gen_JSON_Mockup()
     };
     this.height = 0;                          //holds constant actual value of Widget height 
     this.dropdown = undefined;                //child element of Widget   
@@ -69,7 +69,13 @@ class Widget extends React.Component
 
   handleReferenceClick(e)
   {
-    alert(e.currentTarget.className)
+    let refID = e.currentTarget.dataset.id;
+
+    setTimeout(() =>
+    {
+      this.setState({refID: refID});
+    }
+    , 500)
   }
 
 

@@ -6,18 +6,20 @@ let titles = `Harry Potter and the Deathly Hallows;The Hobbit;1984;Pride and Pre
     JSON_MockUp = []
    
 
-for (let i in titles)
+export default function Gen_JSON_Mockup()
 {
-  let id = chars.map((a, i) => i < 11 ? chars[Math.floor(Math.random() * chars.length)] : '').join('')
-  
-  JSON_MockUp.push(
+  for (let i in titles)
   {
-    title: titles[i],
-    author: authors[i],
-    id: id,
-    ref_type: i % 5 === 0 ? ref_types[0] : ref_types[1]
-  })
+    let id = chars.map((a, i) => i < 11 ? chars[Math.floor(Math.random() * chars.length)] : '').join('')
+    
+    JSON_MockUp.push(
+    {
+      title: titles[i],
+      author: authors[i],
+      id: id,
+      ref_type: i % 5 === 0 ? ref_types[0] : ref_types[1]
+    })
+  }
+
+  return JSON_MockUp;
 }
-
-
-export default JSON_MockUp;

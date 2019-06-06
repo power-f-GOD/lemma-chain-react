@@ -43,10 +43,6 @@ body {
   height: auto;
 }
 
-.widget .collapsed {
-  height: 0;
-}
-
 .widget .ref-tab-wrapper {
   padding: 12px;
   display: -webkit-box;
@@ -79,6 +75,8 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-shadow: 0 3px 8px #bbb;
+          box-shadow: 0 3px 8px #bbb;
 }
 
 .widget .tab-links-wrapper button {
@@ -181,7 +179,7 @@ body {
 }
 
 .widget ul.tab .tab-items-wrapper:hover {
-  background: #c0c0c0;
+  background: #ccc;
   padding-left: 20px;
 }
 
