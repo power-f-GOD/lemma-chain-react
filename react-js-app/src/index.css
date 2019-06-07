@@ -180,7 +180,7 @@ body {
 
 .widget ul.tab .tab-items-wrapper:hover {
   background: #ccc;
-  padding-left: 20px;
+  padding-left: 22px;
 }
 
 .widget ul.active-tab {
@@ -195,5 +195,10 @@ body {
 
 .widget ul .graph-wrapper h1 {
   margin: 100px 0;
+}
+
+.fade-out {
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
 /*# sourceMappingURL=index.css.map */

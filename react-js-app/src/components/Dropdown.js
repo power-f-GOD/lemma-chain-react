@@ -10,7 +10,10 @@ function Dropdown(props)
       style={{height: props.state.dropdownCurHeight}}
     >
       <div className='tab-links-wrapper'>
-        <button className="back-btn">❮</button>
+        <button
+          className="back-btn"
+          onClick={props.goBackInTime}
+        >❮</button>
         <button
           className='required-tab-link tab-link active-tab-link'
           data-tab-name='required-tab'

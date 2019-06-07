@@ -21,6 +21,7 @@ class Widget extends React.Component
     this.dropdown = undefined;                //child element of Widget   
     this.activeTabLink = undefined;           //tab link/button
     this.activeTab = undefined;               //active tab/dropdown for either of three toggleable tabs
+    this.history = [];                        //will hold the different state changes in order to enable going back in time
     this.resizeDropdownHeightTo = this.resizeDropdownHeightTo.bind(this);   //collapses or drops dropdown menu on toggle
     this.findNode = this.findNode.bind(this);     //ReactDOM traverser
   }
@@ -69,13 +70,34 @@ class Widget extends React.Component
 
   handleReferenceClick(e)
   {
-    let refID = e.currentTarget.dataset.id;
+    let refID = e.currentTarget.dataset.id,
+        refIDElement = this.findNode(this, '.ref-identifier');
+
+    refIDElement.classList.add('fade-out');
+    this.setState({ payload: [] })
+    this.activeTab.classList.add('fade-out');
 
     setTimeout(() =>
     {
-      this.setState({refID: refID});
-    }
-    , 500)
+      this.setState({
+        refID: refID,
+        payload: Gen_JSON_Mockup()
+      });
+      this.findNode(this, '.ref-identifier');
+      this.activeTab.classList.remove('fade-out');
+      refIDElement.classList.remove('fade-out');
+      //using another setState method here to update dropdown height to activeTab height after it has been populated to avoid getting a height of 0 if done in the previous setState method
+      this.setState({
+        dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab)
+      });
+      this.history.push(this.state);
+    }, 1000)
+  }
+
+
+  goBackInTime()
+  {
+    console.log('will go back in time!');
   }
 
 
@@ -104,6 +126,7 @@ class Widget extends React.Component
     this.dropdown = this.findNode(this, '.dropdown');     
     this.activeTabLink = this.findNode(this, '.active-tab-link');
     this.activeTab = this.findNode(this, '.required-tab');
+    this.history.push(this.state);
   }
 
 
@@ -123,6 +146,7 @@ class Widget extends React.Component
           state={this.state}
           handleTabToggle={this.handleTabToggle.bind(this)}
           handleReferenceClick={this.handleReferenceClick.bind(this)}
+          goBackInTime={this.goBackInTime.bind(this)}
         />
       </div>
     );

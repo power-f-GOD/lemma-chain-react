@@ -181,7 +181,7 @@ body
         &:hover
         {
           background: #ccc;
-          padding-left: 20px;
+          padding-left: 22px;
         }
       }
     }
@@ -201,6 +201,21 @@ body
     }
   }
 }
+
+
+.fade-out
+{
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+
+// @media screen and (max-width: 767px)
+// {
+//   .graph-tab,
+//   .graph-tab-link
+//   { display: none !important; }
+// }
 
 
 
