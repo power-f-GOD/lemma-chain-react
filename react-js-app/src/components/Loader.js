@@ -13,7 +13,7 @@ export default function Loader(props)
         borderRadius: '50%',
         marginRight: 5,
       },
-      loaderStyle = 
+      loaderWrapperStyle = 
       {
         visibility: props.isLoading ? 'visible' : 'hidden',
         opacity: props.isLoading ? 1 : 0,
@@ -28,23 +28,22 @@ export default function Loader(props)
         flexDirection: 'column',
         color: props.attributes.color
       },
+      loaderStyle = 
+      {
+        display: 'block',
+        textAlign: 'center',
+        position: props.attributes.type === 'minor' ? 'absolute' : '',
+        visibility: props.isLoading ? 'visible' : 'hidden',
+        opacity: props.isLoading ? 1 : 0
+      },
       minorLoader = 
-        <span
-          className='loader'
-          style={{
-            display: 'block',
-            textAlign: 'center',
-            position: props.attributes.type === 'minor' ? 'absolute' : '',
-            visibility: props.isLoading ? 'visible' : 'hidden',
-            opacity: props.isLoading ? 1 : 0
-          }}
-        >
+        <span className='loader' style={loaderStyle}>
           <span className='loader-circle' style={circlesStyle}></span>
           <span className='loader-circle' style={circlesStyle}></span>
           <span className='loader-circle' style={circlesStyle}></span>
         </span>,
       majorLoader = 
-        <div className='loader-wrapper' style={loaderStyle}>
+        <div className='loader-wrapper' style={loaderWrapperStyle}>
           {minorLoader}<br />
           <span className='load-name' style={{fontSize: '13px'}}>{props.attributes.rider}</span>
         </div>;

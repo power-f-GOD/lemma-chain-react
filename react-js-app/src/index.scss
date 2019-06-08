@@ -146,7 +146,7 @@ body
     padding: 0;
     margin: 0;
     width: 100%;
-    max-height: 334px;
+    max-height: 333px;
     overflow-y: auto;
     cursor: pointer;
     opacity: 0;
@@ -160,7 +160,7 @@ body
       .tab-items-wrapper
       {
         // border: 1px solid yellow;
-        padding: 16px 13px;
+        padding: 16px;
         width: 100%;
         border-bottom: 1px solid $hover-grey;
 
@@ -176,16 +176,17 @@ body
             { display: block; }
 
             &.props:nth-child(1)
-            {
-              font-weight: bold;
-              margin-bottom: 5px;
-            }
+            { margin-bottom: 5px; }
+
+            &.title,
+            &.id
+            { font-weight: bold; }
 
             &.props:nth-child(2)
             { margin-bottom: 5px; }
 
             &.props:nth-child(3)
-            { font-style: italic; }
+            { font-size: 14px; }
           }
         }
 

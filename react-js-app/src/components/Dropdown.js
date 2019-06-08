@@ -6,10 +6,7 @@ import Loader from './Loader';
 function Dropdown(props)
 {
   return (
-    <section
-      className='dropdown'
-      style={{height: props.state.dropdownCurHeight}}
-    >
+    <section className='dropdown' style={{height: props.state.dropdownCurHeight}}>
       <div className='tab-links-wrapper'>
         <button
           className="back-btn"
@@ -32,10 +29,7 @@ function Dropdown(props)
           onClick={props.handleTabToggle}
         >★</button>
       </div>
-      <div
-        className='tabs-container'
-        style={{position: 'relative'}}
-      >
+      <div className='tabs-container' style={{position: 'relative'}}>
         <Loader
           isLoading={props.state.isLoading}
           attributes={{
@@ -47,10 +41,7 @@ function Dropdown(props)
           }}
         />
 
-        <div
-          className='tabs-wrapper'
-          style={{opacity: props.state.isLoading ? 0 : 1}}
-        >
+        <div className='tabs-wrapper' style={{opacity: props.state.isLoading ? 0 : 1}}>
           <ul className='tab required-tab active-tab'> 
             {
               props.state.payload.map((ref, key) => 
@@ -62,7 +53,8 @@ function Dropdown(props)
                   key={key}
                   ref_type={ref.ref_type}
                   handleReferenceClick={props.handleReferenceClick}
-                /> : null)
+                />
+              : null)
             }
           </ul>
           <ul className='tab recommended-tab'>
@@ -76,7 +68,8 @@ function Dropdown(props)
                   key={key}
                   ref_type={ref.ref_type}
                   handleReferenceClick={props.handleReferenceClick}
-                /> : null)
+                />
+              : null)
             }
           </ul>
           <ul className='tab graph-tab'>

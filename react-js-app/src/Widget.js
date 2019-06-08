@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Dropdown from './components/Dropdown';
-import Gen_JSON_Mockup from './JSON_MockUp';
+import Gen_JSON_Mockup from './JSON_MockUp_Sample';
 import Loader from './components/Loader';
 
 
@@ -19,14 +19,16 @@ class Widget extends React.Component
       refID: '9v7s4gtgt9',
       isLoading: false,
       payload: Gen_JSON_Mockup(),
-      historyExists: false,
-      widgetHeight: 0,                        //same as this.height: used as props for loader wrapper style height computation
+      activeTab: 'required-tab',              //this and activeTabLink will be used heavily when going back in time and for reseting active tab and tab link and resizing dropdown height to activeTab in the past
+      activeTabLink: 'required-tab-link',
+      historyExists: false,                   //displays back button if true and hides if otherwise
+      widgetHeight: 0,                        //same as this.height: only used as props for loader wrapper style height computation
     };
     this.height = 0;                          //holds constant actual value of Widget height 
     this.dropdown = undefined;                //child element of Widget   
     this.activeTabLink = undefined;           //tab link/button
-    this.activeTab = undefined;               //active tab/dropdown for either of three toggleable tabs
-    this.history = [];                        //will hold the different state changes in order to enable going back in time
+    this.activeTab = undefined;               //active tab/dropdown for either of the three toggleable tabs
+    this.history = [{}];                      //will hold the different state changes in order to enable going back in time
     this.resizeDropdownHeightTo = this.resizeDropdownHeightTo.bind(this);   //collapses or drops dropdown menu on toggle
     this.findNode = this.findNode.bind(this);     //ReactDOM traverser
   }
@@ -54,6 +56,7 @@ class Widget extends React.Component
   {
     let activeTabName, tabLinks, tabs;
 
+    //get all tab and tabLink elements
     this.activeTabLink = e.currentTarget;
     activeTabName = this.activeTabLink.getAttribute('data-tab-name');
     this.activeTab = this.findNode(this, `.${activeTabName}`);
@@ -71,7 +74,9 @@ class Widget extends React.Component
     this.activeTab.classList.add('active-tab');
     
     this.setState({
-      dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab)
+      dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
+      activeTab: activeTabName,
+      activeTabLink: `${activeTabName}-link`
     });
   }
 
@@ -90,7 +95,7 @@ class Widget extends React.Component
         refID: refID,
         payload: Gen_JSON_Mockup()
       });
-      //using another setState method here to update dropdown height to activeTab height after it has been populated to avoid getting a height of 0 assuming done in the previous setState method
+      //using another setState method here to update dropdown height to activeTab-height after it has been populated to avoid setting a height of 0 assuming it's done in the previous setState method
       this.setState(
       {
         dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
@@ -98,20 +103,23 @@ class Widget extends React.Component
         isLoading: false
       });
       
-      this.history.push(this.state);
+      this.history.push(this.state);                  //update history
     }, 1000);
   }
 
 
-
+  
+  //time traveller function
   goBackInTime()
   {
     let past,
         pastIndex = this.history.length - 2,
-        backInTime = {};
+        backInTime = {},
+        tabLinks = this.findNode(this, '.tab-link'),
+        tabs = this.findNode(this, '.tab');
 
     if (pastIndex >= 0 && this.history[pastIndex])
-      this.setState(prevState =>
+      this.setState(varNotNeeded =>
       {
         past = this.history[pastIndex];
 
@@ -121,8 +129,21 @@ class Widget extends React.Component
         return backInTime;
       })
     else { this.setState({historyExists: false}); }
-    
-    this.history.pop();                     //remove/delete last history state after going back in time
+
+    //remove all current active tab and tablink classes
+    tabLinks.forEach((tabLink, i) => 
+    {
+      tabLink.classList.remove('active-tab-link');
+      tabs[i].classList.remove('active-tab');
+    })
+
+    //reset active tab and tabLink to active tab and tabLink in the past
+    this.activeTab = this.findNode(this, `.${this.history[pastIndex].activeTab}`);
+    this.activeTab.classList.add('active-tab')
+    this.activeTabLink = this.findNode(this, `.${this.history[pastIndex].activeTabLink}`);
+    this.activeTabLink.classList.add('active-tab-link');
+  
+    this.history.pop();                     //remove/delete current past after going back in time
   }
 
 
@@ -154,15 +175,21 @@ class Widget extends React.Component
     this.dropdown = this.findNode(this, '.dropdown');     
     this.activeTabLink = this.findNode(this, '.active-tab-link');
     this.activeTab = this.findNode(this, '.required-tab');
-    this.history.push(this.state);
+
+    //using for loop to set props in  history to avoid referencing this.state in history (assuming I used 'this.history.push(this.state)') due to the next two assignment lines after the for loop
+    for (let prop in this.state)
+      this.history[0][prop] = this.state[prop];
+
     this.history[0].dropdownCurHeight = this.resizeDropdownHeightTo(this.activeTab);      //unset history initial (first state) dropdown height from 0 to the current activeTab height to prevent dropdown from resizing to 0 on click of back button if history index is at 0.
+    this.history[0].dropdownIsCollapsed = false;                       //prevent caret-icon-flip bug if gone back in time to first state i.e. if history index is at 0
   }
 
 
 
   render()
   {
-    let refIDWrapperStyle = {
+    let refIDWrapperStyle =
+        {
           position: 'relative',
           display: 'flex',
           justifyContent: 'center'
@@ -176,10 +203,9 @@ class Widget extends React.Component
         >
           <span>LC</span>
           <span style={refIDWrapperStyle}>
-            <span
-              className='ref-identifier'
-              style={{opacity: this.state.isLoading ? 0 : 1}}
-            >{this.state.refID}</span>
+            <span className='ref-identifier' style={{opacity: this.state.isLoading ? 0 : 1}}>
+              {this.state.refID}
+            </span>
             <Loader
               isLoading={this.state.isLoading}
               attributes={{
@@ -189,7 +215,6 @@ class Widget extends React.Component
               }}
             />
           </span>
-          
           <span className={`caret-icon ${this.state.dropdownIsCollapsed ? 'flip-caret-icon' : ''}`}>❮</span>
         </section>
         <Dropdown
