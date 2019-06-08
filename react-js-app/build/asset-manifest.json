@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/lemma-chain-react/react-js-app/static/css/main.cc9d2881.chunk.css",
+    "main.js": "/lemma-chain-react/react-js-app/static/js/main.fc61b190.chunk.js",
+    "main.js.map": "/lemma-chain-react/react-js-app/static/js/main.fc61b190.chunk.js.map",
+    "runtime~main.js": "/lemma-chain-react/react-js-app/static/js/runtime~main.fbfa5f4e.js",
+    "runtime~main.js.map": "/lemma-chain-react/react-js-app/static/js/runtime~main.fbfa5f4e.js.map",
+    "static/js/2.45b30e71.chunk.js": "/lemma-chain-react/react-js-app/static/js/2.45b30e71.chunk.js",
+    "static/js/2.45b30e71.chunk.js.map": "/lemma-chain-react/react-js-app/static/js/2.45b30e71.chunk.js.map",
+    "index.html": "/lemma-chain-react/react-js-app/index.html",
+    "precache-manifest.02a1bb8d5fb8cc3b50311510754b5925.js": "/lemma-chain-react/react-js-app/precache-manifest.02a1bb8d5fb8cc3b50311510754b5925.js",
+    "service-worker.js": "/lemma-chain-react/react-js-app/service-worker.js",
+    "static/css/main.cc9d2881.chunk.css.map": "/lemma-chain-react/react-js-app/static/css/main.cc9d2881.chunk.css.map"
+  }
+}
