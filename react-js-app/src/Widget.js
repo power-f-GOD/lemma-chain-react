@@ -6,6 +6,7 @@ import Loader from './components/Loader';
 
 
 
+
 class Widget extends React.Component
 {
   constructor()
@@ -17,10 +18,9 @@ class Widget extends React.Component
       dropdownCurHeight: 0,                   //holds dropdown height value change
       refID: '9v7s4gtgt9',
       isLoading: false,
-      activeTab: 'required-tab',
-      activeTabLink: 'required-tab-link',
       payload: Gen_JSON_Mockup(),
-      historyExists: false
+      historyExists: false,
+      widgetHeight: 0,                        //same as this.height: used as props for loader wrapper style height computation
     };
     this.height = 0;                          //holds constant actual value of Widget height 
     this.dropdown = undefined;                //child element of Widget   
@@ -30,6 +30,7 @@ class Widget extends React.Component
     this.resizeDropdownHeightTo = this.resizeDropdownHeightTo.bind(this);   //collapses or drops dropdown menu on toggle
     this.findNode = this.findNode.bind(this);     //ReactDOM traverser
   }
+
   
 
   handleDropdownToggle()
@@ -41,10 +42,12 @@ class Widget extends React.Component
 
       return {
         dropdownIsCollapsed: !collapsed,
-        dropdownCurHeight: dropdownNewHeight
+        dropdownCurHeight: dropdownNewHeight,
+        widgetHeight: this.height                   //set state constant value of widget Height. Used mainly as props for loader wrapper style height
       };
     });
   }
+
 
 
   handleTabToggle(e)
@@ -68,18 +71,17 @@ class Widget extends React.Component
     this.activeTab.classList.add('active-tab');
     
     this.setState({
-      dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
-      activeTab: activeTabName,
-      activeTabLink: `${this.activeTabLink.getAttribute('data-tab-name')}-link`
+      dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab)
     });
   }
 
+  
 
   handleReferenceClick(e)
   {
     let refID = e.currentTarget.dataset.id;
 
-    this.setState({isLoading: true});            //first set loading to true to enable fadeout transition
+    this.setState({isLoading: true});                 //first set loading to true to enable transition fadeout
     this.setState({payload: []})
     
     setTimeout(() =>                                  //in actual sense, this setTimeout function is a kinda 
@@ -88,7 +90,7 @@ class Widget extends React.Component
         refID: refID,
         payload: Gen_JSON_Mockup()
       });
-      //using another setState method here to update dropdown height to activeTab height after it has been populated to avoid getting a height of 0 if done in the previous setState method
+      //using another setState method here to update dropdown height to activeTab height after it has been populated to avoid getting a height of 0 assuming done in the previous setState method
       this.setState(
       {
         dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
@@ -99,6 +101,7 @@ class Widget extends React.Component
       this.history.push(this.state);
     }, 1000);
   }
+
 
 
   goBackInTime()
@@ -119,8 +122,9 @@ class Widget extends React.Component
       })
     else { this.setState({historyExists: false}); }
     
-    this.history.pop();
+    this.history.pop();                     //remove/delete last history state after going back in time
   }
+
 
 
   resizeDropdownHeightTo(activeTab, constHeight = this.height)
@@ -128,6 +132,7 @@ class Widget extends React.Component
     //i.e. if the argument, activeTab, is an element and not a number (0)...
     return activeTab !== 0 ? (activeTab.offsetHeight + constHeight) : 0;
   }
+
 
 
   //ReactDOM traverser function
@@ -142,16 +147,17 @@ class Widget extends React.Component
   }
 
 
+
   componentDidMount()
   {
-    this.height = this.findNode(this).offsetHeight;     //now set value of constant Widget height
+    this.height = this.findNode(this).offsetHeight;                      //now set value of constant Widget height
     this.dropdown = this.findNode(this, '.dropdown');     
     this.activeTabLink = this.findNode(this, '.active-tab-link');
     this.activeTab = this.findNode(this, '.required-tab');
     this.history.push(this.state);
-    this.history[0].dropdownCurHeight = this.resizeDropdownHeightTo(this.activeTab);      //unset history initial (first state) dropdown height from 0 to the current activeTab height to prevent dropdown from resizing to 0 on click of back button
-    // this.history[0].dropdownIsCollapsed = false;
+    this.history[0].dropdownCurHeight = this.resizeDropdownHeightTo(this.activeTab);      //unset history initial (first state) dropdown height from 0 to the current activeTab height to prevent dropdown from resizing to 0 on click of back button if history index is at 0.
   }
+
 
 
   render()
@@ -179,8 +185,7 @@ class Widget extends React.Component
               attributes={{
                 size: 8,
                 color: 'white',
-                type: 'minor',
-                wrapperHeight: this.state.dropdownCurHeight - this.height
+                type: 'minor'
               }}
             />
           </span>
@@ -197,6 +202,7 @@ class Widget extends React.Component
     );
   }
 }
+
 
 
 export default Widget;

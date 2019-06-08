@@ -40,9 +40,10 @@ function Dropdown(props)
           isLoading={props.state.isLoading}
           attributes={{
             size: 12,
-            color: 'white',
+            color: '#333',
             rider: 'Loading References...',
-            type: 'major'
+            type: 'major',
+            wrapperHeight: props.state.dropdownCurHeight - props.state.widgetHeight
           }}
         />
 

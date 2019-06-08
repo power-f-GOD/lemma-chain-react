@@ -1,9 +1,11 @@
 import React from 'react';
 
 
+//Loader returns 'minor loader' (without wrapper) or 'major loader' (with wrapper) depending on context 
 export default function Loader(props)
 {
-  let circlesStyle = {
+  let circlesStyle = 
+      {
         height: props.attributes.size,
         width: props.attributes.size,
         background: props.attributes.color,
@@ -11,24 +13,22 @@ export default function Loader(props)
         borderRadius: '50%',
         marginRight: 5,
       },
-      loaderStyle = {
+      loaderStyle = 
+      {
         visibility: props.isLoading ? 'visible' : 'hidden',
         opacity: props.isLoading ? 1 : 0,
         position: 'absolute',
         width: '100%',
-        background: 'rgba(50, 50, 50, 0.7)',
+        background: 'rgba(50, 50, 50, 0)',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
-        // eight: props.attributes.wrapperHeight,
-        flexDirection: 'column', border: '1px solid red',
+        height: props.attributes.wrapperHeight,
+        flexDirection: 'column',
         color: props.attributes.color
-      };
-  console.log(props.attributes.wrapperHeight)
-  //Loader returns 'minor loader' (without wrapper) or 'major loader' (with wrapper) depending on context 
-  
-  let minorLoader = 
+      },
+      minorLoader = 
         <span
           className='loader'
           style={{

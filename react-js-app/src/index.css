@@ -136,11 +136,16 @@ body {
           transform: scale(1.04);
 }
 
+.widget .tabs-wrapper {
+  border-radius: 5px;
+  overflow: hidden;
+}
+
 .widget ul {
   padding: 0;
   margin: 0;
   width: 100%;
-  max-height: 304px;
+  max-height: 334px;
   overflow-y: auto;
   cursor: pointer;
   opacity: 0;
@@ -181,7 +186,7 @@ body {
 
 .widget ul.tab .tab-items-wrapper:hover {
   background: #ccc;
-  padding-left: 22px;
+  padding-left: 24px;
 }
 
 .widget ul.active-tab {
@@ -250,6 +255,13 @@ body {
   100% {
     -webkit-transform: scale(1);
             transform: scale(1);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .graph-tab,
+  .graph-tab-link {
+    display: none !important;
   }
 }
 /*# sourceMappingURL=index.css.map */
