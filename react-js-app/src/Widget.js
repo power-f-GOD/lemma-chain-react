@@ -60,7 +60,7 @@ class Widget extends React.Component
     tabLinks = this.findNode(this, '.tab-link');
     tabs = this.findNode(this, '.tab');
 
-    //remove all 'active' classNames from tabs and links
+    //remove all 'active' classNames from tabs and links.
     tabLinks.forEach((tabLink, i) =>
     {
       tabLink.classList.remove('active-tab-link');
@@ -75,7 +75,7 @@ class Widget extends React.Component
     });
   }
 
-  
+
 
   handleReferenceClick(e)
   {
