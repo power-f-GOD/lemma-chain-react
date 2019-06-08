@@ -16,6 +16,14 @@ function Items(props)
         <span className='props'>Title: <span className='title'>{props.title}</span></span>
         <span className='props'>Author: <span className='author'>{props.author}</span></span>
         <span className='props'>Ref. ID: <span className="id">{props.id}</span></span>
+        <span 
+          className='props'
+          style={{
+            display: 'block',
+            textAlign: 'right',
+            fontSize: '10px'
+          }}
+        >{props.ref_type}</span>
       </li>
     </div>
   );

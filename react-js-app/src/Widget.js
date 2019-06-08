@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Dropdown from './components/Dropdown';
 import Gen_JSON_Mockup from './JSON_MockUp';
+import Loader from './components/Loader';
 
 
 
@@ -14,8 +15,12 @@ class Widget extends React.Component
     {
       dropdownIsCollapsed: true,              //Boolean for dropdown toggle
       dropdownCurHeight: 0,                   //holds dropdown height value change
-      refID: '9v7s4',
-      payload: Gen_JSON_Mockup()
+      refID: '9v7s4gtgt9',
+      isLoading: false,
+      activeTab: 'required-tab',
+      activeTabLink: 'required-tab-link',
+      payload: Gen_JSON_Mockup(),
+      historyExists: false
     };
     this.height = 0;                          //holds constant actual value of Widget height 
     this.dropdown = undefined;                //child element of Widget   
@@ -62,42 +67,59 @@ class Widget extends React.Component
     this.activeTabLink.classList.add('active-tab-link');
     this.activeTab.classList.add('active-tab');
     
-    this.setState({ 
-      dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab) 
+    this.setState({
+      dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
+      activeTab: activeTabName,
+      activeTabLink: `${this.activeTabLink.getAttribute('data-tab-name')}-link`
     });
   }
 
 
   handleReferenceClick(e)
   {
-    let refID = e.currentTarget.dataset.id,
-        refIDElement = this.findNode(this, '.ref-identifier');
+    let refID = e.currentTarget.dataset.id;
 
-    refIDElement.classList.add('fade-out');
-    this.setState({ payload: [] })
-    this.activeTab.classList.add('fade-out');
-
-    setTimeout(() =>
-    {
+    this.setState({isLoading: true});            //first set loading to true to enable fadeout transition
+    this.setState({payload: []})
+    
+    setTimeout(() =>                                  //in actual sense, this setTimeout function is a kinda 
+    {                                                 //placeholder for the fetch/axios API call method
       this.setState({
         refID: refID,
         payload: Gen_JSON_Mockup()
       });
-      this.findNode(this, '.ref-identifier');
-      this.activeTab.classList.remove('fade-out');
-      refIDElement.classList.remove('fade-out');
       //using another setState method here to update dropdown height to activeTab height after it has been populated to avoid getting a height of 0 if done in the previous setState method
-      this.setState({
-        dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab)
+      this.setState(
+      {
+        dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
+        historyExists: true,
+        isLoading: false
       });
+      
       this.history.push(this.state);
-    }, 1000)
+    }, 1000);
   }
 
 
   goBackInTime()
   {
-    console.log('will go back in time!');
+    let past,
+        pastIndex = this.history.length - 2,
+        backInTime = {};
+
+    if (pastIndex >= 0 && this.history[pastIndex])
+      this.setState(prevState =>
+      {
+        past = this.history[pastIndex];
+
+        for (let state in past)
+          backInTime[state] = past[state];
+
+        return backInTime;
+      })
+    else { this.setState({historyExists: false}); }
+    
+    this.history.pop();
   }
 
 
@@ -127,11 +149,19 @@ class Widget extends React.Component
     this.activeTabLink = this.findNode(this, '.active-tab-link');
     this.activeTab = this.findNode(this, '.required-tab');
     this.history.push(this.state);
+    this.history[0].dropdownCurHeight = this.resizeDropdownHeightTo(this.activeTab);      //unset history initial (first state) dropdown height from 0 to the current activeTab height to prevent dropdown from resizing to 0 on click of back button
+    // this.history[0].dropdownIsCollapsed = false;
   }
 
 
   render()
   {
+    let refIDWrapperStyle = {
+          position: 'relative',
+          display: 'flex',
+          justifyContent: 'center'
+        };
+
     return (
       <div className='widget'>
         <section
@@ -139,7 +169,22 @@ class Widget extends React.Component
           onClick={this.handleDropdownToggle.bind(this)}
         >
           <span>LC</span>
-          <span className='ref-identifier'>{this.state.refID}</span>
+          <span style={refIDWrapperStyle}>
+            <span
+              className='ref-identifier'
+              style={{opacity: this.state.isLoading ? 0 : 1}}
+            >{this.state.refID}</span>
+            <Loader
+              isLoading={this.state.isLoading}
+              attributes={{
+                size: 8,
+                color: 'white',
+                type: 'minor',
+                wrapperHeight: this.state.dropdownCurHeight - this.height
+              }}
+            />
+          </span>
+          
           <span className={`caret-icon ${this.state.dropdownIsCollapsed ? 'flip-caret-icon' : ''}`}>❮</span>
         </section>
         <Dropdown

@@ -101,7 +101,7 @@ body {
 .widget .tab-links-wrapper button.back-btn, .widget .tab-links-wrapper button.graph-tab-link {
   width: 55px;
   font-size: 18px;
-  padding: 1.5px;
+  padding: 0px;
   background: #54c1ec;
   color: yellow;
 }
@@ -139,6 +139,7 @@ body {
 .widget ul {
   padding: 0;
   margin: 0;
+  width: 100%;
   max-height: 304px;
   overflow-y: auto;
   cursor: pointer;
@@ -200,5 +201,55 @@ body {
 .fade-out {
   opacity: 0 !important;
   visibility: hidden !important;
+}
+
+.loader-circle {
+  -webkit-animation: scale 1s infinite;
+          animation: scale 1s infinite;
+}
+
+.loader-circle:nth-of-type(1) {
+  -webkit-animation-delay: 0.25s;
+          animation-delay: 0.25s;
+}
+
+.loader-circle:nth-of-type(2) {
+  -webkit-animation-delay: 0.5s;
+          animation-delay: 0.5s;
+}
+
+.loader-circle:nth-of-type(3) {
+  -webkit-animation-delay: 0.75s;
+          animation-delay: 0.75s;
+}
+
+@-webkit-keyframes scale {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(0.25);
+            transform: scale(0.25);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes scale {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(0.25);
+            transform: scale(0.25);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
 }
 /*# sourceMappingURL=index.css.map */
