@@ -103,7 +103,7 @@ class Widget extends React.Component
       });
       
       this.history.push(this.state);                  //update history
-    }, 1000);
+    }, 1500);
   }
 
 
