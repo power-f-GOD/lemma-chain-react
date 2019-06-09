@@ -87,7 +87,7 @@ class Widget extends React.Component
     let refID = e.currentTarget.dataset.id;
 
     this.setState({isLoading: true});                 //first set loading to true to enable transition fadeout
-    this.setState({payload: []})
+    setTimeout(() => this.setState({payload: []}), 200);
     
     setTimeout(() =>                                  //in actual sense, this setTimeout function is a kinda 
     {                                                 //placeholder for the fetch/axios API call method
