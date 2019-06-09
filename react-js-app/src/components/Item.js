@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-function Items(props)
+function Item(props)
 {
   let ref_type_style = {
         display: 'block',
@@ -29,4 +29,4 @@ function Items(props)
 }
 
 
-export default Items;
+export default Item;

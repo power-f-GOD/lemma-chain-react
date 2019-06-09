@@ -96,8 +96,7 @@ class Widget extends React.Component
         payload: Gen_JSON_Mockup()
       });
       //using another setState method here to update dropdown height to activeTab-height after it has been populated to avoid setting a height of 0 assuming it's done in the previous setState method
-      this.setState(
-      {
+      this.setState({
         dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
         historyExists: true,
         isLoading: false
