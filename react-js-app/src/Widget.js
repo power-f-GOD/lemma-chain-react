@@ -39,11 +39,11 @@ class Widget extends React.Component
   {
     this.setState(prevState =>
     {
-      let collapsed = prevState.dropdownIsCollapsed,
-          dropdownNewHeight = this.resizeDropdownHeightTo(collapsed ? this.activeTab : 0);
+      let isCollapsed = prevState.dropdownIsCollapsed,
+          dropdownNewHeight = this.resizeDropdownHeightTo(isCollapsed ? this.activeTab : 0);
 
       return {
-        dropdownIsCollapsed: !collapsed,
+        dropdownIsCollapsed: !isCollapsed,
         dropdownCurHeight: dropdownNewHeight,
         widgetHeight: this.height                   //set state constant value of widget Height. Used mainly as props for loader wrapper style height
       };
