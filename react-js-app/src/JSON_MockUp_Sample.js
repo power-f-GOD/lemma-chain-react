@@ -18,7 +18,7 @@ export default function Gen_JSON_Mockup()
 
   randTitles = titles.split`;`.map((title, i) =>
   {
-    if (i > 7) return null;
+    if (i > 7) return null;           //retrict number of generated payload (titles) to 8 instead of 20 (which is the actual total number of books [payload/titles]) in order to well visualize randomization and see changes: PS: sum of the total number of required and recommended refs will always be 8
 
     randIndex = Math.floor(Math.random() * _titles.length);
     randTitle = _titles[randIndex];
