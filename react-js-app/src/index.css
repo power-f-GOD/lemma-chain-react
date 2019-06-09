@@ -75,8 +75,10 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-shadow: 0 3px 8px #bbb;
-          box-shadow: 0 3px 8px #bbb;
+  -webkit-box-shadow: 0 2px 8px #aaa;
+          box-shadow: 0 2px 8px #aaa;
+  position: relative;
+  z-index: 1;
 }
 
 .widget .tab-links-wrapper button {
@@ -95,7 +97,7 @@ body {
   font-size: 15px;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
   font-weight: bold;
-  background: white;
+  background: #999;
 }
 
 .widget .tab-links-wrapper button.back-btn, .widget .tab-links-wrapper button.graph-tab-link {
@@ -137,7 +139,7 @@ body {
 }
 
 .widget .tabs-wrapper {
-  border-radius: 5px;
+  border-radius: 0 0 5px 5px;
   overflow: hidden;
 }
 
@@ -155,10 +157,23 @@ body {
   transition: 1s, opacity 0.6s;
 }
 
+.widget ul::-webkit-scrollbar {
+  width: 10px;
+}
+
+.widget ul::-webkit-scrollbar-track {
+  background: #ccc;
+}
+
+.widget ul::-webkit-scrollbar-thumb {
+  background: #999;
+  border-radius: 0 0 5px 5px;
+}
+
 .widget ul.tab .tab-items-wrapper {
   padding: 16px;
   width: 100%;
-  border-bottom: 1px solid #c0c0c0;
+  border-bottom: 1px solid #bbb;
 }
 
 .widget ul.tab .tab-items-wrapper li {
@@ -190,6 +205,7 @@ body {
 .widget ul.tab .tab-items-wrapper:hover {
   background: #ccc;
   padding-left: 24px;
+  border-bottom-color: #bbb;
 }
 
 .widget ul.active-tab {

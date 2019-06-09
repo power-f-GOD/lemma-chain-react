@@ -2,7 +2,7 @@
   "name": "react-js-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://power-f-god.github.io/lemma-chain-react/react-js-app",
+  "homepage": "https://lemma-chain-gui.netlify.com",
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

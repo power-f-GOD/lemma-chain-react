@@ -19,8 +19,8 @@ class Widget extends React.Component
       refID: '9v7s4gtgt9',
       isLoading: false,
       payload: Gen_JSON_Mockup(),
-      activeTab: 'required-tab',              //this and activeTabLink will be used heavily when going back in time and for reseting active tab and tab link and resizing dropdown height to activeTab in the past
-      activeTabLink: 'required-tab-link',
+      activeTabName: 'required-tab',              //this and activeTabLink will be used heavily when going back in time and for reseting active tab and tab link and resizing dropdown height to activeTab in the past
+      activeTabLinkName: 'required-tab-link',
       historyExists: false,                   //displays back button if true and hides if otherwise
       widgetHeight: 0,                        //same as this.height: only used as props for loader wrapper style height computation
     };
@@ -75,8 +75,8 @@ class Widget extends React.Component
     
     this.setState({
       dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
-      activeTab: activeTabName,
-      activeTabLink: `${activeTabName}-link`
+      activeTabName: activeTabName,
+      activeTabLinkName: `${activeTabName}-link`
     });
   }
 
@@ -138,9 +138,9 @@ class Widget extends React.Component
     })
 
     //reset active tab and tabLink to active tab and tabLink in the past
-    this.activeTab = this.findNode(this, `.${this.history[pastIndex].activeTab}`);
+    this.activeTab = this.findNode(this, `.${this.history[pastIndex].activeTabName}`);
     this.activeTab.classList.add('active-tab')
-    this.activeTabLink = this.findNode(this, `.${this.history[pastIndex].activeTabLink}`);
+    this.activeTabLink = this.findNode(this, `.${this.history[pastIndex].activeTabLinkName}`);
     this.activeTabLink.classList.add('active-tab-link');
   
     this.history.pop();                     //remove/delete current past after going back in time
