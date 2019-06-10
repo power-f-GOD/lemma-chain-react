@@ -23,6 +23,7 @@ class Widget extends React.Component
       activeTabLinkName: 'required-tab-link',
       historyExists: false,                   //displays back button if true and hides if otherwise
       widgetHeight: 0,                        //same as this.height: only used as props for loader wrapper style height computation
+      isMobileDevice: false                    //boolean to check what device app is running on
     };
     this.height = 0;                          //holds constant actual value of Widget height 
     this.dropdown = undefined;                //child element of Widget   
@@ -99,7 +100,8 @@ class Widget extends React.Component
       this.setState({
         dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
         historyExists: true,
-        isLoading: false
+        isLoading: false,
+        dropdownIsCollapsed: false
       });
       
       this.history.push(this.state);                  //update history
@@ -127,7 +129,7 @@ class Widget extends React.Component
 
         return backInTime;
       })
-    else { this.setState({historyExists: false}); }
+    else { return this.setState({historyExists: false}); }
 
     //remove all current active tab and tablink classes
     tabLinks.forEach((tabLink, i) => 
@@ -170,17 +172,25 @@ class Widget extends React.Component
 
   componentDidMount()
   {
-    this.height = this.findNode(this).offsetHeight;                      //now set value of constant Widget height
-    this.dropdown = this.findNode(this, '.dropdown');     
-    this.activeTabLink = this.findNode(this, '.active-tab-link');
-    this.activeTab = this.findNode(this, '.required-tab');
+    //check what device user is running
+    if (/(Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone)/i.test(window.navigator.userAgent))
+      this.setState({isMobileDevice: true});
+    
+    //delay till isMobileDevice state is set 
+    setTimeout(() =>
+    {
+      this.height = this.findNode(this).offsetHeight;                      //now set value of constant Widget height
+      this.dropdown = this.findNode(this, '.dropdown');     
+      this.activeTabLink = this.findNode(this, '.active-tab-link');
+      this.activeTab = this.findNode(this, '.required-tab');
 
-    //using for loop to set props in  history to avoid referencing this.state in history (assuming I used 'this.history.push(this.state)') due to the next two assignment lines after the for loop
-    for (let prop in this.state)
-      this.history[0][prop] = this.state[prop];
+      //using for loop to set props in  history to avoid referencing this.state in history (assuming I used 'this.history.push(this.state)') due to the next two assignment lines after the for loop
+      for (let prop in this.state)
+        this.history[0][prop] = this.state[prop];
 
-    this.history[0].dropdownCurHeight = this.resizeDropdownHeightTo(this.activeTab);      //unset history initial (first state) dropdown height from 0 to the current activeTab height to prevent dropdown from resizing to 0 on click of back button if history index is at 0.
-    this.history[0].dropdownIsCollapsed = false;                       //prevent caret-icon-flip bug if gone back in time to first state i.e. if history index is at 0
+      this.history[0].dropdownCurHeight = this.resizeDropdownHeightTo(this.activeTab);      //unset history initial (first state) dropdown height from 0 to the current activeTab height to prevent dropdown from resizing to 0 on click of back button if history index is at 0.
+      this.history[0].dropdownIsCollapsed = false;                       //prevent caret-icon-flip bug if gone back in time to first state i.e. if history index is at 0
+    }, 100)
   }
 
 
@@ -195,7 +205,7 @@ class Widget extends React.Component
         };
 
     return (
-      <div className='widget'>
+      <div className={`widget ${this.state.isMobileDevice ? 'isMobileDevice' : ''}`}>
         <section
           className='ref-tab-wrapper'
           onClick={this.handleDropdownToggle.bind(this)}

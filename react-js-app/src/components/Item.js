@@ -5,20 +5,22 @@ function Item(props)
 {
   let ref_type_style = {
         display: 'block',
-        textAlign: 'right',
-        fontSize: '10px'
+        fontSize: 10,
+        right: 0,
+        bottom: 0,
+        position: 'absolute'
       }
 
   return (
     <div
-      className='tab-items-wrapper'
+      className='item-wrapper'
       data-title={props.title}
       data-author={props.author}
       data-id={props.id}
       data-ref-type={props.ref_type}
       onClick={(e) => props.handleReferenceClick(e)}
     >
-      <li className='tab-items'>
+      <li className='item' style={{position: 'relative'}}>
         <span className='props'>Title: <span className='title'>{props.title}</span></span>
         <span className='props'>Author: <span className='author'>{props.author}</span></span>
         <span className='props'>Ref. ID: <span className="id">{props.id}</span></span>

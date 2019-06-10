@@ -1,13 +1,16 @@
 
 $font: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-$hover-grey: #c0c0c0;
+$hover-grey: #ccc;
+$active-el-bgcolor: white;
+$pink-bg: rgb(234, 10, 130);
+$pink-bg-hover: rgb(204, 0, 100);
+$default-font-size: 15px;
 
 body
 {
   display: flex;
   margin: 0;
   justify-content: center;
-  font-size: 16px;
   background: #333;
   font-family: $font;
 }
@@ -15,7 +18,7 @@ body
 #root { width: auto; }
 
 *
-{ 
+{
   box-sizing: border-box;
   transition: 0.3s, transform 0.15s;
   outline: none;
@@ -28,7 +31,7 @@ body
   margin: 50px 0;
   min-width: 350px;
   max-width: 500px;
-  background: gainsboro;
+  background: $active-el-bgcolor;
   border-radius: 5px;
   overflow: hidden;
   box-shadow: 0 5px 10px #111, 
@@ -45,13 +48,14 @@ body
     padding: 12px;
     display: flex;
     justify-content: space-between;
-    background: rgb(240, 19, 137);
+    background: $pink-bg;
     color: white;
     cursor: pointer;
-    // border: 1px solid blue;
+    position: relative;
+    z-index: 2;
 
     &:hover
-    { background: rgb(214, 0, 114); }
+    { background: $pink-bg-hover; }
 
     .caret-icon
     {
@@ -66,7 +70,7 @@ body
   .tab-links-wrapper
   {
     display: flex;
-    box-shadow: 0 2px 8px #aaa;
+    box-shadow: 0 1px 8px #999;
     position: relative;
     z-index: 1;
 
@@ -79,11 +83,10 @@ body
       align-items: center;
       border: none;
       cursor: pointer;
-      font-size: 15px;
+      font-size: 14px;
       font-family: $font;
       font-weight: bold;
-      background: #999;
-      // border-bottom: 1px solid darkgray;
+      background: #888888;
 
       &.back-btn,
       &.graph-tab-link
@@ -91,18 +94,28 @@ body
         width: 55px;
         font-size: 18px;
         padding: 0px;
-        background: rgb(84, 193, 236);
-        color: rgb(255, 255, 0);
-        
-        &:hover
-        { background: $hover-grey; }
       }
 
-      // &.back-btn
-      // { width: 0; }
+      &.back-btn
+      {
+        background: $pink-bg;
+        color: white;
+        
+        &:hover
+        { background: $pink-bg-hover; }
+      }
+
+      &.graph-tab-link
+      {
+        background: rgb(63, 201, 255) !important;
+        color: yellow;
+        
+        &:hover
+        { background: rgb(73, 211, 255) !important; }
+      }
 
       &[class^=active]
-      { background: gainsboro; }
+      { background: $active-el-bgcolor; }
 
       &.recommended-tab-link,
       &.required-tab-link,
@@ -110,18 +123,18 @@ body
       {
         &.active-tab-link
         {
-          background: gainsboro;
+          background: $active-el-bgcolor;
 
           &:before
           {
             content: '› ';
-            font-size: 15px;
+            font-size: $default-font-size;
             color: black;
           }
           &:after
           {
             content: ' ‹';
-            font-size: 15px;
+            font-size: $default-font-size;
             color: black;
           }
         }
@@ -155,29 +168,30 @@ body
     height: 0;
     visibility: hidden;
     transition: 1s, opacity 0.6s;
+    position: relative;
 
 
     &::-webkit-scrollbar
     { width: 10px; }
 
     &::-webkit-scrollbar-track
-    { background: #ccc; }
+    { background: #ddd; }
 
     &::-webkit-scrollbar-thumb
     {
-      background: #999;
+      background: #bbb;
       border-radius: 0 0 5px 5px;
     }
     
     
     &.tab
     {
-      .tab-items-wrapper
+      .item-wrapper
       {
-        // border: 1px solid yellow;
-        padding: 16px;
+        padding: 20px 16px;
         width: 100%;
-        border-bottom: 1px solid #bbb;
+        background: white;
+        border-bottom: 1px solid #ddd;
 
         li
         {
@@ -191,14 +205,14 @@ body
             { display: block; }
 
             &.props:nth-child(1)
-            { margin-bottom: 5px; }
+            { margin-bottom: 8px; }
 
             &.title,
             &.id
             { font-weight: bold; }
 
             &.props:nth-child(2)
-            { margin-bottom: 5px; }
+            { margin-bottom: 8px; }
 
             &.props:nth-child(3)
             { font-size: 14px; }
@@ -207,7 +221,7 @@ body
 
         &:hover
         {
-          background: #ccc;
+          background: #ddd;
           padding-left: 24px;
           border-bottom-color: #bbb;
         }
@@ -225,7 +239,7 @@ body
     {
       text-align: center;
       
-      h1 { margin: 100px 0 }
+      h1 { margin: 140px 0 }
     }
   }
 }
@@ -260,7 +274,7 @@ body
 }
 
 
-@media screen and (max-width: 767px)
+.isMobileDevice
 {
   .graph-tab,
   .graph-tab-link
