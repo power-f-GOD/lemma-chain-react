@@ -1,6 +1,6 @@
 
 $font: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-$hover-grey: #ccc;
+$hover-grey: #bbb;
 $active-el-bgcolor: white;
 $pink-bg: rgb(234, 10, 130);
 $pink-bg-hover: rgb(204, 0, 100);
@@ -32,8 +32,10 @@ body
   min-width: 350px;
   max-width: 500px;
   background: $active-el-bgcolor;
-  border-radius: 5px;
+  border-radius: 5px !important;
   overflow: hidden;
+  position: relative;
+  z-index: 0;             //set this to avoid border radius from setting to 0 on ref load
   box-shadow: 0 5px 10px #111, 
               0 10px 20px #111,
               0 15px 30px #111;
@@ -45,7 +47,7 @@ body
   .ref-tab-wrapper
   {
     
-    padding: 12px;
+    padding: 12px 15px;
     display: flex;
     justify-content: space-between;
     background: $pink-bg;
@@ -111,7 +113,7 @@ body
         color: yellow;
         
         &:hover
-        { background: rgb(73, 211, 255) !important; }
+        { background: rgb(97, 210, 255) !important; }
       }
 
       &[class^=active]
