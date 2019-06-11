@@ -2,7 +2,7 @@
   "name": "react-js-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "",
+  "homepage": "https://github.com/power-f-GOD/lemma-chain-react/tree/powerofgod/react-js-app",
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
