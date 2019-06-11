@@ -173,19 +173,6 @@ body {
   position: relative;
 }
 
-.widget ul::-webkit-scrollbar {
-  width: 10px;
-}
-
-.widget ul::-webkit-scrollbar-track {
-  background: #ddd;
-}
-
-.widget ul::-webkit-scrollbar-thumb {
-  background: #bbb;
-  border-radius: 0 0 5px 5px;
-}
-
 .widget ul.tab .item-wrapper {
   padding: 20px 16px;
   width: 100%;
@@ -297,5 +284,18 @@ body {
 .isMobileDevice .graph-tab,
 .isMobileDevice .graph-tab-link {
   display: none !important;
+}
+
+.usePCScrollBar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.usePCScrollBar::-webkit-scrollbar-track {
+  background: #ddd;
+}
+
+.usePCScrollBar::-webkit-scrollbar-thumb {
+  background: #bbb;
+  border-radius: 0 0 5px 5px;
 }
 /*# sourceMappingURL=index.css.map */

@@ -46,7 +46,7 @@ function Dropdown(props)
         />
 
         <div className='tabs-wrapper' style={{opacity: props.state.isLoading ? 0 : 1}}>
-          <ul className='tab required-tab active-tab'> 
+          <ul className={`tab required-tab active-tab ${!props.state.isMobileDevice ? 'usePCScrollBar' : ''}`}> 
             {
               props.state.payload.map((ref, key) => 
                 ref.ref_type === 'required' ? 
@@ -61,7 +61,7 @@ function Dropdown(props)
               : null)
             }
           </ul>
-          <ul className='tab recommended-tab'>
+          <ul className={`tab recommended-tab ${!props.state.isMobileDevice ? 'usePCScrollBar' : ''}`}>
             {
               props.state.payload.map((ref, key) => 
                 ref.ref_type === 'recommended' ? 
@@ -76,7 +76,7 @@ function Dropdown(props)
               : null)
             }
           </ul>
-          <ul className='tab graph-tab'>
+          <ul className={`tab graph-tab ${!props.state.isMobileDevice ? 'usePCScrollBar' : ''}`}>
             <div className='tab-items-wrapper graph-wrapper'>
               <h1 className='title'>GRAPH ZONE!</h1>
             </div>

@@ -171,19 +171,6 @@ body
     visibility: hidden;
     transition: 1s, opacity 0.6s;
     position: relative;
-
-
-    &::-webkit-scrollbar
-    { width: 10px; }
-
-    &::-webkit-scrollbar-track
-    { background: #ddd; }
-
-    &::-webkit-scrollbar-thumb
-    {
-      background: #bbb;
-      border-radius: 0 0 5px 5px;
-    }
     
     
     &.tab
@@ -281,6 +268,23 @@ body
   .graph-tab,
   .graph-tab-link
   { display: none !important; }
+
+  
+}
+
+.usePCScrollBar
+{
+  &::-webkit-scrollbar
+  { width: 10px; }
+
+  &::-webkit-scrollbar-track
+  { background: #ddd; }
+
+  &::-webkit-scrollbar-thumb
+  {
+    background: #bbb;
+    border-radius: 0 0 5px 5px;
+  }
 }
 
 
