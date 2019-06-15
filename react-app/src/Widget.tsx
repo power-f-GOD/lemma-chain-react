@@ -68,7 +68,7 @@ class Widget extends React.Component<{}, IState>
   {
     this.setState(prevState =>
     {
-      let dropdownIsCollapsed = prevState.dropdownIsCollapsed,
+      let {dropdownIsCollapsed} = prevState,
           dropdownNewHeight = this.resizeDropdownHeightTo(dropdownIsCollapsed ? this.activeTab : 0);
 
       return {
