@@ -211,7 +211,7 @@ class Widget extends React.Component
       <div className={`widget ${this.state.isMobileDevice ? 'isMobileDevice' : ''}`}>
         <section
           className='ref-tab-wrapper'
-          onClick={this.handleDropdownToggle.bind(this)}
+          onClick={this.handleDropdownToggle.bind(this)} 
         >
           <span>LC</span>
           <span style={refIDWrapperStyle}>
