@@ -1,9 +1,9 @@
 import React from 'react';
 
 
-function Item(props)
+function Item(props: any)
 {
-  let ref_type_style = {
+  let ref_type_style: object = {
         display: 'block',
         fontSize: 10,
         right: 0,

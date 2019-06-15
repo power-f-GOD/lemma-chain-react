@@ -2,9 +2,9 @@ import React from 'react';
 
 
 //Loader returns 'minor loader' (without wrapper) or 'major loader' (with wrapper) depending on context 
-export default function Loader(props)
+export default function Loader(props: any)
 {
-  let circlesStyle = 
+  let circlesStyle: object = 
       {
         height: props.attributes.size,
         width: props.attributes.size,
@@ -13,7 +13,7 @@ export default function Loader(props)
         borderRadius: '50%',
         marginRight: 5,
       },
-      loaderWrapperStyle = 
+      loaderWrapperStyle: object = 
       {
         visibility: props.isLoading ? 'visible' : 'hidden',
         opacity: props.isLoading ? 1 : 0,
@@ -28,7 +28,7 @@ export default function Loader(props)
         flexDirection: 'column',
         color: props.attributes.color
       },
-      loaderStyle = 
+      loaderStyle: object = 
       {
         display: 'block',
         textAlign: 'center',
