@@ -13,6 +13,8 @@ body
   font-family: $font;
 }
 
+#root { width: auto; }
+
 *
 { 
   box-sizing: border-box;
@@ -21,12 +23,12 @@ body
   opacity: 1;
 }
 
-.app
+.widget
 {
-  width: 80%;
+  width: 80vw;
   margin: 50px 0;
   min-width: 350px;
-  max-width: 600px;
+  max-width: 500px;
   background: gainsboro;
   border-radius: 5px;
   overflow: hidden;
@@ -35,10 +37,13 @@ body
               0 15px 30px #111;
   // border: 1px solid red;
 
-  .dropdown-container
+  .dropdown
+  { height: auto; }
+
+  .collapsed
   { height: 0; }
   
-  .ref-dropdown-wrapper
+  .ref-tab-wrapper
   {
     
     padding: 12px;
@@ -52,24 +57,27 @@ body
     &:hover
     { background: rgb(214, 0, 114); }
 
-    .ref-dropdown-icon
-    { 
+    .caret-icon
+    {
       font-weight: bold;
       transform: rotate(90deg);
     }
 
-    .icon-flip
+    .flip-caret-icon
     { transform: rotate(270deg); }
   }
 
-  .top-toggle-wrapper
+  .tab-links-wrapper
   {
     display: flex;
 
     button
     {
       width: 50%;
-      padding: 14px;
+      padding: 14px 5px;
+      display: inline-flex;
+      justify-content: space-around;
+      align-items: center;
       border: none;
       cursor: pointer;
       font-size: 15px;
@@ -79,7 +87,7 @@ body
       // border-bottom: 1px solid darkgray;
 
       &.back-btn,
-      &.star-btn
+      &.graph-tab-link
       {
         width: 55px;
         font-size: 18px;
@@ -91,15 +99,17 @@ body
         { background: $hover-grey; }
       }
 
-      &.active
+      &[class^=active]
       { background: gainsboro; }
 
-      &.recommended-btn,
-      &.required-btn,
-      &.star-btn
+      &.recommended-tab-link,
+      &.required-tab-link,
+      &.graph-tab-link
       {
-        &.active
+        &.active-tab-link
         {
+          background: gainsboro;
+
           &:before
           {
             content: '› ';
@@ -134,9 +144,9 @@ body
     transition: 1s;
     
     
-    &.dropdown
+    &.tab
     {
-      .dropdown-items-wrapper
+      .tab-items-wrapper
       {
         // border: 1px solid yellow;
         padding: 16px 13px;
@@ -172,7 +182,7 @@ body
       }
     }
 
-    &.active-dropdown
+    &.active-tab
     {
       height: auto;
       opacity: 1;
@@ -186,13 +196,6 @@ body
       h1 { margin: 100px 0 }
     }
   }
-}
-
-.hide
-{
-  visibility: hidden;
-  opacity: 0;
-  height: 0;
 }
 
 

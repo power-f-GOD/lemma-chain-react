@@ -5,19 +5,16 @@ import Gen_JSON_Mockup from './JSON_MockUp_Sample';
 import Loader from './components/Loader';
 
 
-/**
- * dropdownIsCollapsed is a boolean for dropdown toggle
- */
 
 
 class Widget extends React.Component
 {
-  // constructor()
-  // {
-    // super();
-    state = 
+  constructor()
+  {
+    super();
+    this.state = 
     {
-      dropdownIsCollapsed: true,              //
+      dropdownIsCollapsed: true,              //Boolean for dropdown toggle
       dropdownCurHeight: 0,                   //holds dropdown height value change
       refID: '9v7s4gtgt9',
       isLoading: false,
@@ -28,18 +25,18 @@ class Widget extends React.Component
       widgetHeight: 0,                        //same as this.height: only used as props for loader wrapper style height computation
       isMobileDevice: false                    //boolean to check what device app is running on
     };
-    height = 0;                          //holds constant actual value of Widget height 
-    dropdown = undefined;                //child element of Widget   
-    activeTabLink = undefined;           //tab link/button
-    activeTab = undefined;               //active tab/dropdown for either of the three toggleable tabs
-    history = [{}];                      //will hold the different state changes in order to enable going back in time
-    // this.resizeDropdownHeightTo = this.resizeDropdownHeightTo.bind(this);   //collapses or drops dropdown menu on toggle
-    // this.findNode = this.findNode.bind(this);     //ReactDOM traverser
-  // }
+    this.height = 0;                          //holds constant actual value of Widget height 
+    this.dropdown = undefined;                //child element of Widget   
+    this.activeTabLink = undefined;           //tab link/button
+    this.activeTab = undefined;               //active tab/dropdown for either of the three toggleable tabs
+    this.history = [{}];                      //will hold the different state changes in order to enable going back in time
+    this.resizeDropdownHeightTo = this.resizeDropdownHeightTo.bind(this);   //collapses or drops dropdown menu on toggle
+    this.findNode = this.findNode.bind(this);     //ReactDOM traverser
+  }
 
   
 
-  handleDropdownToggle = () =>
+  handleDropdownToggle()
   {
     this.setState(prevState =>
     {
@@ -56,7 +53,7 @@ class Widget extends React.Component
 
 
 
-  handleTabToggle = (e) =>
+  handleTabToggle(e)
   {
     let activeTabName, tabLinks, tabs;
 
@@ -86,7 +83,7 @@ class Widget extends React.Component
 
 
 
-  handleReferenceClick = (e) =>
+  handleReferenceClick(e)
   {
     let refID = e.currentTarget.dataset.id;
 
@@ -114,7 +111,7 @@ class Widget extends React.Component
 
   
   //time traveller function
-  goBackInTime = () =>
+  goBackInTime()
   {
     let past,
         pastIndex = this.history.length - 2,
@@ -152,7 +149,7 @@ class Widget extends React.Component
 
 
 
-  resizeDropdownHeightTo = (activeTab, constHeight = this.height) =>
+  resizeDropdownHeightTo(activeTab, constHeight = this.height)
   {
     //i.e. if the argument, activeTab, is an element and not a number (0)...
     return activeTab !== 0 ? (activeTab.offsetHeight + constHeight) : 0;
@@ -161,7 +158,7 @@ class Widget extends React.Component
 
 
   //ReactDOM traverser function
-  findNode = (parent, childName) =>
+  findNode(parent, childName)
   {
     let DOMp = ReactDOM.findDOMNode(parent),
         queryAll = DOMp.querySelectorAll(childName);
@@ -173,7 +170,7 @@ class Widget extends React.Component
 
 
 
-  componentDidMount = () =>
+  componentDidMount()
   {
     //check what device user is running
     if (/(Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone)/i.test(window.navigator.userAgent))
@@ -198,7 +195,7 @@ class Widget extends React.Component
 
 
 
-  render = () =>
+  render()
   {
     let refIDWrapperStyle =
         {

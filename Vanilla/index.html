@@ -6,8 +6,10 @@
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
     <title>Lemma-Chain GUI</title>
     <link rel='stylesheet' href='index.css' />
+    
   </head>
   <body>
+    <script src="index.js" defer></script>
     <div class='app'>
       <section class='ref-dropdown-wrapper'>
         <span>LC</span>
@@ -17,16 +19,28 @@
       <section class='dropdown-container hide'>
         <div class='top-toggle-wrapper'>
           <button class="back-btn">❮</button>
-          <button class='required-btn active dropdown-btn' data-dropdown-name='required-dropdown'>Required</button>
-          <button class='recommended-btn dropdown-btn' data-dropdown-name='recommended-dropdown'>Recommended</button>
-          <button class="star-btn dropdown-btn" data-dropdown-name='graph-dropdown'>★</button>
+          <button
+            class='required-btn active dropdown-btn'
+            data-dropdown-name='required-dropdown'>Required</button>
+          <button
+            class='recommended-btn dropdown-btn'
+            data-dropdown-name='recommended-dropdown'>Recommended</button>
+          <button
+            class="star-btn dropdown-btn"
+            data-dropdown-name='graph-dropdown'>★</button>
         </div>
         <div class='dropdown-wrapper'>
           <ul class='dropdown required-dropdown active-dropdown'>
-            <div class='dropdown-items-wrapper'>
+            <div
+              class='dropdown-items-wrapper'
+              data-id='2dvz4mn'
+              data-types='required,recommended'
+              data-payload='{"title": "Payload placeholder title", "author": "Payload placeholder author"}'
+            >
               <li class='dropdown-items'>
-                <span class='title'>Title: Placeholder title</span>
-                <span class='author'>Author: Placeholder author</span>
+                <span class='props'>Title: <span class='title'>Placeholder title</span></span>
+                <span class='props'>Author: <span class='author'>Placeholder author</span></span>
+                <span class='props'>Ref. ID: <span class="ref">2dvz4mn</span></span>
               </li>
             </div>
           </ul>
@@ -52,7 +66,5 @@
         </div>
       </section>
     </div>
-
-    <script src="index.js"></script>
   </body>
 </html>

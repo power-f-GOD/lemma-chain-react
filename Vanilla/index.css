@@ -123,8 +123,8 @@ body {
   opacity: 0;
   height: 0;
   visibility: hidden;
-  -webkit-transition: 1.5s;
-  transition: 1.5s;
+  -webkit-transition: 1s;
+  transition: 1s;
 }
 
 .app ul.dropdown .dropdown-items-wrapper {
@@ -138,16 +138,20 @@ body {
   padding-left: 10px;
 }
 
-.app ul.dropdown .dropdown-items-wrapper li span {
+.app ul.dropdown .dropdown-items-wrapper li span.props {
   display: block;
 }
 
-.app ul.dropdown .dropdown-items-wrapper li span.title {
+.app ul.dropdown .dropdown-items-wrapper li span.props:nth-child(1) {
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-.app ul.dropdown .dropdown-items-wrapper li span.author {
+.app ul.dropdown .dropdown-items-wrapper li span.props:nth-child(2) {
+  margin-bottom: 5px;
+}
+
+.app ul.dropdown .dropdown-items-wrapper li span.props:nth-child(3) {
   font-style: italic;
 }
 
