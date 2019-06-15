@@ -7,36 +7,50 @@ import Loader from './components/Loader';
 
 
 
+
 class Widget extends React.Component
 {
-  constructor()
+  /**
+   * dropdownIsCollapsed: boolean for dropdown toggle
+   * dropdownCurHeight: holds dropdown height value change
+   * activeTabName: this and activeTabLinkName are mainly used for navigating history (going back in time)
+   * historyExists: boolean to display 'back button' if true and hide if otherwise
+   * widgetHeight: same as this.height; used mainly as props for loader wrapper style height computation
+   * isMobileDevice: boolean to check what device app is running on (hides 'star button' if true, displays if false)
+   * height: holds constant actual value of Widget height
+   * dropdown: child element of Widget
+   * activeTabLink: tab link/button
+   * activeTab: active tab/dropdown for either of the three togglable tabs
+   * history: An array of state objects; will hold the different state changes in order to enable going back in time
+   */
+
+  state = 
   {
-    super();
-    this.state = 
-    {
-      dropdownIsCollapsed: true,              //Boolean for dropdown toggle
-      dropdownCurHeight: 0,                   //holds dropdown height value change
-      refID: '9v7s4gtgt9',
-      isLoading: false,
-      payload: Gen_JSON_Mockup(),
-      activeTabName: 'required-tab',          //this and activeTabLinkName will be used heavily when going back in time and for reseting active tab and tab link and resizing dropdown height to activeTab in the past
-      activeTabLinkName: 'required-tab-link',
-      historyExists: false,                   //displays back button if true and hides if otherwise
-      widgetHeight: 0,                        //same as this.height: only used as props for loader wrapper style height computation
-      isMobileDevice: false                    //boolean to check what device app is running on
-    };
-    this.height = 0;                          //holds constant actual value of Widget height 
-    this.dropdown = undefined;                //child element of Widget   
-    this.activeTabLink = undefined;           //tab link/button
-    this.activeTab = undefined;               //active tab/dropdown for either of the three toggleable tabs
-    this.history = [{}];                      //will hold the different state changes in order to enable going back in time
-    this.resizeDropdownHeightTo = this.resizeDropdownHeightTo.bind(this);   //collapses or drops dropdown menu on toggle
-    this.findNode = this.findNode.bind(this);     //ReactDOM traverser
-  }
+    dropdownIsCollapsed: true,
+    dropdownCurHeight: 0,
+    refID: '9v7s4gtgt9',
+    isLoading: false,
+    payload: Gen_JSON_Mockup(),
+    activeTabName: 'required-tab',
+    activeTabLinkName: 'required-tab-link',
+    historyExists: false,
+    widgetHeight: 0,
+    isMobileDevice: false
+  };
+
+  height = 0;
+
+  dropdown = undefined;
+
+  activeTabLink = undefined;
+
+  activeTab = undefined;
+
+  history = [{}];
 
   
 
-  handleDropdownToggle()
+  handleDropdownToggle = () =>
   {
     this.setState(prevState =>
     {
@@ -46,14 +60,14 @@ class Widget extends React.Component
       return {
         dropdownIsCollapsed: !dropdownIsCollapsed,
         dropdownCurHeight: dropdownNewHeight,
-        widgetHeight: this.height                   //set state constant value of widget Height. Used mainly as props for loader wrapper style height
+        widgetHeight: this.height
       };
     });
   }
 
 
 
-  handleTabToggle(e)
+  handleTabToggle = (e) =>
   {
     let activeTabName, tabLinks, tabs;
 
@@ -83,15 +97,21 @@ class Widget extends React.Component
 
 
 
-  handleReferenceClick(e)
+  /**
+   * @param handleReferenceClick: Reference click handler; fetches recommended and required refs for clicked ref
+   */
+  handleReferenceClick = (e) =>
   {
     let refID = e.currentTarget.dataset.id;
 
-    this.setState({isLoading: true});                 //first set loading to true to enable transition fadeout
+    //first set loading to true to enable transition fadeout
+    this.setState({isLoading: true});
+
     setTimeout(() => this.setState({payload: []}), 200);
     
-    setTimeout(() =>                                  //in actual sense, this setTimeout function is a kinda 
-    {                                                 //placeholder for the fetch/axios API call method
+    //in actual sense, this setTimeout function is a kinda placeholder for the fetch/axios API call method
+    setTimeout(() =>                                  
+    {
       this.setState({
         refID: refID,
         payload: Gen_JSON_Mockup()
@@ -104,14 +124,17 @@ class Widget extends React.Component
         dropdownIsCollapsed: false
       });
       
-      this.history.push(this.state);                  //update history
+      //update history
+      this.history.push(this.state);                  
     }, 1500);
   }
 
 
   
-  //time traveller function
-  goBackInTime()
+  /**
+   * @param goBackInTime: history navigation (time traveller) function 
+   */
+  goBackInTime = () =>
   {
     let past,
         pastIndex = this.history.length - 2,
@@ -144,12 +167,16 @@ class Widget extends React.Component
     this.activeTabLink = this.findNode(this, `.${this.history[pastIndex].activeTabLinkName}`);
     this.activeTabLink.classList.add('active-tab-link');
   
-    this.history.pop();                     //remove/delete current past after going back in time
+    //remove/delete past future having travelled back in time
+    this.history.pop();                     
   }
 
 
 
-  resizeDropdownHeightTo(activeTab, constHeight = this.height)
+  /**
+   * @param resizeDropdownHeightTo: Resizes dropdown menu to current activeTab; or collapses dropdown to 0 height
+   */
+  resizeDropdownHeightTo = (activeTab, constHeight = this.height) =>
   {
     //i.e. if the argument, activeTab, is an element and not a number (0)...
     return activeTab !== 0 ? (activeTab.offsetHeight + constHeight) : 0;
@@ -157,8 +184,10 @@ class Widget extends React.Component
 
 
 
-  //ReactDOM traverser function
-  findNode(parent, childName)
+  /**
+   * @param findNode: ReactDOM traverser function - querySelector
+   */
+  findNode = (parent, childName) =>
   {
     let DOMp = ReactDOM.findDOMNode(parent),
         queryAll = DOMp.querySelectorAll(childName);
@@ -170,7 +199,7 @@ class Widget extends React.Component
 
 
 
-  componentDidMount()
+  componentDidMount = () =>
   {
     //check what device user is running
     if (/(Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone)/i.test(window.navigator.userAgent))
@@ -179,7 +208,8 @@ class Widget extends React.Component
     //delay till isMobileDevice state is set 
     setTimeout(() =>
     {
-      this.height = this.findNode(this).offsetHeight;                      //now set value of constant Widget height
+      //now set value of constant Widget height
+      this.height = this.findNode(this).offsetHeight;                      
       this.dropdown = this.findNode(this, '.dropdown');     
       this.activeTabLink = this.findNode(this, '.active-tab-link');
       this.activeTab = this.findNode(this, '.required-tab');
@@ -188,14 +218,17 @@ class Widget extends React.Component
       for (let prop in this.state)
         this.history[0][prop] = this.state[prop];
 
-      this.history[0].dropdownCurHeight = this.resizeDropdownHeightTo(this.activeTab);      //unset history initial (first state) dropdown height from 0 to the current activeTab height to prevent dropdown from resizing to 0 on click of back button if history index is at 0.
-      this.history[0].dropdownIsCollapsed = false;                       //prevent caret-icon-flip bug if gone back in time to first state i.e. if history index is at 0
+      //unset history initial (first state) dropdown height from 0 to the current activeTab height to prevent dropdown from resizing to 0 on click of back button assuming history index is at 0 (first state).
+      this.history[0].dropdownCurHeight = this.resizeDropdownHeightTo(this.activeTab);
+      
+      //prevent caret-icon-flip bug if gone back in time to first state i.e. if history index is at 0
+      this.history[0].dropdownIsCollapsed = false;                       
     }, 100)
   }
 
 
 
-  render()
+  render = () =>
   {
     let refIDWrapperStyle =
         {
@@ -208,7 +241,7 @@ class Widget extends React.Component
       <div className={`widget ${this.state.isMobileDevice ? 'isMobileDevice' : ''}`}>
         <section
           className='ref-tab-wrapper'
-          onClick={this.handleDropdownToggle.bind(this)}
+          onClick={this.handleDropdownToggle.bind(this)} 
         >
           <span>LC</span>
           <span style={refIDWrapperStyle}>
