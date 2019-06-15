@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactInstance, CSSProperties } from 'react';
 import ReactDOM from 'react-dom';
 import Dropdown from './components/Dropdown';
 import Gen_JSON_Mockup from './JSON_MockUp_Sample';
@@ -12,7 +12,7 @@ interface IState
   dropdownCurHeight: number;
   refID: string;
   isLoading: boolean;
-  payload: object[];
+  payload: Array<object>;
   activeTabName: string;
   activeTabLinkName: string;
   historyExists: boolean;
@@ -35,10 +35,10 @@ class Widget extends React.Component<{}, IState>
    * dropdown: child element of Widget
    * activeTabLink: tab link/button
    * activeTab: active tab/dropdown for either of the three togglable tabs
-   * history: An array of state objects; will hold the different state changes in order to enable going back in time
+   * history: An array of state objects; will hold the different state changes in order to enable and set state going back in time
    */
 
-  state: any = 
+  state: IState = 
   {
     dropdownIsCollapsed: true,
     dropdownCurHeight: 0,
@@ -54,17 +54,18 @@ class Widget extends React.Component<{}, IState>
 
   height: number = 0;
 
-  dropdown: any;
+  dropdown: HTMLDivElement | any = null;
 
-  activeTabLink: any;
+  activeTabLink: HTMLButtonElement | any = null;
 
-  activeTab: any;
+  activeTab: HTMLUListElement | any = null;
 
-  history: any = [{}];
+  //copy initial/first state object and set at index 0 of history
+  history: Array<any> = [Object.assign({}, this.state)]; 
 
   
 
-  handleDropdownToggle = () =>
+  handleDropdownToggle = (): void =>
   {
     this.setState(prevState =>
     {
@@ -81,11 +82,11 @@ class Widget extends React.Component<{}, IState>
 
 
 
-  handleTabToggle = (e: any) =>
+  handleTabToggle = (e: React.MouseEvent<HTMLButtonElement>): void =>
   {
     let activeTabName: string,
-        tabLinks: Element[],
-        tabs: Element[];
+        tabLinks: HTMLButtonElement[],
+        tabs: HTMLUListElement[];
 
     //get all tab and tabLink elements
     this.activeTabLink = e.currentTarget;
@@ -95,7 +96,7 @@ class Widget extends React.Component<{}, IState>
     tabs = this.findNode(this, '.tab');
 
     //remove all 'active' classNames from tabs and links.
-    tabLinks.forEach((tabLink: Element, i: number) =>
+    tabLinks.forEach((tabLink, i) =>
     {
       tabLink.classList.remove('active-tab-link');
       tabs[i].classList.remove('active-tab');
@@ -116,9 +117,9 @@ class Widget extends React.Component<{}, IState>
   /**
    * @param handleReferenceClick: Reference click handler; fetches recommended and required refs for clicked ref
    */
-  handleReferenceClick = (e: any) =>
+  handleReferenceClick = (e: React.MouseEvent<HTMLDivElement>): void =>
   {
-    let refID: string = e.currentTarget.dataset.id;
+    let refID: string | any = e.currentTarget.dataset.id;
 
     //first set loading to true to enable transition fadeout
     this.setState({isLoading: true});
@@ -141,37 +142,34 @@ class Widget extends React.Component<{}, IState>
       });
       
       //update history
-      this.history.push(this.state);                  
+      this.history.push(Object.assign({}, this.state));                  
     }, 1500);
   }
 
 
   
   /**
-   * @param goBackInTime: history navigation (time traveller) function 
+   * @param goBackInTime: history navigation (time traveller) function; handles going back one depth on click of 'back button' 
    */
-  goBackInTime = () =>
+  goBackInTime = (): any =>
   {
-    let past: any,
+    let past: object,
         pastIndex: number = this.history.length - 2,
-        backInTime: any = {},
-        tabLinks: any = this.findNode(this, '.tab-link'),
-        tabs: any = this.findNode(this, '.tab');
+        backInTime: object,
+        tabLinks: HTMLButtonElement[] = this.findNode(this, '.tab-link'),
+        tabs: HTMLUListElement[] = this.findNode(this, '.tab');
 
     if (pastIndex >= 0 && this.history[pastIndex])
-      this.setState(varNotNeeded =>
+      this.setState(() =>
       {
         past = this.history[pastIndex];
-
-        for (let state in past)
-          backInTime[state] = past[state];
-
+        backInTime = Object.assign({}, past);
         return backInTime;
       })
     else { return this.setState({historyExists: false}); }
 
     //remove all current active tab and tablink classes
-    tabLinks.forEach((tabLink: any, i: any) => 
+    tabLinks.forEach((tabLink, i) => 
     {
       tabLink.classList.remove('active-tab-link');
       tabs[i].classList.remove('active-tab');
@@ -190,9 +188,9 @@ class Widget extends React.Component<{}, IState>
 
 
   /**
-   * @param resizeDropdownHeightTo: Resizes dropdown menu to current activeTab; or collapses dropdown to 0 height
+   * @param resizeDropdownHeightTo: Returns height of current activeTab, or 0 if 'dropdownIsCollapsed'; used to compute and set height of dropdown menu
    */
-  resizeDropdownHeightTo = (activeTab: any, constHeight = this.height) =>
+  resizeDropdownHeightTo(activeTab: any, constHeight = this.height): number
   {
     //i.e. if the argument, activeTab, is an element and not a number (0)...
     return activeTab !== 0 ? (activeTab.offsetHeight + constHeight) : 0;
@@ -203,10 +201,10 @@ class Widget extends React.Component<{}, IState>
   /**
    * @param findNode: ReactDOM traverser function - querySelector
    */
-  findNode = (parent: any, childName?:string) =>
+  findNode(parent: ReactInstance, childName?:string): any
   {
     let DOMp: any = ReactDOM.findDOMNode(parent),
-        queryAll: Element[] = DOMp.querySelectorAll(childName);
+        queryAll: HTMLElement[] = DOMp.querySelectorAll(childName);
 
     if (childName)
       return queryAll[1] ? queryAll : DOMp.querySelector(childName);
@@ -215,12 +213,12 @@ class Widget extends React.Component<{}, IState>
 
 
 
-  componentDidMount = () =>
+  componentDidMount(): void
   {
     //check what device user is running
     if (/(Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone)/i.test(window.navigator.userAgent))
       this.setState({isMobileDevice: true});
-    
+
     //delay till isMobileDevice state is set 
     setTimeout(() =>
     {
@@ -230,14 +228,10 @@ class Widget extends React.Component<{}, IState>
       this.activeTabLink = this.findNode(this, '.active-tab-link');
       this.activeTab = this.findNode(this, '.required-tab');
 
-      //using for loop to set props in  history to avoid referencing this.state in history (assuming I used 'this.history.push(this.state)') due to the next two assignment lines after the for loop
-      for (let prop in this.state)
-        this.history[0][prop] = this.state[prop];
-
-      //unset history initial (first state) dropdown height from 0 to the current activeTab height to prevent dropdown from resizing to 0 on click of back button assuming history index is at 0 (first state).
+      //unset history initial (first state) dropdown height from 0 to current activeTab height to prevent dropdown from resizing to 0 on click of back button assuming history index is at 0 (first state).
       this.history[0].dropdownCurHeight = this.resizeDropdownHeightTo(this.activeTab);
       
-      //prevent caret-icon-flip bug if gone back in time to first state i.e. if history index is at 0
+      //prevent caret-icon-flip bug if gone back in time to first state i.e. if history index is at 0 on 'back button' click
       this.history[0].dropdownIsCollapsed = false;                       
     }, 100)
   }
@@ -246,7 +240,7 @@ class Widget extends React.Component<{}, IState>
 
   render = () =>
   {
-    let refIDWrapperStyle: object =
+    let refIDWrapperStyle: CSSProperties =
         {
           position: 'relative',
           display: 'flex',

@@ -3,15 +3,8 @@ import Item from './Item';
 import Loader from './Loader';
 
 
-interface IProps { 
-  state: any;
-  handleTabToggle: any;
-  goBackInTime: any;
-  handleReferenceClick: any;
-}
 
-
-function Dropdown(props: IProps)
+function Dropdown(props: any)
 {
   return (
     <section className='dropdown' style={{height: props.state.dropdownCurHeight}}>
@@ -54,7 +47,7 @@ function Dropdown(props: IProps)
         />
 
         <div className='tabs-wrapper' style={{opacity: props.state.isLoading ? 0 : 1}}>
-          <ul className={`tab required-tab active-tab ${!props.state.isMobileDevice ? 'usePCScrollBar' : ''}`}> 
+          <ul className={`tab required-tab active-tab ${!props.state.isMobileDevice ? 'usePCScrollBar' : null}`}> 
             {
               props.state.payload.map((ref: any, key: number) => 
                 ref.ref_type === 'required' ? 

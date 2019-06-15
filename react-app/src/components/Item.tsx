@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
 
 function Item(props: any)
 {
-  let ref_type_style: object = {
+  let ref_type_style: CSSProperties = {
         display: 'block',
         fontSize: 10,
         right: 0,
