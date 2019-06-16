@@ -1,7 +1,19 @@
 import React, { CSSProperties } from 'react';
 
 
-function Item(props: any)
+
+interface Props
+{
+  title: string;
+  author: string;
+  id: string;
+  ref_type: string;
+  [key: string]: any;
+}
+
+
+
+function Item(props: Props): JSX.Element
 {
   let ref_type_style: CSSProperties = {
         display: 'block',
@@ -29,6 +41,7 @@ function Item(props: any)
     </div>
   );
 }
+
 
 
 export default Item;

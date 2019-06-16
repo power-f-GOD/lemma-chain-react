@@ -1,14 +1,30 @@
 import React, { CSSProperties } from 'react';
 
 
+
+interface Props
+{
+  isLoading: boolean;
+  attributes: 
+  {
+    size: number;
+    type: string;
+    color?: string;
+    rider?: string;
+    wrapperHeight?: number;
+  };
+}
+
+
+
 //Loader returns 'minor loader' (without wrapper) or 'major loader' (with wrapper) depending on context 
-export default function Loader(props: any)
+export default function Loader(props: Props): JSX.Element
 {
   let circlesStyle: CSSProperties = 
       {
         height: props.attributes.size,
         width: props.attributes.size,
-        background: props.attributes.color,
+        background: props.attributes.color || '#333',
         display: 'inline-block',
         borderRadius: '50%',
         marginRight: 5,

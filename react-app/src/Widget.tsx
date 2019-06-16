@@ -6,7 +6,7 @@ import Loader from './components/Loader';
 
 
 
-interface IState
+export interface StateObject
 {
   dropdownIsCollapsed: boolean;
   dropdownCurHeight: number;
@@ -22,7 +22,7 @@ interface IState
 
 
 
-class Widget extends React.Component<{}, IState>
+class Widget extends React.Component<{}, StateObject>
 {
   /**
    * dropdownIsCollapsed: boolean for dropdown toggle
@@ -38,7 +38,7 @@ class Widget extends React.Component<{}, IState>
    * history: An array of state objects; will hold the different state changes in order to enable and set state going back in time
    */
 
-  state: IState = 
+  state: StateObject = 
   {
     dropdownIsCollapsed: true,
     dropdownCurHeight: 0,
@@ -52,7 +52,7 @@ class Widget extends React.Component<{}, IState>
     isMobileDevice: false
   };
 
-  height: number = 0;
+  height = 0;
 
   dropdown: HTMLDivElement | any = null;
 
@@ -61,7 +61,7 @@ class Widget extends React.Component<{}, IState>
   activeTab: HTMLUListElement | any = null;
 
   //copy initial/first state object and set at index 0 of history
-  history: Array<any> = [Object.assign({}, this.state)]; 
+  history: StateObject[] = [Object.assign({}, this.state)]; 
 
   
 
@@ -119,7 +119,7 @@ class Widget extends React.Component<{}, IState>
    */
   handleReferenceClick = (e: React.MouseEvent<HTMLDivElement>): void =>
   {
-    let refID: string | any = e.currentTarget.dataset.id;
+    let refID: any = e.currentTarget.dataset.id;
 
     //first set loading to true to enable transition fadeout
     this.setState({isLoading: true});
@@ -154,7 +154,7 @@ class Widget extends React.Component<{}, IState>
   goBackInTime = (): any =>
   {
     let past: object,
-        pastIndex: number = this.history.length - 2,
+        pastIndex = this.history.length - 2,
         backInTime: object,
         tabLinks: HTMLButtonElement[] = this.findNode(this, '.tab-link'),
         tabs: HTMLUListElement[] = this.findNode(this, '.tab');
@@ -199,7 +199,7 @@ class Widget extends React.Component<{}, IState>
 
 
   /**
-   * @param findNode: ReactDOM traverser function - querySelector
+   * @param findNode: ReactDOM traverser function - querySelector; returns a DOM node
    */
   findNode(parent: ReactInstance, childName?:string): any
   {
@@ -233,7 +233,7 @@ class Widget extends React.Component<{}, IState>
       
       //prevent caret-icon-flip bug if gone back in time to first state i.e. if history index is at 0 on 'back button' click
       this.history[0].dropdownIsCollapsed = false;                       
-    }, 100)
+    }, 100);
   }
 
 

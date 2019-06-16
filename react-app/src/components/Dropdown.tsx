@@ -1,10 +1,19 @@
 import React from 'react';
 import Item from './Item';
 import Loader from './Loader';
+import { StateObject as StateObjectInterface } from '../Widget';
 
 
 
-function Dropdown(props: any)
+interface Props
+{
+  state: StateObjectInterface;
+  [key: string]: any;
+}
+
+
+
+function Dropdown(props: Props): JSX.Element
 {
   return (
     <section className='dropdown' style={{height: props.state.dropdownCurHeight}}>
@@ -87,6 +96,7 @@ function Dropdown(props: any)
     </section>
   );
 }
+
 
 
 export default Dropdown;
