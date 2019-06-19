@@ -1,9 +1,17 @@
 import React, { ReactInstance, CSSProperties } from 'react';
 import ReactDOM from 'react-dom';
 import Dropdown from './components/Dropdown';
-import Gen_JSON_Mockup from './JSON_MockUp_Sample';
+import Get_HardCoded_Refs from './JSON_MockUp_Sample';
 import Loader from './components/Loader';
 
+
+interface Payload
+{
+  data: {title: string, author: string};
+  id: string;
+  refs: Array<object>;
+  [key: string]: any;
+}
 
 
 export interface StateObject
@@ -12,7 +20,7 @@ export interface StateObject
   dropdownCurHeight: number;
   refID: string;
   isLoading: boolean;
-  payload: Array<object>;
+  payload: Payload;
   activeTabName: string;
   activeTabLinkName: string;
   historyExists: boolean;
@@ -42,9 +50,9 @@ class Widget extends React.Component<{}, StateObject>
   {
     dropdownIsCollapsed: true,
     dropdownCurHeight: 0,
-    refID: '9v7s4gtgt9',
+    refID: '@alpha/35t8qc8i5',
     isLoading: false,
-    payload: Gen_JSON_Mockup(),
+    payload: Get_HardCoded_Refs(),
     activeTabName: 'required-tab',
     activeTabLinkName: 'required-tab-link',
     historyExists: false,
@@ -119,31 +127,58 @@ class Widget extends React.Component<{}, StateObject>
    */
   handleReferenceClick = (e: React.MouseEvent<HTMLDivElement>): void =>
   {
-    let refID: any = e.currentTarget.dataset.id;
+    let refID: any = e.currentTarget.dataset.id,
+        init: RequestInit = {
+          method: 'GET',
+          cache: 'no-cache',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-AUTH-ACCOUNT': 'alpha',
+            'X-AUTH-PASSWORD': 'password123'
+          }
+        };
 
     //first set loading to true to enable transition fadeout
     this.setState({isLoading: true});
 
-    setTimeout(() => this.setState({payload: []}), 200);
+    setTimeout(() => 
+    {
+      //clear/empty initial payload before updating it
+      this.setState({payload: {
+        data: { title: '', author: ''},
+        id: '',
+        refs: [{}]
+      }});
+      
+      fetch(`http://localhost:1323/${refID}`, init)
+        .then((response: Response) => response.json())
+        .then((data: Payload) =>
+        {
+          console.log(data)
+          
+          this.setState({
+            refID: refID,
+            payload: data
+          });
+          //using another setState method here to update dropdown height to activeTab-height after it has been populated to avoid setting a height of 0 assuming it's done in the previous setState method
+          this.setState({
+            dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
+            historyExists: true,
+            isLoading: false,
+            dropdownIsCollapsed: false
+          });
+          
+          //update history
+          this.history.push(Object.assign({}, this.state)); 
+        })
+        .catch(err => console.log(err + ': Something went wrong; Could not fetch refs!'));
+    }, 200);
     
     //in actual sense, this setTimeout function is a kinda placeholder for the fetch/axios API call method
-    setTimeout(() =>                                  
-    {
-      this.setState({
-        refID: refID,
-        payload: Gen_JSON_Mockup()
-      });
-      //using another setState method here to update dropdown height to activeTab-height after it has been populated to avoid setting a height of 0 assuming it's done in the previous setState method
-      this.setState({
-        dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
-        historyExists: true,
-        isLoading: false,
-        dropdownIsCollapsed: false
-      });
-      
-      //update history
-      this.history.push(Object.assign({}, this.state));                  
-    }, 1500);
+    // setTimeout(() =>                                  
+    // {
+                       
+    // }, 1500);
   }
 
 

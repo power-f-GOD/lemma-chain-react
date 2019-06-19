@@ -286,15 +286,15 @@ body {
   display: none !important;
 }
 
-.usePCScrollBar::-webkit-scrollbar {
+.useCustomScrollBar::-webkit-scrollbar {
   width: 10px;
 }
 
-.usePCScrollBar::-webkit-scrollbar-track {
+.useCustomScrollBar::-webkit-scrollbar-track {
   background: #ddd;
 }
 
-.usePCScrollBar::-webkit-scrollbar-thumb {
+.useCustomScrollBar::-webkit-scrollbar-thumb {
   background: #bbb;
   border-radius: 0 0 5px 5px;
 }

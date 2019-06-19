@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import Item from './Item';
 import Loader from './Loader';
 import { StateObject as StateObjectInterface } from '../Widget';
@@ -15,6 +15,29 @@ interface Props
 
 function Dropdown(props: Props): JSX.Element
 {
+  let requiredRefsExist = props.state.payload.refs.some((ref: {[key: string]: any}) => /required/.test(ref.ref_type)),
+      recommendedRefsExist = props.state.payload.refs.some((ref: {[key: string]: any}) => /recommended/.test(ref.ref_type));
+
+  let nothingToShowWrapperStyle: CSSProperties = 
+      {
+        padding: 80,
+        color: '#888',
+        fontStyle: 'italic',
+        textAlign: 'center',
+        position: 'relative'
+      };
+  
+
+  function DisplayNothingToShowMessage(prop: {for_ref_type: string})
+  {
+    return (
+      <div className='item-wrapper' style={nothingToShowWrapperStyle}>
+        <span className='props'>Nothing to show.<br />Book has no <b>{prop.for_ref_type}</b> references.</span>
+      </div>
+    );
+  }
+  
+
   return (
     <section className='dropdown' style={{height: props.state.dropdownCurHeight}}>
       <div className='tab-links-wrapper'>
@@ -56,37 +79,40 @@ function Dropdown(props: Props): JSX.Element
         />
 
         <div className='tabs-wrapper' style={{opacity: props.state.isLoading ? 0 : 1}}>
-          <ul className={`tab required-tab active-tab ${!props.state.isMobileDevice ? 'usePCScrollBar' : null}`}> 
+          <ul className={`tab required-tab active-tab ${!props.state.isMobileDevice ? 'useCustomScrollBar' : null}`}> 
             {
-              props.state.payload.map((ref: any, key: number) => 
-                ref.ref_type === 'required' ? 
-                <Item
-                  title={ref.title}
-                  author={ref.author}
-                  id={ref.id}
-                  key={key}
-                  ref_type={ref.ref_type}
-                  handleReferenceClick={props.handleReferenceClick}
-                />
-              : null)
+              requiredRefsExist ?
+                props.state.payload.refs.map((ref: any, key: number) => 
+                  ref.ref_type === 'required' ? 
+                  <Item
+                    data={ref.data}
+                    id={ref.id}
+                    ref_type={`#${ref.ref_type}`}
+                    key={key}
+                    handleReferenceClick={props.handleReferenceClick}
+                  />
+                : null)
+              : <DisplayNothingToShowMessage for_ref_type='required' />
             }
           </ul>
-          <ul className={`tab recommended-tab ${!props.state.isMobileDevice ? 'usePCScrollBar' : ''}`}>
+          <ul className={`tab recommended-tab ${!props.state.isMobileDevice ? 'useCustomScrollBar' : ''}`}>
             {
-              props.state.payload.map((ref: any, key: number) => 
-                ref.ref_type === 'recommended' ? 
-                <Item
-                  title={ref.title}
-                  author={ref.author}
-                  id={ref.id}
-                  key={key}
-                  ref_type={ref.ref_type}
-                  handleReferenceClick={props.handleReferenceClick}
-                />
-              : null)
+              recommendedRefsExist ?
+                props.state.payload.refs.map((ref: any, key: number) => 
+                  ref.ref_type === 'recommended' ? 
+                  <Item
+                  data={ref.data}
+                    author={ref.author}
+                    id={ref.id}
+                    ref_type={`#${ref.ref_type}`}
+                    key={key}
+                    handleReferenceClick={props.handleReferenceClick}
+                  />
+                : null)
+              : <DisplayNothingToShowMessage for_ref_type='recommended' />
             }
           </ul>
-          <ul className={`tab graph-tab ${!props.state.isMobileDevice ? 'usePCScrollBar' : ''}`}>
+          <ul className={`tab graph-tab ${!props.state.isMobileDevice ? 'useCustomScrollBar' : ''}`}>
             <div className='tab-items-wrapper graph-wrapper'>
               <h1 className='title'>GRAPH ZONE!</h1>
             </div>

@@ -10,7 +10,7 @@ ref_types = ['required', 'recommended'];
 chars = '01234abcdefghijklmnopqrstuvwxyz56789';
 
 
-export default function Gen_JSON_Mockup()
+export function Gen_JSON_Mockup()
 {
 
   let JSON_MockUp: object[],
@@ -48,4 +48,49 @@ export default function Gen_JSON_Mockup()
   });
 
   return JSON_MockUp;
+}
+
+
+export default function Get_HardCoded_Refs()
+{
+  return (
+    {
+      "data": {
+        "author": "Dan Brown",
+        "title": "The Da Vinci Code"
+      },
+      "id": "@alpha/35t8qc8i5",
+      "refs": 
+      [
+        {
+            "data": {
+                "author": "J. R. R. Tolkien",
+                "title": "The Hobbit"
+            },
+            "id": "@alpha/17t8kc5ig",
+            "ref_type": "required",
+            "refs": []
+        },
+        {
+          "data": {
+              "author": "Jane Austen",
+              "title": "Pride and Prejudice"
+          },
+          "id": "@alpha/r9t9rc4ip",
+          "ref_type": "recommended",
+          "refs": 
+          [
+            {
+              "data": {
+                  "author": "J. R. R. Tolkien",
+                  "title": "The Hobbit"
+              },
+              "id": "17t8kc5ig",
+              "ref_type": "recommended",
+              "refs": []
+            }
+          ]
+        }
+      ]
+  });
 }

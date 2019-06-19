@@ -60,7 +60,8 @@ export default function Loader(props: Props): JSX.Element
         </span>,
       majorLoader: React.ReactElement = 
         <div className='loader-wrapper' style={loaderWrapperStyle}>
-          {minorLoader}<br />
+          {minorLoader}
+          <br />
           <span className='load-name' style={{fontSize: 13}}>{props.attributes.rider}</span>
         </div>;
   
