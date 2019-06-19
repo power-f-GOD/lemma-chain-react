@@ -19,13 +19,14 @@ export interface StateObject
   dropdownIsCollapsed: boolean;
   dropdownCurHeight: number;
   refID: string;
-  isLoading: boolean;
-  payload: Payload;
   activeTabName: string;
   activeTabLinkName: string;
   historyExists: boolean;
-  widgetHeight: number;
   isMobileDevice: boolean;
+  isLoading: boolean;
+  payload: Payload;
+  errOccurred: boolean;
+  errMessage: string;
 }
 
 
@@ -37,7 +38,6 @@ class Widget extends React.Component<{}, StateObject>
    * dropdownCurHeight: holds dropdown height value change
    * activeTabName: this and activeTabLinkName are mainly used for navigating history (going back in time)
    * historyExists: boolean to display 'back button' if true and hide if otherwise
-   * widgetHeight: same as this.height; used mainly as props for loader wrapper style height computation
    * isMobileDevice: boolean to check what device app is running on (hides 'star button' if true, displays if false)
    * height: holds constant actual value of Widget height
    * dropdown: child element of Widget
@@ -51,13 +51,14 @@ class Widget extends React.Component<{}, StateObject>
     dropdownIsCollapsed: true,
     dropdownCurHeight: 0,
     refID: '@alpha/35t8qc8i5',
-    isLoading: false,
-    payload: Get_HardCoded_Refs(),
     activeTabName: 'required-tab',
     activeTabLinkName: 'required-tab-link',
     historyExists: false,
-    widgetHeight: 0,
-    isMobileDevice: false
+    isMobileDevice: false,
+    isLoading: false,
+    payload: Get_HardCoded_Refs(),
+    errOccurred: false,
+    errMessage: ''
   };
 
   height = 0;
@@ -82,8 +83,7 @@ class Widget extends React.Component<{}, StateObject>
 
       return {
         dropdownIsCollapsed: !dropdownIsCollapsed,
-        dropdownCurHeight: dropdownNewHeight,
-        widgetHeight: this.height
+        dropdownCurHeight: dropdownNewHeight
       };
     });
   }
@@ -131,6 +131,7 @@ class Widget extends React.Component<{}, StateObject>
         init: RequestInit = {
           method: 'GET',
           cache: 'no-cache',
+          //PLACEHOLDER: header props values should be gotten from the users session and not hardcoded as this
           headers: {
             'Content-Type': 'application/json',
             'X-AUTH-ACCOUNT': 'alpha',
@@ -154,31 +155,37 @@ class Widget extends React.Component<{}, StateObject>
         .then((response: Response) => response.json())
         .then((data: Payload) =>
         {
-          console.log(data)
-          
-          this.setState({
-            refID: refID,
-            payload: data
-          });
-          //using another setState method here to update dropdown height to activeTab-height after it has been populated to avoid setting a height of 0 assuming it's done in the previous setState method
-          this.setState({
-            dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
-            historyExists: true,
-            isLoading: false,
-            dropdownIsCollapsed: false
-          });
-          
+          //do not proceed to UI if server returns an error [message]
+          if (Object.keys(data).includes('error'))
+            this.setState({
+              errOccurred: true,
+              errMessage: `ErrorMessage: ${data.error}`,
+              dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
+              historyExists: true,
+              isLoading: false,
+              dropdownIsCollapsed: false
+            });
+          else
+          {
+            this.setState({
+              refID: refID,
+              payload: data
+            });
+            //using another setState method here to update dropdown height to activeTab-height after it has been populated to avoid setting a height of 0 assuming it's done in the previous setState method
+            this.setState({
+              errOccurred: false,
+              dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
+              historyExists: true,
+              isLoading: false,
+              dropdownIsCollapsed: false
+            });
+          }
+
           //update history
-          this.history.push(Object.assign({}, this.state)); 
+          this.history.push(Object.assign({}, this.state));
         })
-        .catch(err => console.log(err + ': Something went wrong; Could not fetch refs!'));
+        .catch(err => this.setState({errMessage: `Error: Something is not right; ${err}.`}));
     }, 200);
-    
-    //in actual sense, this setTimeout function is a kinda placeholder for the fetch/axios API call method
-    // setTimeout(() =>                                  
-    // {
-                       
-    // }, 1500);
   }
 
 
@@ -248,7 +255,7 @@ class Widget extends React.Component<{}, StateObject>
 
 
 
-  componentDidMount(): void
+  componentDidMount()
   {
     //check what device user is running
     if (/(Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone)/i.test(window.navigator.userAgent))
@@ -257,23 +264,21 @@ class Widget extends React.Component<{}, StateObject>
     //delay till isMobileDevice state is set 
     setTimeout(() =>
     {
-      //now set value of constant Widget height
+      //now set value of constant Widget height which will also be used in computing loader wrapper height in Dropdown.js
       this.height = this.findNode(this).offsetHeight;                      
       this.dropdown = this.findNode(this, '.dropdown');     
       this.activeTabLink = this.findNode(this, '.active-tab-link');
-      this.activeTab = this.findNode(this, '.required-tab');
-
-      //unset history initial (first state) dropdown height from 0 to current activeTab height to prevent dropdown from resizing to 0 on click of back button assuming history index is at 0 (first state).
+      this.activeTab = this.findNode(this, '.required-tab'); 
+      //HACK: unset history initial (first state) dropdown height from 0 to current activeTab height to prevent dropdown from resizing to 0 on click of back button assuming history index is at 0 (first state).
       this.history[0].dropdownCurHeight = this.resizeDropdownHeightTo(this.activeTab);
-      
-      //prevent caret-icon-flip bug if gone back in time to first state i.e. if history index is at 0 on 'back button' click
+      //HACK: prevent caret-icon-flip bug if gone back in time to first state i.e. if history index is at 0 on 'back button' click
       this.history[0].dropdownIsCollapsed = false;                       
     }, 100);
   }
 
 
 
-  render = () =>
+  render()
   {
     let refIDWrapperStyle: CSSProperties =
         {
@@ -306,6 +311,7 @@ class Widget extends React.Component<{}, StateObject>
         </section>
         <Dropdown
           state={this.state}
+          height={this.height}
           handleTabToggle={this.handleTabToggle}
           handleReferenceClick={this.handleReferenceClick}
           goBackInTime={this.goBackInTime}

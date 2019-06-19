@@ -80,16 +80,17 @@ export default function Get_HardCoded_Refs()
           "ref_type": "recommended",
           "refs": 
           [
-            {
-              "data": {
-                  "author": "J. R. R. Tolkien",
-                  "title": "The Hobbit"
-              },
-              "id": "17t8kc5ig",
-              "ref_type": "recommended",
-              "refs": []
-            }
+            
           ]
+        },
+        {
+          "data": {
+            "title": "Never Let Me Go",
+            "author": "Kazuo Ishiguro"
+          },
+          "id": "@alpha/3vys8wtdtn",
+          "ref_type": "recommended",
+          "refs": []
         }
       ]
   });

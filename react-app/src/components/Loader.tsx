@@ -18,7 +18,7 @@ interface Props
 
 
 //Loader returns 'minor loader' (without wrapper) or 'major loader' (with wrapper) depending on context 
-export default function Loader(props: Props): JSX.Element
+export default function Loader(props: Props)
 {
   let circlesStyle: CSSProperties = 
       {

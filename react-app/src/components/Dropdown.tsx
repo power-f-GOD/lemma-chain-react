@@ -13,31 +13,12 @@ interface Props
 
 
 
-function Dropdown(props: Props): JSX.Element
+function Dropdown(props: Props)
 {
-  let requiredRefsExist = props.state.payload.refs.some((ref: {[key: string]: any}) => /required/.test(ref.ref_type)),
-      recommendedRefsExist = props.state.payload.refs.some((ref: {[key: string]: any}) => /recommended/.test(ref.ref_type));
-
-  let nothingToShowWrapperStyle: CSSProperties = 
-      {
-        padding: 80,
-        color: '#888',
-        fontStyle: 'italic',
-        textAlign: 'center',
-        position: 'relative'
-      };
+  let requiredRefsExist = props.state.payload.refs.some((ref: any) => /required/.test(ref.ref_type)),
+      recommendedRefsExist = props.state.payload.refs.some((ref: any) => /recommended/.test(ref.ref_type));
   
-
-  function DisplayNothingToShowMessage(prop: {for_ref_type: string})
-  {
-    return (
-      <div className='item-wrapper' style={nothingToShowWrapperStyle}>
-        <span className='props'>Nothing to show.<br />Book has no <b>{prop.for_ref_type}</b> references.</span>
-      </div>
-    );
-  }
   
-
   return (
     <section className='dropdown' style={{height: props.state.dropdownCurHeight}}>
       <div className='tab-links-wrapper'>
@@ -74,42 +55,54 @@ function Dropdown(props: Props): JSX.Element
             color: '#333',
             rider: 'Loading References...',
             type: 'major',
-            wrapperHeight: props.state.dropdownCurHeight - props.state.widgetHeight
+            wrapperHeight: props.state.dropdownCurHeight - props.height
           }}
         />
 
         <div className='tabs-wrapper' style={{opacity: props.state.isLoading ? 0 : 1}}>
           <ul className={`tab required-tab active-tab ${!props.state.isMobileDevice ? 'useCustomScrollBar' : null}`}> 
             {
-              requiredRefsExist ?
-                props.state.payload.refs.map((ref: any, key: number) => 
-                  ref.ref_type === 'required' ? 
-                  <Item
-                    data={ref.data}
-                    id={ref.id}
-                    ref_type={`#${ref.ref_type}`}
-                    key={key}
-                    handleReferenceClick={props.handleReferenceClick}
-                  />
-                : null)
-              : <DisplayNothingToShowMessage for_ref_type='required' />
+              props.state.errOccurred ?
+                <DisplaySomeMessage
+                  type='error'
+                  errMessage={props.state.errMessage}
+                  for_ref_type='required'
+                />
+              : requiredRefsExist ?
+                  props.state.payload.refs.map((ref: any, key: number) => 
+                    ref.ref_type === 'required' ? 
+                    <Item
+                      data={ref.data}
+                      id={ref.id}
+                      ref_type={`#${ref.ref_type}`}
+                      key={key}
+                      handleReferenceClick={props.handleReferenceClick}
+                    />
+                  : null)
+                : <DisplaySomeMessage type='no-ref' for_ref_type='required' />
             }
           </ul>
           <ul className={`tab recommended-tab ${!props.state.isMobileDevice ? 'useCustomScrollBar' : ''}`}>
             {
-              recommendedRefsExist ?
-                props.state.payload.refs.map((ref: any, key: number) => 
-                  ref.ref_type === 'recommended' ? 
-                  <Item
-                  data={ref.data}
-                    author={ref.author}
-                    id={ref.id}
-                    ref_type={`#${ref.ref_type}`}
-                    key={key}
-                    handleReferenceClick={props.handleReferenceClick}
-                  />
-                : null)
-              : <DisplayNothingToShowMessage for_ref_type='recommended' />
+              props.state.errOccurred ?
+                <DisplaySomeMessage
+                  type='error'
+                  errMessage={props.state.errMessage}
+                  for_ref_type='recommended'
+                />
+              : recommendedRefsExist ?
+                  props.state.payload.refs.map((ref: any, key: number) => 
+                    ref.ref_type === 'recommended' ? 
+                    <Item
+                      data={ref.data}
+                      author={ref.author}
+                      id={ref.id}
+                      ref_type={`#${ref.ref_type}`}
+                      key={key}
+                      handleReferenceClick={props.handleReferenceClick}
+                    />
+                  : null)
+                : <DisplaySomeMessage type='no-ref' for_ref_type='recommended' />
             }
           </ul>
           <ul className={`tab graph-tab ${!props.state.isMobileDevice ? 'useCustomScrollBar' : ''}`}>
@@ -126,3 +119,29 @@ function Dropdown(props: Props): JSX.Element
 
 
 export default Dropdown;
+
+
+
+function DisplaySomeMessage(props: any)
+{
+  let messageWrapperStyle: CSSProperties = 
+    {
+      padding: '100px 30px',
+      color: '#888',
+      fontStyle: 'italic',
+      textAlign: 'center',
+    },
+    errMessage: React.ReactFragment = 
+      <>Sorry. Could not load <b>{props.for_ref_type}</b> references for this book.<br />{props.errMessage}.</>,
+    nothingToShowMessage: React.ReactFragment =
+      <>Nothing to show.<br />Book has no <b>{props.for_ref_type}</b> references.</>;
+
+  return (
+    <div className='item-wrapper' style={messageWrapperStyle}>
+      <span className='props'>{props.type.match('error') ? errMessage : nothingToShowMessage}</span>
+    </div>
+  );
+}
+
+
+
