@@ -5,6 +5,7 @@ import Get_HardCoded_Refs from './JSON_MockUp_Sample';
 import Loader from './components/Loader';
 
 
+
 interface Payload
 {
   data: {title: string, author: string};
@@ -12,6 +13,7 @@ interface Payload
   refs: Array<object>;
   [key: string]: any;
 }
+
 
 
 export interface StateObject
@@ -131,7 +133,7 @@ class Widget extends React.Component<{}, StateObject>
         init: RequestInit = {
           method: 'GET',
           cache: 'no-cache',
-          //PLACEHOLDER: header props values should be gotten from the users session and not hardcoded as this
+          //PLACEHOLDER: header props values should be gotten from the users session (or maybe not) and not hardcoded as this
           headers: {
             'Content-Type': 'application/json',
             'X-AUTH-ACCOUNT': 'alpha',
@@ -177,7 +179,7 @@ class Widget extends React.Component<{}, StateObject>
         })
         .catch(err => {
           //just for proper English sentence casing and grammar
-          let errMsg = String(err).replace(/(type)?error:/i, '').trim(),
+          let errMsg = String(err).replace(/(\w+)?error:/i, '').trim(),
               appendDot = errMsg.substr(-1) !== '.' ? `${errMsg}.` : errMsg,
               grammarfiedErrMsg = appendDot.charAt(0).toUpperCase() + appendDot.substr(1,);
           
@@ -274,6 +276,7 @@ class Widget extends React.Component<{}, StateObject>
       this.dropdown = this.findNode(this, '.dropdown');     
       this.activeTabLink = this.findNode(this, '.active-tab-link');
       this.activeTab = this.findNode(this, '.required-tab'); 
+
       //HACK: unset history initial (first state) dropdown height from 0 to current activeTab height to prevent dropdown from resizing to 0 on click of back button assuming history index is at 0 (first state).
       this.history[0].dropdownCurHeight = this.resizeDropdownHeightTo(this.activeTab);
       //HACK: prevent caret-icon-flip bug if gone back in time to first state i.e. if history index is at 0 on 'back button' click
@@ -296,7 +299,7 @@ class Widget extends React.Component<{}, StateObject>
       <div className={`widget ${this.state.isMobileDevice ? 'isMobileDevice' : ''}`}>
         <section
           className='ref-tab-wrapper'
-          onClick={this.handleDropdownToggle.bind(this)} 
+          onClick={this.handleDropdownToggle} 
         >
           <span>LC</span>
           <span style={refIDWrapperStyle}>

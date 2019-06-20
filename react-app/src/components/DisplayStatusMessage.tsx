@@ -1,6 +1,7 @@
 import React, { CSSProperties } from 'react';
 
 
+
 /**
  * @param DisplayStatusMessage: Displays error message or 'book has no-ref' message depending on context.
  */
@@ -32,23 +33,23 @@ export default function DisplayStatusMessage(props: any)
     errMsg: React.ReactFragment = 
       <>
         Sorry. Could not load <b>{props.for_ref_type}</b> references for this book.<br /><b>ErrorMessage:</b> {props.errMsg}<br /><br />
-        {/fetch/i.test(props.errMsg) ? suggestMsg : ''}
+        {/fail|fetch|error/i.test(props.errMsg) ? suggestMsg : ''}
       </>,
     nothingToShowMessage: React.ReactFragment =
       <>Nothing to show.<br />Book has no <b>{props.for_ref_type}</b> references.</>,
     graphStatusMessage: React.ReactFragment =
       <>
         Sorry. Can't visualize <b>graph</b>.<br />
-        <b>Reason:</b> {props.errMsg || 'Book has no parents.'}
+        <b>{props.errMsg ? 'ErrorMessage:' : 'Reason:'}</b> {props.errMsg || 'Book has no parent refs.'}
       </>;
 
   return (
     <div className='item-wrapper' style={messageWrapperStyle}>
       <span className='props'>
-        <img src='err_grey.png' alt='Error' style={errImgStyle}/><br />
+        <img src='err_grey.png' alt='Status' style={errImgStyle}/><br />
         {
           /graph/.test(props.for_ref_type) ? 
-            graphStatusMessage : (props.type.match('error') ? errMsg : nothingToShowMessage)
+            graphStatusMessage : (/error/.test(props.type) ? errMsg : nothingToShowMessage)
         }
       </span>
     </div>

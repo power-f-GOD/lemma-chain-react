@@ -20,7 +20,8 @@ function Item(props: Props): JSX.Element
         fontSize: 10,
         right: 0,
         bottom: 0,
-        position: 'absolute'
+        position: 'absolute',
+        color: '#999'
       }
 
   return (

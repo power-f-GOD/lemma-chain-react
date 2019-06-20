@@ -27,7 +27,7 @@ body {
 }
 
 .widget {
-  width: 80vw;
+  width: 85vw;
   margin: 50px 0;
   min-width: 350px;
   max-width: 500px;
@@ -52,7 +52,7 @@ body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  background: #ea0a82;
+  background: #910091;
   color: white;
   cursor: pointer;
   position: relative;
@@ -60,7 +60,7 @@ body {
 }
 
 .widget .ref-tab-wrapper:hover {
-  background: #cc0064;
+  background: #740074;
 }
 
 .widget .ref-tab-wrapper .caret-icon {
@@ -100,31 +100,33 @@ body {
   font-size: 14px;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
   font-weight: bold;
-  background: #888888;
+  color: #eee;
+  background: #d264d2;
 }
 
 .widget .tab-links-wrapper button.back-btn, .widget .tab-links-wrapper button.graph-tab-link {
   width: 55px;
-  font-size: 18px;
   padding: 0px;
 }
 
 .widget .tab-links-wrapper button.back-btn {
-  background: #ea0a82;
-  color: white;
+  font-size: 18px;
+  background: #910091;
+  color: white !important;
 }
 
 .widget .tab-links-wrapper button.back-btn:hover {
-  background: #cc0064;
+  background: #740074;
 }
 
 .widget .tab-links-wrapper button.graph-tab-link {
-  background: #3fc9ff !important;
-  color: yellow;
+  font-size: 20px;
+  background: #16bdff !important;
+  color: white !important;
 }
 
 .widget .tab-links-wrapper button.graph-tab-link:hover {
-  background: #61d2ff !important;
+  background: #2ad1ff !important;
 }
 
 .widget .tab-links-wrapper button[class^=active] {
@@ -133,6 +135,7 @@ body {
 
 .widget .tab-links-wrapper button.recommended-tab-link.active-tab-link, .widget .tab-links-wrapper button.required-tab-link.active-tab-link, .widget .tab-links-wrapper button.graph-tab-link.active-tab-link {
   background: white;
+  color: #910091;
 }
 
 .widget .tab-links-wrapper button.recommended-tab-link.active-tab-link:before, .widget .tab-links-wrapper button.required-tab-link.active-tab-link:before, .widget .tab-links-wrapper button.graph-tab-link.active-tab-link:before {
@@ -148,9 +151,10 @@ body {
 }
 
 .widget .tab-links-wrapper button:hover {
-  background: #bbb;
+  background: #eb7deb;
   -webkit-transform: scale(1.04);
           transform: scale(1.04);
+  color: white;
 }
 
 .widget .tabs-wrapper {
@@ -162,18 +166,18 @@ body {
   padding: 0;
   margin: 0;
   width: 100%;
-  max-height: 333px;
+  max-height: 327px;
   overflow-y: auto;
   cursor: pointer;
   opacity: 0;
   height: 0;
   visibility: hidden;
-  -webkit-transition: 1s;
-  transition: 1s;
+  -webkit-transition: 1s, opacity 0.5s;
+  transition: 1s, opacity 0.5s;
 }
 
 .widget ul.tab .item-wrapper {
-  padding: 20px 16px;
+  padding: 22px 18px;
   width: 100%;
   background: white;
   border-bottom: 1px solid #ddd;
@@ -189,16 +193,12 @@ body {
   display: block;
 }
 
-.widget ul.tab .item-wrapper li span.props:nth-child(1) {
-  margin-bottom: 8px;
+.widget ul.tab .item-wrapper li span.props:nth-child(1), .widget ul.tab .item-wrapper li span.props:nth-child(2) {
+  margin-bottom: 5px;
 }
 
 .widget ul.tab .item-wrapper li span.title, .widget ul.tab .item-wrapper li span.id {
   font-weight: bold;
-}
-
-.widget ul.tab .item-wrapper li span.props:nth-child(2) {
-  margin-bottom: 8px;
 }
 
 .widget ul.tab .item-wrapper li span.props:nth-child(3) {
@@ -207,6 +207,7 @@ body {
 
 .widget ul.tab .item-wrapper:hover {
   background: #ddd;
+  padding-left: 25px;
   border-bottom-color: #bbb;
 }
 
@@ -221,7 +222,7 @@ body {
 }
 
 .widget ul .graph-wrapper h1 {
-  margin: 140px 0;
+  margin: 130px 0;
 }
 
 .fade-out {

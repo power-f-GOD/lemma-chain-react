@@ -57,13 +57,12 @@ function Dropdown(props: Props)
           isLoading={props.state.isLoading}
           attributes={{
             size: 12,
-            color: 'rgb(204, 0, 100)',
+            color: 'rgb(145, 0, 145)',
             rider: 'Loading References...',
             type: 'major',
             wrapperHeight: props.state.dropdownCurHeight - props.height
           }}
         />
-
         <div className='tabs-wrapper' style={{opacity: props.state.isLoading ? 0 : 1}}>
           <ul className={`tab required-tab active-tab ${!props.state.isMobileDevice ? 'useCustomScrollBar' : null}`}> 
             {
@@ -107,11 +106,22 @@ function Dropdown(props: Props)
                       handleReferenceClick={props.handleReferenceClick}
                     />
                   : null)
-                : <DisplayStatusMessage type='no-ref' for_ref_type='recommended' />
+                : <DisplayStatusMessage
+                    type='no-ref'
+                    for_ref_type='recommended'
+                    errMsg=''
+                  />
             }
           </ul>
           <ul className={`tab graph-tab ${!props.state.isMobileDevice ? 'useCustomScrollBar' : ''}`}>
-            { ifCanVisualizeGraph ? renderGraph : <DisplayStatusMessage type='no-ref' for_ref_type='graph' /> }
+            { 
+              ifCanVisualizeGraph ? renderGraph
+                : <DisplayStatusMessage
+                    type='no-ref'
+                    for_ref_type='graph'
+                    errMsg={props.state.errMsg}
+                  />
+            }
           </ul>
         </div>
       </div>

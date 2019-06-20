@@ -2,9 +2,17 @@
 $font: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 $hover-grey: #bbb;
 $active-el-bgcolor: white;
-$pink-bg: rgb(234, 10, 130);
-$pink-bg-hover: rgb(204, 0, 100);
+$purple-bg: rgb(145, 0, 145);
+$purple-bg-hover: rgb(116, 0, 116);
 $default-font-size: 15px;
+$graph-tab-link-bgcolor: rgb(22, 189, 255);
+$graph-tab-link-color: white;
+$graph-tab-link-hover-bgcolor: rgb(42, 209, 255);
+$tab-link-bgcolor: rgb(210, 100, 210);
+$tab-link-hover-bgcolor: rgb(235, 125, 235);
+$tab-link-color: #eee;
+
+
 
 body
 {
@@ -27,7 +35,7 @@ body
 
 .widget
 {
-  width: 80vw;
+  width: 85vw;
   margin: 50px 0;
   min-width: 350px;
   max-width: 500px;
@@ -46,18 +54,17 @@ body
   
   .ref-tab-wrapper
   {
-    
     padding: 12px 15px;
     display: flex;
     justify-content: space-between;
-    background: $pink-bg;
+    background: $purple-bg;
     color: white;
     cursor: pointer;
     position: relative;
     z-index: 2;
 
     &:hover
-    { background: $pink-bg-hover; }
+    { background: $purple-bg-hover; }
 
     .caret-icon
     {
@@ -88,32 +95,34 @@ body
       font-size: 14px;
       font-family: $font;
       font-weight: bold;
-      background: #888888;
+      color: $tab-link-color;
+      background: $tab-link-bgcolor;
 
       &.back-btn,
       &.graph-tab-link
       {
         width: 55px;
-        font-size: 18px;
         padding: 0px;
       }
 
       &.back-btn
       {
-        background: $pink-bg;
-        color: white;
+        font-size: 18px;
+        background: $purple-bg;
+        color: white !important;
         
         &:hover
-        { background: $pink-bg-hover; }
+        { background: $purple-bg-hover; }
       }
 
       &.graph-tab-link
       {
-        background: rgb(63, 201, 255) !important;
-        color: yellow;
+        font-size: 20px;
+        background: $graph-tab-link-bgcolor !important;
+        color: $graph-tab-link-color !important;
         
         &:hover
-        { background: rgb(97, 210, 255) !important; }
+        { background: $graph-tab-link-hover-bgcolor !important; }
       }
 
       &[class^=active]
@@ -126,6 +135,7 @@ body
         &.active-tab-link
         {
           background: $active-el-bgcolor;
+          color: $purple-bg;
 
           &:before
           {
@@ -144,8 +154,9 @@ body
 
       &:hover
       {
-        background: $hover-grey; 
+        background: $tab-link-hover-bgcolor; 
         transform: scale(1.04);
+        color: white;
       }
     }
   }
@@ -163,20 +174,20 @@ body
     padding: 0;
     margin: 0;
     width: 100%;
-    max-height: 333px;
+    max-height: 327px;
     overflow-y: auto;
     cursor: pointer;
     opacity: 0;
     height: 0;
     visibility: hidden;
-    transition: 1s;
+    transition: 1s, opacity 0.5s;
     
     
     &.tab
     {
       .item-wrapper
       {
-        padding: 20px 16px;
+        padding: 22px 18px;
         width: 100%;
         background: white;
         border-bottom: 1px solid #ddd;
@@ -192,15 +203,13 @@ body
             &.props
             { display: block; }
 
-            &.props:nth-child(1)
-            { margin-bottom: 8px; }
+            &.props:nth-child(1),
+            &.props:nth-child(2)
+            { margin-bottom: 5px; }
 
             &.title,
             &.id
             { font-weight: bold; }
-
-            &.props:nth-child(2)
-            { margin-bottom: 8px; }
 
             &.props:nth-child(3)
             { font-size: 14px; }
@@ -210,7 +219,7 @@ body
         &:hover
         {
           background: #ddd;
-          // padding-left: 24px;
+          padding-left: 25px;
           border-bottom-color: #bbb;
         }
       }
@@ -227,7 +236,7 @@ body
     {
       text-align: center;
       
-      h1 { margin: 140px 0 }
+      h1 { margin: 130px 0 }
     }
   }
 }
