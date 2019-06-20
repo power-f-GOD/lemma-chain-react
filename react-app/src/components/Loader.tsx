@@ -61,8 +61,7 @@ export default function Loader(props: Props)
       majorLoader: React.ReactElement = 
         <div className='loader-wrapper' style={loaderWrapperStyle}>
           {minorLoader}
-          <br />
-          <span className='load-name' style={{fontSize: 13}}>{props.attributes.rider}</span>
+          <span className='load-name' style={{fontSize: 13, marginTop: 10}}>{props.attributes.rider}</span>
         </div>;
   
   //loader animation style in CSS (index.css) file

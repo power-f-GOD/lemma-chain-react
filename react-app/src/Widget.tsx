@@ -26,7 +26,7 @@ export interface StateObject
   isLoading: boolean;
   payload: Payload;
   errOccurred: boolean;
-  errMessage: string;
+  errMsg: string;
 }
 
 
@@ -50,7 +50,7 @@ class Widget extends React.Component<{}, StateObject>
   {
     dropdownIsCollapsed: true,
     dropdownCurHeight: 0,
-    refID: '@alpha/35t8qc8i5',
+    refID: '@alpha/1v1t2ulhg',
     activeTabName: 'required-tab',
     activeTabLinkName: 'required-tab-link',
     historyExists: false,
@@ -58,7 +58,7 @@ class Widget extends React.Component<{}, StateObject>
     isLoading: false,
     payload: Get_HardCoded_Refs(),
     errOccurred: false,
-    errMessage: ''
+    errMsg: ''
   };
 
   height = 0;
@@ -108,7 +108,7 @@ class Widget extends React.Component<{}, StateObject>
     {
       tabLink.classList.remove('active-tab-link');
       tabs[i].classList.remove('active-tab');
-    })
+    });
     //add 'active' classNames to active tab and link
     this.activeTabLink.classList.add('active-tab-link');
     this.activeTab.classList.add('active-tab');
@@ -139,7 +139,7 @@ class Widget extends React.Component<{}, StateObject>
           }
         };
 
-    //first set loading to true to enable transition fadeout
+    //first set loading to true to visualize fadeout
     this.setState({isLoading: true});
 
     setTimeout(() => 
@@ -155,18 +155,10 @@ class Widget extends React.Component<{}, StateObject>
         .then((response: Response) => response.json())
         .then((data: Payload) =>
         {
-          //do not proceed to UI if server returns an error [message]
+          //throw Error (i.e. do not proceed to try populating UI) if server returns an error [message]
           if (Object.keys(data).includes('error'))
-            this.setState({
-              errOccurred: true,
-              errMessage: `ErrorMessage: ${data.error}`,
-              dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
-              historyExists: true,
-              isLoading: false,
-              dropdownIsCollapsed: false
-            });
-          else
-          {
+            throw new Error(data.error);
+          else {
             this.setState({
               refID: refID,
               payload: data
@@ -180,11 +172,26 @@ class Widget extends React.Component<{}, StateObject>
               dropdownIsCollapsed: false
             });
           }
-
           //update history
           this.history.push(Object.assign({}, this.state));
         })
-        .catch(err => this.setState({errMessage: `Error: Something is not right; ${err}.`}));
+        .catch(err => {
+          //just for proper English sentence casing and grammar
+          let errMsg = String(err).replace(/(type)?error:/i, '').trim(),
+              appendDot = errMsg.substr(-1) !== '.' ? `${errMsg}.` : errMsg,
+              grammarfiedErrMsg = appendDot.charAt(0).toUpperCase() + appendDot.substr(1,);
+          
+          this.setState({
+            errOccurred: true,
+            errMsg: `${grammarfiedErrMsg}`,
+            dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
+            historyExists: true,
+            isLoading: false,
+            dropdownIsCollapsed: false
+          });
+          //update history
+          this.history.push(Object.assign({}, this.state));
+        });
     }, 200);
   }
 
@@ -202,12 +209,11 @@ class Widget extends React.Component<{}, StateObject>
         tabs: HTMLUListElement[] = this.findNode(this, '.tab');
 
     if (pastIndex >= 0 && this.history[pastIndex])
-      this.setState(() =>
-      {
+      this.setState(() => {
         past = this.history[pastIndex];
         backInTime = Object.assign({}, past);
         return backInTime;
-      })
+      }); 
     else { return this.setState({historyExists: false}); }
 
     //remove all current active tab and tablink classes
@@ -215,16 +221,15 @@ class Widget extends React.Component<{}, StateObject>
     {
       tabLink.classList.remove('active-tab-link');
       tabs[i].classList.remove('active-tab');
-    })
-
+    });
     //reset active tab and tabLink to active tab and tabLink in the past
     this.activeTab = this.findNode(this, `.${this.history[pastIndex].activeTabName}`);
-    this.activeTab.classList.add('active-tab')
+    this.activeTab.classList.add('active-tab');
     this.activeTabLink = this.findNode(this, `.${this.history[pastIndex].activeTabLinkName}`);
     this.activeTabLink.classList.add('active-tab-link');
   
     //remove/delete past future having travelled back in time
-    this.history.pop();                     
+    this.history.pop();                 
   }
 
 

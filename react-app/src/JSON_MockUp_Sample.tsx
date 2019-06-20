@@ -56,42 +56,223 @@ export default function Get_HardCoded_Refs()
   return (
     {
       "data": {
-        "author": "Dan Brown",
-        "title": "The Da Vinci Code"
+          "author": "Charles Dickens",
+          "title": "A Christmas Carol"
       },
-      "id": "@alpha/35t8qc8i5",
-      "refs": 
-      [
-        {
-            "data": {
-                "author": "J. R. R. Tolkien",
-                "title": "The Hobbit"
-            },
-            "id": "@alpha/17t8kc5ig",
-            "ref_type": "required",
-            "refs": []
-        },
-        {
-          "data": {
-              "author": "Jane Austen",
-              "title": "Pride and Prejudice"
+      "id": "@alpha/1v1t2ulhg",
+      "refs": [
+          {
+              "data": {
+                  "author": "J. R. R. Tolkien",
+                  "title": "The Hobbit"
+              },
+              "id": "@alpha/17t8kc5ig",
+              "ref_type": "recommended",
+              "refs": []
           },
-          "id": "@alpha/r9t9rc4ip",
-          "ref_type": "recommended",
-          "refs": 
-          [
-            
-          ]
-        },
-        {
-          "data": {
-            "title": "Never Let Me Go",
-            "author": "Kazuo Ishiguro"
+          {
+              "data": {
+                  "author": "Jane Austen",
+                  "title": "Pride and Prejudice"
+              },
+              "id": "@alpha/r9t9rc4ip",
+              "ref_type": "recommended",
+              "refs": [
+                  {
+                      "data": {
+                          "author": "J. R. R. Tolkien",
+                          "title": "The Hobbit"
+                      },
+                      "id": "17t8kc5ig",
+                      "ref_type": "recommended",
+                      "refs": []
+                  }
+              ]
           },
-          "id": "@alpha/3vys8wtdtn",
-          "ref_type": "recommended",
-          "refs": []
-        }
+          {
+              "data": {
+                  "author": "Dan Brown",
+                  "title": "The Da Vinci Code"
+              },
+              "id": "@alpha/35t8qc8i5",
+              "ref_type": "required",
+              "refs": [
+                  {
+                      "data": {
+                          "author": "J. R. R. Tolkien",
+                          "title": "The Hobbit"
+                      },
+                      "id": "17t8kc5ig",
+                      "ref_type": "required",
+                      "refs": []
+                  },
+                  {
+                      "data": {
+                          "author": "Jane Austen",
+                          "title": "Pride and Prejudice"
+                      },
+                      "id": "r9t9rc4ip",
+                      "ref_type": "recommended",
+                      "refs": []
+                  }
+              ]
+          },
+          {
+              "data": {
+                  "author": "J. D. Salinger",
+                  "title": "The Catcher in the Rye"
+              },
+              "id": "@alpha/jjtn4cdirv",
+              "ref_type": "required",
+              "refs": [
+                  {
+                      "data": {
+                          "author": "J. R. R. Tolkien",
+                          "title": "The Hobbit"
+                      },
+                      "id": "17t8kc5ig",
+                      "ref_type": "recommended",
+                      "refs": []
+                  },
+                  {
+                      "data": {
+                          "author": "Jane Austen",
+                          "title": "Pride and Prejudice"
+                      },
+                      "id": "r9t9rc4ip",
+                      "ref_type": "recommended",
+                      "refs": []
+                  },
+                  {
+                      "data": {
+                          "author": "Dan Brown",
+                          "title": "The Da Vinci Code"
+                      },
+                      "id": "35t8qc8i5",
+                      "ref_type": "required",
+                      "refs": []
+                  }
+              ]
+          },
+          {
+              "data": {
+                  "author": "Yann Martel",
+                  "title": "Life of Pi"
+              },
+              "id": "@alpha/qqt2kcrip2",
+              "ref_type": "recommended",
+              "refs": []
+          },
+          {
+              "data": {
+                  "author": "Diana Gabaldon",
+                  "title": "Outlander"
+              },
+              "id": "@alpha/n8padhdu4",
+              "ref_type": "recommended",
+              "refs": [
+                  {
+                      "data": {
+                          "author": "J. R. R. Tolkien",
+                          "title": "The Hobbit"
+                      },
+                      "id": "17t8kc5ig",
+                      "ref_type": "recommended",
+                      "refs": []
+                  },
+                  {
+                      "data": {
+                          "author": "George Orwell",
+                          "title": "1984"
+                      },
+                      "id": "@alpha/5qtv1c9i8",
+                      "ref_type": "required",
+                      "refs": [
+                          {
+                              "data": {
+                                  "author": "J. R. R. Tolkien",
+                                  "title": "The Hobbit"
+                              },
+                              "id": "17t8kc5ig",
+                              "ref_type": "required",
+                              "refs": []
+                          }
+                      ]
+                  },
+                  {
+                      "data": {
+                          "author": "Jane Austen",
+                          "title": "Pride and Prejudice"
+                      },
+                      "id": "r9t9rc4ip",
+                      "ref_type": "recommended",
+                      "refs": []
+                  },
+                  {
+                      "data": {
+                          "author": "J. D. Salinger",
+                          "title": "The Catcher in the Rye"
+                      },
+                      "id": "jjtn4cdirv",
+                      "ref_type": "recommended",
+                      "refs": []
+                  },
+                  {
+                      "data": {
+                          "author": "Yann Martel",
+                          "title": "Life of Pi"
+                      },
+                      "id": "qqt2kcrip2",
+                      "ref_type": "recommended",
+                      "refs": []
+                  },
+                  {
+                      "data": {
+                          "author": "J. R. R. Tolkien",
+                          "title": "The Two Towers"
+                      },
+                      "id": "@alpha/9yt4lcli2j",
+                      "ref_type": "required",
+                      "refs": [
+                          {
+                              "data": {
+                                  "author": "J. R. R. Tolkien",
+                                  "title": "The Hobbit"
+                              },
+                              "id": "17t8kc5ig",
+                              "ref_type": "recommended",
+                              "refs": []
+                          },
+                          {
+                              "data": {
+                                  "author": "Jane Austen",
+                                  "title": "Pride and Prejudice"
+                              },
+                              "id": "r9t9rc4ip",
+                              "ref_type": "recommended",
+                              "refs": []
+                          },
+                          {
+                              "data": {
+                                  "author": "Dan Brown",
+                                  "title": "The Da Vinci Code"
+                              },
+                              "id": "35t8qc8i5",
+                              "ref_type": "required",
+                              "refs": []
+                          }
+                      ]
+                  }
+              ]
+          }
       ]
   });
 }
+
+
+
+		// "required:@alpha/35t8qc8i5",
+		// "required:@alpha/jjtn4cdirv",
+		// "recommended:@alpha/17t8kc5ig",
+		// "recommended:@alpha/qqt2kcrip2",
+		// "recommended:@alpha/n8padhdu4"

@@ -1,6 +1,7 @@
-import React, { CSSProperties } from 'react';
+import React from 'react';
 import Item from './Item';
 import Loader from './Loader';
+import DisplayStatusMessage from './DisplayStatusMessage';
 import { StateObject as StateObjectInterface } from '../Widget';
 
 
@@ -15,9 +16,13 @@ interface Props
 
 function Dropdown(props: Props)
 {
-  let requiredRefsExist = props.state.payload.refs.some((ref: any) => /required/.test(ref.ref_type)),
-      recommendedRefsExist = props.state.payload.refs.some((ref: any) => /recommended/.test(ref.ref_type));
-  
+  let requiredRefsExist: boolean = props.state.payload.refs.some((ref: any) => /required/.test(ref.ref_type)),
+      recommendedRefsExist: boolean = props.state.payload.refs.some((ref: any) => /recommended/.test(ref.ref_type)),
+      ifCanVisualizeGraph: boolean = (requiredRefsExist || recommendedRefsExist) && !props.state.errOccurred,
+      renderGraph: React.ReactElement = 
+        <div className='tab-items-wrapper graph-wrapper'>
+          <h1 className='title'>GRAPH BE VISUALIZED!</h1>
+        </div>;
   
   return (
     <section className='dropdown' style={{height: props.state.dropdownCurHeight}}>
@@ -52,7 +57,7 @@ function Dropdown(props: Props)
           isLoading={props.state.isLoading}
           attributes={{
             size: 12,
-            color: '#333',
+            color: 'rgb(204, 0, 100)',
             rider: 'Loading References...',
             type: 'major',
             wrapperHeight: props.state.dropdownCurHeight - props.height
@@ -63,9 +68,9 @@ function Dropdown(props: Props)
           <ul className={`tab required-tab active-tab ${!props.state.isMobileDevice ? 'useCustomScrollBar' : null}`}> 
             {
               props.state.errOccurred ?
-                <DisplaySomeMessage
+                <DisplayStatusMessage
                   type='error'
-                  errMessage={props.state.errMessage}
+                  errMsg={props.state.errMsg}
                   for_ref_type='required'
                 />
               : requiredRefsExist ?
@@ -79,15 +84,15 @@ function Dropdown(props: Props)
                       handleReferenceClick={props.handleReferenceClick}
                     />
                   : null)
-                : <DisplaySomeMessage type='no-ref' for_ref_type='required' />
+                : <DisplayStatusMessage type='no-ref' for_ref_type='required' />
             }
           </ul>
           <ul className={`tab recommended-tab ${!props.state.isMobileDevice ? 'useCustomScrollBar' : ''}`}>
             {
               props.state.errOccurred ?
-                <DisplaySomeMessage
+                <DisplayStatusMessage
                   type='error'
-                  errMessage={props.state.errMessage}
+                  errMsg={props.state.errMsg}
                   for_ref_type='recommended'
                 />
               : recommendedRefsExist ?
@@ -102,13 +107,11 @@ function Dropdown(props: Props)
                       handleReferenceClick={props.handleReferenceClick}
                     />
                   : null)
-                : <DisplaySomeMessage type='no-ref' for_ref_type='recommended' />
+                : <DisplayStatusMessage type='no-ref' for_ref_type='recommended' />
             }
           </ul>
           <ul className={`tab graph-tab ${!props.state.isMobileDevice ? 'useCustomScrollBar' : ''}`}>
-            <div className='tab-items-wrapper graph-wrapper'>
-              <h1 className='title'>GRAPH ZONE!</h1>
-            </div>
+            { ifCanVisualizeGraph ? renderGraph : <DisplayStatusMessage type='no-ref' for_ref_type='graph' /> }
           </ul>
         </div>
       </div>
@@ -119,29 +122,6 @@ function Dropdown(props: Props)
 
 
 export default Dropdown;
-
-
-
-function DisplaySomeMessage(props: any)
-{
-  let messageWrapperStyle: CSSProperties = 
-    {
-      padding: '100px 30px',
-      color: '#888',
-      fontStyle: 'italic',
-      textAlign: 'center',
-    },
-    errMessage: React.ReactFragment = 
-      <>Sorry. Could not load <b>{props.for_ref_type}</b> references for this book.<br />{props.errMessage}.</>,
-    nothingToShowMessage: React.ReactFragment =
-      <>Nothing to show.<br />Book has no <b>{props.for_ref_type}</b> references.</>;
-
-  return (
-    <div className='item-wrapper' style={messageWrapperStyle}>
-      <span className='props'>{props.type.match('error') ? errMessage : nothingToShowMessage}</span>
-    </div>
-  );
-}
 
 
 

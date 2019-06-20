@@ -14,7 +14,8 @@ interface Props
 
 function Item(props: Props): JSX.Element
 {
-  let ref_type_style: CSSProperties = {
+  let ref_type_style: CSSProperties = 
+      {
         display: 'block',
         fontSize: 10,
         right: 0,

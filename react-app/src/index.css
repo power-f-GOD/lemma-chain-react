@@ -168,9 +168,8 @@ body {
   opacity: 0;
   height: 0;
   visibility: hidden;
-  -webkit-transition: 1s, opacity 0.6s;
-  transition: 1s, opacity 0.6s;
-  position: relative;
+  -webkit-transition: 1s;
+  transition: 1s;
 }
 
 .widget ul.tab .item-wrapper {
@@ -208,7 +207,6 @@ body {
 
 .widget ul.tab .item-wrapper:hover {
   background: #ddd;
-  padding-left: 24px;
   border-bottom-color: #bbb;
 }
 
