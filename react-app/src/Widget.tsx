@@ -194,7 +194,7 @@ class Widget extends React.Component<{}, StateObject>
           //update history
           this.history.push(Object.assign({}, this.state));
         });
-    }, 200);
+    }, 150);
   }
 
 
