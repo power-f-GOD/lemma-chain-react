@@ -29,7 +29,7 @@ export default function DisplayStatusMessage(props: any)
       marginBottom: 10
     },
     suggestMsg: React.ReactFragment =
-      <><b>Suggest:</b> Check internet connection.</>,
+      <><b>Suggest:</b> Must be a network issue. Check internet connection then try again.</>,
     errMsg: React.ReactFragment = 
       <>
         Sorry. Could not load <b>{props.for_ref_type}</b> references for this book.<br /><b>ErrorMessage:</b> {props.errMsg}<br /><br />
