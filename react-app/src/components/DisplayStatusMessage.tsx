@@ -9,7 +9,7 @@ export default function DisplayStatusMessage(props: any)
 {
   let messageWrapperStyle: CSSProperties = 
     {
-      padding: 20,
+      padding: '20px 30px',
       display: 'flex',
       textAlign: 'center',
       justifyContent: 'center',
