@@ -153,7 +153,7 @@ class Widget extends React.Component<{}, StateObject>
         refs: [{}]
       }});
       
-      fetch(`http://68.183.123.0:1323/${refID}`, init)
+      fetch(`https://68.183.123.0:1323/${refID}`, init)
         .then((response: Response) => response.json())
         .then((data: Payload) =>
         {
