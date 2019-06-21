@@ -27,7 +27,7 @@ body {
 }
 
 .widget {
-  width: 85vw;
+  width: 88vw;
   margin: 50px 0;
   min-width: 350px;
   max-width: 500px;
@@ -86,7 +86,7 @@ body {
 
 .widget .tab-links-wrapper button {
   width: 50%;
-  padding: 14px 5px;
+  padding: 14px 10px;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -106,7 +106,7 @@ body {
 
 .widget .tab-links-wrapper button.back-btn, .widget .tab-links-wrapper button.graph-tab-link {
   width: 55px;
-  padding: 0px;
+  padding: 0;
 }
 
 .widget .tab-links-wrapper button.back-btn {
@@ -121,33 +121,34 @@ body {
 
 .widget .tab-links-wrapper button.graph-tab-link {
   font-size: 20px;
-  background: #16bdff !important;
-  color: white !important;
+  padding: 4px;
+  background: #910091;
+  color: yellow !important;
 }
 
 .widget .tab-links-wrapper button.graph-tab-link:hover {
-  background: #2ad1ff !important;
+  background: #20c7f5 !important;
 }
 
 .widget .tab-links-wrapper button[class^=active] {
   background: white;
 }
 
-.widget .tab-links-wrapper button.recommended-tab-link.active-tab-link, .widget .tab-links-wrapper button.required-tab-link.active-tab-link, .widget .tab-links-wrapper button.graph-tab-link.active-tab-link {
+.widget .tab-links-wrapper button.recommended-tab-link.active-tab-link, .widget .tab-links-wrapper button.required-tab-link.active-tab-link {
   background: white;
   color: #910091;
 }
 
-.widget .tab-links-wrapper button.recommended-tab-link.active-tab-link:before, .widget .tab-links-wrapper button.required-tab-link.active-tab-link:before, .widget .tab-links-wrapper button.graph-tab-link.active-tab-link:before {
+.widget .tab-links-wrapper button.recommended-tab-link.active-tab-link:before, .widget .tab-links-wrapper button.required-tab-link.active-tab-link:before {
   content: '› ';
   font-size: 15px;
-  color: black;
+  color: inherit;
 }
 
-.widget .tab-links-wrapper button.recommended-tab-link.active-tab-link:after, .widget .tab-links-wrapper button.required-tab-link.active-tab-link:after, .widget .tab-links-wrapper button.graph-tab-link.active-tab-link:after {
+.widget .tab-links-wrapper button.recommended-tab-link.active-tab-link:after, .widget .tab-links-wrapper button.required-tab-link.active-tab-link:after {
   content: ' ‹';
   font-size: 15px;
-  color: black;
+  color: inherit;
 }
 
 .widget .tab-links-wrapper button:hover {
@@ -280,8 +281,8 @@ body {
   }
 }
 
-.isMobileDevice .graph-tab,
-.isMobileDevice .graph-tab-link {
+.isViewedWithMobile .graph-tab,
+.isViewedWithMobile .graph-tab-link {
   display: none !important;
 }
 

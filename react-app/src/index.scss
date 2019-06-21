@@ -5,9 +5,9 @@ $active-el-bgcolor: white;
 $purple-bg: rgb(145, 0, 145);
 $purple-bg-hover: rgb(116, 0, 116);
 $default-font-size: 15px;
-$graph-tab-link-bgcolor: rgb(22, 189, 255);
-$graph-tab-link-color: white;
-$graph-tab-link-hover-bgcolor: rgb(42, 209, 255);
+$graph-tab-link-bgcolor: $purple-bg;
+$graph-tab-link-color: yellow;
+$graph-tab-link-hover-bgcolor: rgb(32, 199, 245);
 $tab-link-bgcolor: rgb(210, 100, 210);
 $tab-link-hover-bgcolor: rgb(235, 125, 235);
 $tab-link-color: #eee;
@@ -35,7 +35,7 @@ body
 
 .widget
 {
-  width: 85vw;
+  width: 88vw;
   margin: 50px 0;
   min-width: 350px;
   max-width: 500px;
@@ -86,7 +86,7 @@ body
     button
     {
       width: 50%;
-      padding: 14px 5px;
+      padding: 14px 10px;
       display: inline-flex;
       justify-content: space-around;
       align-items: center;
@@ -102,7 +102,7 @@ body
       &.graph-tab-link
       {
         width: 55px;
-        padding: 0px;
+        padding: 0;
       }
 
       &.back-btn
@@ -118,7 +118,8 @@ body
       &.graph-tab-link
       {
         font-size: 20px;
-        background: $graph-tab-link-bgcolor !important;
+        padding: 4px;
+        background: $graph-tab-link-bgcolor;
         color: $graph-tab-link-color !important;
         
         &:hover
@@ -129,8 +130,7 @@ body
       { background: $active-el-bgcolor; }
 
       &.recommended-tab-link,
-      &.required-tab-link,
-      &.graph-tab-link
+      &.required-tab-link
       {
         &.active-tab-link
         {
@@ -141,13 +141,13 @@ body
           {
             content: '› ';
             font-size: $default-font-size;
-            color: black;
+            color: inherit;
           }
           &:after
           {
             content: ' ‹';
             font-size: $default-font-size;
-            color: black;
+            color: inherit;
           }
         }
       }
@@ -271,13 +271,11 @@ body
 }
 
 
-.isMobileDevice
+.isViewedWithMobile
 {
   .graph-tab,
   .graph-tab-link
   { display: none !important; }
-
-  
 }
 
 .useCustomScrollBar

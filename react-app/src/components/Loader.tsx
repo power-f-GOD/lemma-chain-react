@@ -4,7 +4,7 @@ import React, { CSSProperties } from 'react';
 
 interface Props
 {
-  isLoading: boolean;
+  refIsLoading: boolean;
   attributes: 
   {
     size: number;
@@ -31,8 +31,8 @@ export default function Loader(props: Props)
       },
       loaderWrapperStyle: CSSProperties = 
       {
-        visibility: props.isLoading ? 'visible' : 'hidden',
-        opacity: props.isLoading ? 1 : 0,
+        visibility: props.refIsLoading ? 'visible' : 'hidden',
+        opacity: props.refIsLoading ? 1 : 0,
         position: 'absolute',
         width: '100%',
         background: 'rgba(50, 50, 50, 0)',
@@ -49,8 +49,8 @@ export default function Loader(props: Props)
         display: 'block',
         textAlign: 'center',
         position: props.attributes.type === 'minor' ? 'absolute' : 'static',
-        visibility: props.isLoading ? 'visible' : 'hidden',
-        opacity: props.isLoading ? 1 : 0
+        visibility: props.refIsLoading ? 'visible' : 'hidden',
+        opacity: props.refIsLoading ? 1 : 0
       },
       minorLoader: React.ReactElement = 
         <span className='loader' style={loaderStyle}>

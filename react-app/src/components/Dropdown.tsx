@@ -49,12 +49,13 @@ function Dropdown(props: Props)
           className="graph-tab-link tab-link"
           title='View graph'
           data-tab-name='graph-tab'
+          style={{background: /graph/.test(props.state.activeTabName) ? 'rgb(12, 179, 225)' : ''}}
           onClick={props.handleTabToggle}
         >★</button>
       </div>
       <div className='tabs-container' style={{position: 'relative'}}>
         <Loader
-          isLoading={props.state.isLoading}
+          refIsLoading={props.state.refIsLoading}
           attributes={{
             size: 12,
             color: 'rgb(145, 0, 145)',
@@ -63,8 +64,8 @@ function Dropdown(props: Props)
             wrapperHeight: props.state.dropdownCurHeight - props.height
           }}
         />
-        <div className='tabs-wrapper' style={{opacity: props.state.isLoading ? 0 : 1}}>
-          <ul className={`tab required-tab active-tab ${!props.state.isMobileDevice ? 'useCustomScrollBar' : null}`}> 
+        <div className='tabs-wrapper' style={{opacity: props.state.refIsLoading ? 0 : 1}}>
+          <ul className={`tab required-tab active-tab ${!props.isViewedWithMobile ? 'useCustomScrollBar' : null}`}> 
             {
               props.state.errOccurred ?
                 <DisplayStatusMessage
@@ -86,7 +87,7 @@ function Dropdown(props: Props)
                 : <DisplayStatusMessage type='no-ref' for_ref_type='required' />
             }
           </ul>
-          <ul className={`tab recommended-tab ${!props.state.isMobileDevice ? 'useCustomScrollBar' : ''}`}>
+          <ul className={`tab recommended-tab ${!props.isViewedWithMobile ? 'useCustomScrollBar' : ''}`}>
             {
               props.state.errOccurred ?
                 <DisplayStatusMessage
@@ -113,7 +114,7 @@ function Dropdown(props: Props)
                   />
             }
           </ul>
-          <ul className={`tab graph-tab ${!props.state.isMobileDevice ? 'useCustomScrollBar' : ''}`}>
+          <ul className={`tab graph-tab ${!props.isViewedWithMobile ? 'useCustomScrollBar' : ''}`}>
             { 
               ifCanVisualizeGraph ? renderGraph
                 : <DisplayStatusMessage

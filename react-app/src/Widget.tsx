@@ -24,8 +24,7 @@ export interface StateObject
   activeTabName: string;
   activeTabLinkName: string;
   historyExists: boolean;
-  isMobileDevice: boolean;
-  isLoading: boolean;
+  refIsLoading: boolean;
   payload: Payload;
   errOccurred: boolean;
   errMsg: string;
@@ -40,7 +39,7 @@ class Widget extends React.Component<{}, StateObject>
    * dropdownCurHeight: holds dropdown height value change
    * activeTabName: this and activeTabLinkName are mainly used for navigating history (going back in time)
    * historyExists: boolean to display 'back button' if true and hide if otherwise
-   * isMobileDevice: boolean to check what device app is running on (hides 'star button' if true, displays if false)
+   * isViewedWithMobile: boolean to check what device app is running on (hides 'star button' if true, displays if false)
    * height: holds constant actual value of Widget height
    * dropdown: child element of Widget
    * activeTabLink: tab link/button
@@ -56,14 +55,15 @@ class Widget extends React.Component<{}, StateObject>
     activeTabName: 'required-tab',
     activeTabLinkName: 'required-tab-link',
     historyExists: false,
-    isMobileDevice: false,
-    isLoading: false,
+    refIsLoading: false,
     payload: Get_HardCoded_Refs(),
     errOccurred: false,
     errMsg: ''
   };
 
   height = 0;
+
+  isViewedWithMobile: boolean = false;
 
   dropdown: HTMLDivElement | any = null;
 
@@ -142,7 +142,7 @@ class Widget extends React.Component<{}, StateObject>
         };
 
     //first set loading to true to visualize fadeout
-    this.setState({isLoading: true});
+    this.setState({refIsLoading: true});
 
     setTimeout(() => 
     {
@@ -170,7 +170,7 @@ class Widget extends React.Component<{}, StateObject>
               errOccurred: false,
               dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
               historyExists: true,
-              isLoading: false,
+              refIsLoading: false,
               dropdownIsCollapsed: false
             });
           }
@@ -188,7 +188,7 @@ class Widget extends React.Component<{}, StateObject>
             errMsg: `${grammarfiedErrMsg}`,
             dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
             historyExists: true,
-            isLoading: false,
+            refIsLoading: false,
             dropdownIsCollapsed: false
           });
           //update history
@@ -266,9 +266,9 @@ class Widget extends React.Component<{}, StateObject>
   {
     //check what device user is running
     if (/(Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone)/i.test(window.navigator.userAgent))
-      this.setState({isMobileDevice: true});
+      this.isViewedWithMobile = true;
 
-    //delay till isMobileDevice state is set 
+    //delay till isViewedWithMobile is set 
     setTimeout(() =>
     {
       //now set value of constant Widget height which will also be used in computing loader wrapper height in Dropdown.js
@@ -296,18 +296,18 @@ class Widget extends React.Component<{}, StateObject>
         };
 
     return (
-      <div className={`widget ${this.state.isMobileDevice ? 'isMobileDevice' : ''}`}>
+      <div className={`widget ${this.isViewedWithMobile ? 'isViewedWithMobile' : ''}`}>
         <section
           className='ref-tab-wrapper'
           onClick={this.handleDropdownToggle} 
         >
           <span>LC</span>
           <span style={refIDWrapperStyle}>
-            <span className='ref-identifier' style={{opacity: this.state.isLoading ? 0 : 1}}>
+            <span className='ref-identifier' style={{opacity: this.state.refIsLoading ? 0 : 1}}>
               {this.state.refID}
             </span>
             <Loader
-              isLoading={this.state.isLoading}
+              refIsLoading={this.state.refIsLoading}
               attributes={{
                 size: 8,
                 color: 'white',
@@ -320,6 +320,7 @@ class Widget extends React.Component<{}, StateObject>
         <Dropdown
           state={this.state}
           height={this.height}
+          isViewedWithMobile={this.isViewedWithMobile}
           handleTabToggle={this.handleTabToggle}
           handleReferenceClick={this.handleReferenceClick}
           goBackInTime={this.goBackInTime}
