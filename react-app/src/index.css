@@ -78,8 +78,8 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-shadow: 0 1px 8px #999;
-          box-shadow: 0 1px 8px #999;
+  -webkit-box-shadow: -12px 1px 8px #999;
+          box-shadow: -12px 1px 8px #999;
   position: relative;
   z-index: 1;
 }
@@ -291,11 +291,12 @@ body {
 }
 
 .useCustomScrollBar::-webkit-scrollbar-track {
-  background: #ddd;
+  background: #d264d2;
+  border-radius: 0 0 0 5px;
 }
 
 .useCustomScrollBar::-webkit-scrollbar-thumb {
-  background: #bbb;
+  background: #740074;
   border-radius: 0 0 5px 5px;
 }
 /*# sourceMappingURL=index.css.map */

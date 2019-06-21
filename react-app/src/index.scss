@@ -79,7 +79,7 @@ body
   .tab-links-wrapper
   {
     display: flex;
-    box-shadow: 0 1px 8px #999;
+    box-shadow: -12px 1px 8px #999;
     position: relative;
     z-index: 1;
 
@@ -284,11 +284,14 @@ body
   { width: 10px; }
 
   &::-webkit-scrollbar-track
-  { background: #ddd; }
+  {
+    background: $tab-link-bgcolor;
+    border-radius: 0 0 0 5px;
+  }
 
   &::-webkit-scrollbar-thumb
   {
-    background: #bbb;
+    background: $purple-bg-hover;
     border-radius: 0 0 5px 5px;
   }
 }

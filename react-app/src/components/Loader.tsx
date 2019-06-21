@@ -51,8 +51,10 @@ export default function Loader(props: Props)
         position: props.attributes.type === 'minor' ? 'absolute' : 'static',
         visibility: props.refIsLoading ? 'visible' : 'hidden',
         opacity: props.refIsLoading ? 1 : 0
-      },
-      minorLoader: React.ReactElement = 
+      };
+
+
+  let minorLoader: React.ReactElement = 
         <span className='loader' style={loaderStyle}>
           <span className='loader-circle' style={circlesStyle}></span>
           <span className='loader-circle' style={circlesStyle}></span>
@@ -61,7 +63,10 @@ export default function Loader(props: Props)
       majorLoader: React.ReactElement = 
         <div className='loader-wrapper' style={loaderWrapperStyle}>
           {minorLoader}
-          <span className='load-name' style={{fontSize: 13, marginTop: 10}}>{props.attributes.rider}</span>
+          <span
+            className='loader-rider'
+            style={{fontSize: 13, marginTop: 10}}
+          >{props.attributes.rider}</span>
         </div>;
   
   //loader animation style in CSS (index.css) file

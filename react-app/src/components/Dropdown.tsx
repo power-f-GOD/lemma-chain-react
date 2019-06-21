@@ -1,14 +1,15 @@
 import React from 'react';
+import TabLinks from './TabLinks';
 import Item from './Item';
 import Loader from './Loader';
 import DisplayStatusMessage from './DisplayStatusMessage';
-import { StateObject as StateObjectInterface } from '../Widget';
+import { StateObject } from '../Widget';
 
 
 
-interface Props
+export interface Props
 {
-  state: StateObjectInterface;
+  state: StateObject;
   [key: string]: any;
 }
 
@@ -26,33 +27,11 @@ function Dropdown(props: Props)
   
   return (
     <section className='dropdown' style={{height: props.state.dropdownCurHeight}}>
-      <div className='tab-links-wrapper'>
-        <button
-          className='back-btn'
-          title='Go back in time! ;)'
-          onClick={props.goBackInTime}
-          style={{width: props.state.historyExists ? 55 : 0}}
-        >❮</button>
-        <button
-          className='required-tab-link tab-link active-tab-link'
-          title='Required references'
-          data-tab-name='required-tab'
-          onClick={props.handleTabToggle}
-        >Required</button>
-        <button
-          className='recommended-tab-link tab-link'
-          title='Recommended references'
-          data-tab-name='recommended-tab'
-          onClick={props.handleTabToggle}
-        >Recommended</button>
-        <button
-          className="graph-tab-link tab-link"
-          title='View graph'
-          data-tab-name='graph-tab'
-          style={{background: /graph/.test(props.state.activeTabName) ? 'rgb(12, 179, 225)' : ''}}
-          onClick={props.handleTabToggle}
-        >★</button>
-      </div>
+      <TabLinks
+        state={props.state}
+        goBackInTime={props.goBackInTime}
+        handleTabToggle={props.handleTabToggle}
+      />
       <div className='tabs-container' style={{position: 'relative'}}>
         <Loader
           refIsLoading={props.state.refIsLoading}
@@ -69,9 +48,9 @@ function Dropdown(props: Props)
             {
               props.state.errOccurred ?
                 <DisplayStatusMessage
-                  type='error'
+                  typeofMsg='error'
                   errMsg={props.state.errMsg}
-                  for_ref_type='required'
+                  ref_type='required'
                 />
               : requiredRefsExist ?
                   props.state.payload.refs.map((ref: any, key: number) => 
@@ -84,16 +63,16 @@ function Dropdown(props: Props)
                       handleReferenceClick={props.handleReferenceClick}
                     />
                   : null)
-                : <DisplayStatusMessage type='no-ref' for_ref_type='required' />
+                : <DisplayStatusMessage typeofMsg='no-ref' ref_type='required' />
             }
           </ul>
           <ul className={`tab recommended-tab ${!props.isViewedWithMobile ? 'useCustomScrollBar' : ''}`}>
             {
               props.state.errOccurred ?
                 <DisplayStatusMessage
-                  type='error'
+                  typeofMsg='error'
                   errMsg={props.state.errMsg}
-                  for_ref_type='recommended'
+                  ref_type='recommended'
                 />
               : recommendedRefsExist ?
                   props.state.payload.refs.map((ref: any, key: number) => 
@@ -108,8 +87,8 @@ function Dropdown(props: Props)
                     />
                   : null)
                 : <DisplayStatusMessage
-                    type='no-ref'
-                    for_ref_type='recommended'
+                    typeofMsg='no-ref'
+                    ref_type='recommended'
                     errMsg=''
                   />
             }
@@ -118,8 +97,8 @@ function Dropdown(props: Props)
             { 
               ifCanVisualizeGraph ? renderGraph
                 : <DisplayStatusMessage
-                    type='no-ref'
-                    for_ref_type='graph'
+                    typeofMsg='no-ref'
+                    ref_type='graph'
                     errMsg={props.state.errMsg}
                   />
             }

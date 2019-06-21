@@ -297,10 +297,7 @@ class Widget extends React.Component<{}, StateObject>
 
     return (
       <div className={`widget ${this.isViewedWithMobile ? 'isViewedWithMobile' : ''}`}>
-        <section
-          className='ref-tab-wrapper'
-          onClick={this.handleDropdownToggle} 
-        >
+        <section className='ref-tab-wrapper' onClick={this.handleDropdownToggle}>
           <span>LC</span>
           <span style={refIDWrapperStyle}>
             <span className='ref-identifier' style={{opacity: this.state.refIsLoading ? 0 : 1}}>
