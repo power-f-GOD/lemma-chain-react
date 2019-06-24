@@ -11,6 +11,7 @@ $graph-tab-link-hover-bgcolor: rgb(32, 199, 245);
 $tab-link-bgcolor: rgb(210, 100, 210);
 $tab-link-hover-bgcolor: rgb(235, 125, 235);
 $tab-link-color: #eee;
+$default-letter-spacing: 0.75px;
 
 
 
@@ -23,6 +24,7 @@ body
   align-items: center;
   background: #333;
   font-family: $font;
+  letter-spacing: $default-letter-spacing;
 }
 
 #root { width: auto; }
@@ -30,10 +32,7 @@ body
 *
 {
   box-sizing: border-box;
-  transition: 0.3s, transform 0.15s;
   outline: none;
-  opacity: 1;
-  letter-spacing: 0.75px;
 }
 
 #root
@@ -52,7 +51,6 @@ body
   border-radius: 5px !important;
   overflow: hidden;
   position: relative;
-  // height: auto;
   z-index: 0;             //set this to avoid border radius from setting to 0 on ref load
   box-shadow: 0 5px 10px #111, 
               0 10px 20px #111,
@@ -60,7 +58,10 @@ body
   // border: 1px solid red;
 
   .dropdown
-  { height: auto; }
+  {
+    height: auto;
+    transition: 0.35s;
+  }
   
   .ref-tab-wrapper
   {
@@ -72,13 +73,15 @@ body
     cursor: pointer;
     position: relative;
     z-index: 2;
-
+    
+    
     &:hover
     { background: $purple-bg-hover; }
 
     .caret-icon
     {
       font-weight: bold;
+      transition: 0.35s;
       transform: rotate(90deg);
     }
 
@@ -105,8 +108,11 @@ body
       font-size: 14px;
       font-family: $font;
       font-weight: bold;
+      letter-spacing: $default-letter-spacing;
       color: $tab-link-color;
       background: $tab-link-bgcolor;
+      position: relative;
+      transition: 0.35s;
 
       &.back-btn,
       &.graph-tab-link
@@ -167,6 +173,7 @@ body
         background: $tab-link-hover-bgcolor; 
         transform: scale(1.04);
         color: white;
+        z-index: 1;
       }
     }
   }
@@ -176,76 +183,80 @@ body
   {
     border-radius: 0 0 5px 5px;
     overflow: hidden;
-  }
+    transition: 0.35s;
 
 
-  ul
-  {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    overflow-y: auto;
-    cursor: pointer;
-    opacity: 0;
-    height: 0;
-    visibility: hidden;
-    transition: 1s, opacity 0.6s;
-    
-    
-    &.tab
+    ul
     {
-      .item-wrapper
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      overflow-y: auto;
+      cursor: pointer;
+      opacity: 0;
+      // height: 0;
+      visibility: hidden;
+      position: absolute;
+      transition: 0.5s;
+      
+      
+      &.tab
       {
-        padding: 22px 18px;
-        width: 100%;
-        background: white;
-        border-bottom: 1px solid #ddd;
-
-        li
+        .item-wrapper
         {
-          margin-left: 18px;
-          list-style-type: decimal;
-          padding-left: 10px;
-
-          span
+          padding: 22px 18px;
+          width: 100%;
+          background: white;
+          border-bottom: 1px solid #ddd;
+          letter-spacing: $default-letter-spacing;
+          transition: 0.35s;
+  
+          li
           {
-            &.props
-            { display: block; }
-
-            &.props:nth-child(1),
-            &.props:nth-child(2)
-            { margin-bottom: 5px; }
-
-            &.title,
-            &.id
-            { font-weight: bold; }
-
-            &.props:nth-child(3)
-            { font-size: 14px; }
+            margin-left: 18px;
+            list-style-type: decimal;
+            padding-left: 10px;
+  
+            span
+            {
+              &.props
+              { display: block; }
+  
+              &.props:nth-child(1),
+              &.props:nth-child(2)
+              { margin-bottom: 5px; }
+  
+              &.title,
+              &.id
+              { font-weight: bold; }
+  
+              &.props:nth-child(3)
+              { font-size: 14px; }
+            }
+          }
+  
+          &:hover
+          {
+            background: #ddd;
+            padding-left: 25px;
+            border-bottom-color: #bbb;
           }
         }
-
-        &:hover
-        {
-          background: #ddd;
-          padding-left: 25px;
-          border-bottom-color: #bbb;
-        }
       }
-    }
-
-    &.active-tab
-    {
-      height: auto;
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .graph-wrapper
-    {
-      text-align: center;
-      
-      h1 { margin: 130px 0 }
+  
+      &.active-tab
+      {
+        height: auto;
+        opacity: 1;
+        visibility: visible;
+      }
+  
+      .graph-wrapper
+      {
+        text-align: center;
+        
+        h1 { margin: 130px 0 }
+      }
     }
   }
 }

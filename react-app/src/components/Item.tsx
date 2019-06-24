@@ -24,6 +24,7 @@ function Item(props: Props): JSX.Element
         color: '#999'
       }
 
+      
   return (
     <div
       className='item-wrapper'

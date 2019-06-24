@@ -15,10 +15,11 @@ export default function DisplayStatusMessage(props: any)
         justifyContent: 'center',
         alignItems: 'center',
         color: '#888',
-        // fontStyle: 'italic',
         fontSize: 14,
         minHeight: 'auto',
-        height: 260
+        height: 260,
+        opacity: props.refIsLoading ? 0 : 1,
+        transition: '0.3s'
       },
       errImgStyle: CSSProperties = 
       {
@@ -42,6 +43,7 @@ export default function DisplayStatusMessage(props: any)
           Sorry. Can't visualize <b>graph</b>.<br />
           <b>{props.errMsg ? 'ErrorMessage:' : 'Reason:'}</b> {props.errMsg || 'Book has no parent refs.'}
         </>;
+
 
   return (
     <div className='item-wrapper' style={messageWrapperStyle}>

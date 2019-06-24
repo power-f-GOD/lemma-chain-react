@@ -60,7 +60,7 @@ class Widget extends React.Component<{}, StateObject>
     payload: Get_HardCoded_Refs(),
     errOccurred: false,
     errMsg: '',
-    endpointLink: 'http://68.183.123.0:1323'
+    endpointLink: 'http://localhost:1323'
   };
 
   height = 0;
@@ -283,7 +283,12 @@ class Widget extends React.Component<{}, StateObject>
         <section className='ref-tab-wrapper' onClick={this.handleDropdownToggle}>
           <span>LC</span>
           <span style={refIDWrapperStyle}>
-            <span className='ref-identifier' style={{opacity: this.state.refIsLoading ? 0 : 1}}>
+            <span
+              className='ref-identifier'
+              style={{
+                opacity: this.state.refIsLoading ? 0 : 1,
+                transition: '0.3s'
+              }}>
               {this.state.refID}
             </span>
             <Loader

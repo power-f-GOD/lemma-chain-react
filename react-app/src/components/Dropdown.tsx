@@ -17,9 +17,9 @@ export interface Props
 
 function Dropdown(props: Props)
 {
-  let requiredRefsExist: boolean = props.state.payload.refs.some((ref: any) => /required/.test(ref.ref_type)),
-      recommendedRefsExist: boolean = props.state.payload.refs.some((ref: any) => /recommended/.test(ref.ref_type)),
-      ifCanVisualizeGraph: boolean = (requiredRefsExist || recommendedRefsExist) && !props.state.errOccurred,
+  let requiredRefExists: boolean = props.state.payload.refs.some((ref: any) => /required/.test(ref.ref_type)),
+      recommendedRefExists: boolean = props.state.payload.refs.some((ref: any) => /recommended/.test(ref.ref_type)),
+      ifCanVisualizeGraph: boolean = (requiredRefExists || recommendedRefExists) && !props.state.errOccurred,
       renderGraph: React.ReactElement = 
         <div className='tab-items-wrapper graph-wrapper'>
           <h1 className='title'>GRAPH BE VISUALIZED!</h1>
@@ -55,8 +55,9 @@ function Dropdown(props: Props)
                   typeofMsg='error'
                   errMsg={props.state.errMsg}
                   ref_type='required'
+                  refIsLoading={props.state.refIsLoading}
                 />
-              : requiredRefsExist ?
+              : requiredRefExists ?
                   props.state.payload.refs.map((ref: any, key: number) => 
                     ref.ref_type === 'required' ? 
                     <Item
@@ -67,7 +68,11 @@ function Dropdown(props: Props)
                       handleReferenceClick={props.handleReferenceClick}
                     />
                   : null)
-                : <DisplayStatusMessage typeofMsg='no-ref' ref_type='required' />
+                : <DisplayStatusMessage 
+                    typeofMsg='no-ref'
+                    ref_type='required'
+                    refIsLoading={props.state.refIsLoading}
+                  />
             }
           </ul>
 
@@ -81,8 +86,9 @@ function Dropdown(props: Props)
                   typeofMsg='error'
                   errMsg={props.state.errMsg}
                   ref_type='recommended'
+                  refIsLoading={props.state.refIsLoading}
                 />
-              : recommendedRefsExist ?
+              : recommendedRefExists ?
                   props.state.payload.refs.map((ref: any, key: number) => 
                     ref.ref_type === 'recommended' ? 
                     <Item
@@ -98,6 +104,7 @@ function Dropdown(props: Props)
                     typeofMsg='no-ref'
                     ref_type='recommended'
                     errMsg=''
+                    refIsLoading={props.state.refIsLoading}
                   />
             }
           </ul>
@@ -112,6 +119,7 @@ function Dropdown(props: Props)
                     typeofMsg='no-ref'
                     ref_type='graph'
                     errMsg={props.state.errMsg}
+                    refIsLoading={props.state.refIsLoading}
                   />
             }
           </ul>

@@ -16,6 +16,7 @@ body {
           align-items: center;
   background: #333;
   font-family: "Google Sans", "Roboto Mono", "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  letter-spacing: 0.75px;
 }
 
 #root {
@@ -25,13 +26,7 @@ body {
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  -webkit-transition: 0.3s, -webkit-transform 0.15s;
-  transition: 0.3s, -webkit-transform 0.15s;
-  transition: 0.3s, transform 0.15s;
-  transition: 0.3s, transform 0.15s, -webkit-transform 0.15s;
   outline: none;
-  opacity: 1;
-  letter-spacing: 0.75px;
 }
 
 #root {
@@ -55,6 +50,8 @@ body {
 
 .widget .dropdown {
   height: auto;
+  -webkit-transition: 0.35s;
+  transition: 0.35s;
 }
 
 .widget .ref-tab-wrapper {
@@ -78,6 +75,8 @@ body {
 
 .widget .ref-tab-wrapper .caret-icon {
   font-weight: bold;
+  -webkit-transition: 0.35s;
+  transition: 0.35s;
   -webkit-transform: rotate(90deg);
           transform: rotate(90deg);
 }
@@ -113,8 +112,12 @@ body {
   font-size: 14px;
   font-family: "Google Sans", "Roboto Mono", "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
   font-weight: bold;
+  letter-spacing: 0.75px;
   color: #eee;
   background: #d264d2;
+  position: relative;
+  -webkit-transition: 0.35s;
+  transition: 0.35s;
 }
 
 .widget .tab-links-wrapper button.back-btn, .widget .tab-links-wrapper button.graph-tab-link {
@@ -169,72 +172,78 @@ body {
   -webkit-transform: scale(1.04);
           transform: scale(1.04);
   color: white;
+  z-index: 1;
 }
 
 .widget .tabs-wrapper {
   border-radius: 0 0 5px 5px;
   overflow: hidden;
+  -webkit-transition: 0.35s;
+  transition: 0.35s;
 }
 
-.widget ul {
+.widget .tabs-wrapper ul {
   padding: 0;
   margin: 0;
   width: 100%;
   overflow-y: auto;
   cursor: pointer;
   opacity: 0;
-  height: 0;
   visibility: hidden;
-  -webkit-transition: 1s, opacity 0.6s;
-  transition: 1s, opacity 0.6s;
+  position: absolute;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
 }
 
-.widget ul.tab .item-wrapper {
+.widget .tabs-wrapper ul.tab .item-wrapper {
   padding: 22px 18px;
   width: 100%;
   background: white;
   border-bottom: 1px solid #ddd;
+  letter-spacing: 0.75px;
+  -webkit-transition: 0.35s;
+  transition: 0.35s;
 }
 
-.widget ul.tab .item-wrapper li {
+.widget .tabs-wrapper ul.tab .item-wrapper li {
   margin-left: 18px;
   list-style-type: decimal;
   padding-left: 10px;
 }
 
-.widget ul.tab .item-wrapper li span.props {
+.widget .tabs-wrapper ul.tab .item-wrapper li span.props {
   display: block;
 }
 
-.widget ul.tab .item-wrapper li span.props:nth-child(1), .widget ul.tab .item-wrapper li span.props:nth-child(2) {
+.widget .tabs-wrapper ul.tab .item-wrapper li span.props:nth-child(1), .widget .tabs-wrapper ul.tab .item-wrapper li span.props:nth-child(2) {
   margin-bottom: 5px;
 }
 
-.widget ul.tab .item-wrapper li span.title, .widget ul.tab .item-wrapper li span.id {
+.widget .tabs-wrapper ul.tab .item-wrapper li span.title, .widget .tabs-wrapper ul.tab .item-wrapper li span.id {
   font-weight: bold;
 }
 
-.widget ul.tab .item-wrapper li span.props:nth-child(3) {
+.widget .tabs-wrapper ul.tab .item-wrapper li span.props:nth-child(3) {
   font-size: 14px;
 }
 
-.widget ul.tab .item-wrapper:hover {
+.widget .tabs-wrapper ul.tab .item-wrapper:hover {
   background: #ddd;
   padding-left: 25px;
   border-bottom-color: #bbb;
 }
 
-.widget ul.active-tab {
+.widget .tabs-wrapper ul.active-tab {
   height: auto;
   opacity: 1;
   visibility: visible;
 }
 
-.widget ul .graph-wrapper {
+.widget .tabs-wrapper ul .graph-wrapper {
   text-align: center;
 }
 
-.widget ul .graph-wrapper h1 {
+.widget .tabs-wrapper ul .graph-wrapper h1 {
   margin: 130px 0;
 }
 
