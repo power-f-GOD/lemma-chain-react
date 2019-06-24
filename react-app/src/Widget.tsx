@@ -96,27 +96,15 @@ class Widget extends React.Component<{}, StateObject>
 
   handleTabToggle = (e: React.MouseEvent<HTMLButtonElement>): void =>
   {
-    let activeTabName: string,
-        tabLinks: HTMLButtonElement[],
-        tabs: HTMLUListElement[];
+    let activeTabName: string;
 
     //get all tab and tabLink elements
     this.activeTabLink = e.currentTarget;
     activeTabName = this.activeTabLink.getAttribute('data-tab-name');
     this.activeTab = this.findNode(this, `.${activeTabName}`);
-    tabLinks = this.findNode(this, '.tab-link');
-    tabs = this.findNode(this, '.tab');
-
-    //remove all 'active' classNames from tabs and links.
-    tabLinks.forEach((tabLink, i) =>
-    {
-      tabLink.classList.remove('active-tab-link');
-      tabs[i].classList.remove('active-tab');
-    });
-    //add 'active' classNames to active tab and link
-    this.activeTabLink.classList.add('active-tab-link');
+    //HACK: see Dropdown.tsx for code used to remove 'active' classNames from inactive elements (tabs/tab-links)
     this.activeTab.classList.add('active-tab');
-    
+
     this.setState({
       dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
       activeTabName: activeTabName,
@@ -208,9 +196,7 @@ class Widget extends React.Component<{}, StateObject>
   {
     let past: object,
         pastIndex = this.history.length - 2,
-        backInTime: object,
-        tabLinks: HTMLButtonElement[] = this.findNode(this, '.tab-link'),
-        tabs: HTMLUListElement[] = this.findNode(this, '.tab');
+        backInTime: object;
 
     if (pastIndex >= 0 && this.history[pastIndex])
       this.setState(() => {
@@ -220,17 +206,9 @@ class Widget extends React.Component<{}, StateObject>
       }); 
     else { return this.setState({historyExists: false}); }
 
-    //remove all current active tab and tablink classes
-    tabLinks.forEach((tabLink, i) => 
-    {
-      tabLink.classList.remove('active-tab-link');
-      tabs[i].classList.remove('active-tab');
-    });
     //reset active tab and tabLink to active tab and tabLink in the past
     this.activeTab = this.findNode(this, `.${this.history[pastIndex].activeTabName}`);
-    this.activeTab.classList.add('active-tab');
     this.activeTabLink = this.findNode(this, `.${this.history[pastIndex].activeTabLinkName}`);
-    this.activeTabLink.classList.add('active-tab-link');
   
     //remove/delete past future having travelled back in time
     this.history.pop();                 

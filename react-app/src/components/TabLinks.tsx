@@ -14,19 +14,22 @@ export default function TabLinks(props: Props)
         style={{width: props.state.historyExists ? 55 : 0}}
       >❮</button>
       <button
-        className='required-tab-link tab-link active-tab-link'
+        className={`required-tab-link tab-link 
+          ${/required/.test(props.state.activeTabName) ? 'active-tab-link' : ''}`}
         title='Required references'
         data-tab-name='required-tab'
         onClick={props.handleTabToggle}
       >Required</button>
       <button
-        className='recommended-tab-link tab-link'
+        className={`recommended-tab-link tab-link 
+          ${/recommended/.test(props.state.activeTabName) ? 'active-tab-link' : ''}`}
         title='Recommended references'
         data-tab-name='recommended-tab'
         onClick={props.handleTabToggle}
       >Recommended</button>
       <button
-        className="graph-tab-link tab-link"
+        className={`graph-tab-link tab-link
+          ${/graph/.test(props.state.activeTabName) ? 'active-tab-link' : ''}`}
         title='View graph'
         data-tab-name='graph-tab'
         style={{background: /graph/.test(props.state.activeTabName) ? 'rgb(12, 179, 225)' : ''}}

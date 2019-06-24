@@ -24,7 +24,8 @@ function Dropdown(props: Props)
         <div className='tab-items-wrapper graph-wrapper'>
           <h1 className='title'>GRAPH BE VISUALIZED!</h1>
         </div>;
-  
+
+
   return (
     <section className='dropdown' style={{height: props.state.dropdownCurHeight}}>
       <TabLinks
@@ -44,7 +45,10 @@ function Dropdown(props: Props)
           }}
         />
         <div className='tabs-wrapper' style={{opacity: props.state.refIsLoading ? 0 : 1}}>
-          <ul className={`tab required-tab active-tab ${!props.isViewedWithMobile ? 'useCustomScrollBar' : null}`}> 
+          <ul className={`tab required-tab
+            ${/required/.test(props.state.activeTabName) ? 'active-tab' : ''}
+            ${!props.isViewedWithMobile ? 'useCustomScrollBar' : ''}`}
+          > 
             {
               props.state.errOccurred ?
                 <DisplayStatusMessage
@@ -66,7 +70,11 @@ function Dropdown(props: Props)
                 : <DisplayStatusMessage typeofMsg='no-ref' ref_type='required' />
             }
           </ul>
-          <ul className={`tab recommended-tab ${!props.isViewedWithMobile ? 'useCustomScrollBar' : ''}`}>
+
+          <ul className={`tab recommended-tab
+            ${/recommended/.test(props.state.activeTabName) ? 'active-tab' : ''}
+            ${!props.isViewedWithMobile ? 'useCustomScrollBar' : ''}`}
+          >
             {
               props.state.errOccurred ?
                 <DisplayStatusMessage
@@ -93,7 +101,11 @@ function Dropdown(props: Props)
                   />
             }
           </ul>
-          <ul className={`tab graph-tab ${!props.isViewedWithMobile ? 'useCustomScrollBar' : ''}`}>
+          
+          <ul className={`tab graph-tab
+            ${/graph/.test(props.state.activeTabName) ? 'active-tab' : ''}
+            ${!props.isViewedWithMobile ? 'useCustomScrollBar' : ''}`}
+          >
             { 
               ifCanVisualizeGraph ? renderGraph
                 : <DisplayStatusMessage
