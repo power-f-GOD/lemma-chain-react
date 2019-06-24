@@ -28,7 +28,6 @@ export interface StateObject
   payload: Payload;
   errOccurred: boolean;
   errMsg: string;
-  endpointLink: string;
 }
 
 
@@ -59,8 +58,7 @@ class Widget extends React.Component<{}, StateObject>
     refIsLoading: false,
     payload: Get_HardCoded_Refs(),
     errOccurred: false,
-    errMsg: '',
-    endpointLink: 'http://localhost:1323'
+    errMsg: ''
   };
 
   height = 0;
@@ -72,6 +70,8 @@ class Widget extends React.Component<{}, StateObject>
   activeTabLink: HTMLButtonElement | any = null;
 
   activeTab: HTMLUListElement | any = null;
+
+  endpointLink: string = /localhost/.test(window.location.pathname) ? 'http://localhost:1323' : 'http://68.183.123.0:1323';
 
   //copy initial/first state object and set at index 0 of history
   history: StateObject[] = [Object.assign({}, this.state)]; 
@@ -143,7 +143,7 @@ class Widget extends React.Component<{}, StateObject>
         refs: [{}]
       }});
       
-      fetch(`${this.state.endpointLink}/${refID}`, init)
+      fetch(`${this.endpointLink}/${refID}`, init)
         .then((response: Response) => response.json())
         .then((data: Payload) =>
         {
