@@ -71,7 +71,7 @@ class Widget extends React.Component<{}, StateObject>
 
   activeTab: HTMLUListElement | any = null;
 
-  endpointLink: string = /localhost/.test(window.location.href) ? 'http://localhost:1323' : 'http://68.183.123.0:1323';
+  endpointLink: string = /localhost/.test(window.location.href) ? 'http://localhost:1323' : '//68.183.123.0:1323';
 
   //copy initial/first state object and set at index 0 of history
   history: StateObject[] = [Object.assign({}, this.state)]; 
