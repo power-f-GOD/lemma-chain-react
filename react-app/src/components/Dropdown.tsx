@@ -48,6 +48,7 @@ function Dropdown(props: Props)
           <ul className={`tab required-tab
             ${/required/.test(props.state.activeTabName) ? 'active-tab' : ''}
             ${!props.isViewedWithMobile ? 'useCustomScrollBar' : ''}`}
+            // style={{opacity: /required/.test(props.state.activeTabName) ? 1 : 0}}
           > 
             {
               props.state.errOccurred ?
@@ -79,6 +80,7 @@ function Dropdown(props: Props)
           <ul className={`tab recommended-tab
             ${/recommended/.test(props.state.activeTabName) ? 'active-tab' : ''}
             ${!props.isViewedWithMobile ? 'useCustomScrollBar' : ''}`}
+            // style={{opacity: /recommended/.test(props.state.activeTabName) ? 1 : 0}}
           >
             {
               props.state.errOccurred ?
@@ -112,6 +114,7 @@ function Dropdown(props: Props)
           <ul className={`tab graph-tab
             ${/graph/.test(props.state.activeTabName) ? 'active-tab' : ''}
             ${!props.isViewedWithMobile ? 'useCustomScrollBar' : ''}`}
+            // style={{opacity: /graph/.test(props.state.activeTabName) ? 1 : 0}}
           >
             { 
               ifCanVisualizeGraph ? renderGraph
