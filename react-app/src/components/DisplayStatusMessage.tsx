@@ -15,7 +15,7 @@ export default function DisplayStatusMessage(props: any)
         justifyContent: 'center',
         alignItems: 'center',
         color: '#888',
-        fontStyle: 'italic',
+        // fontStyle: 'italic',
         fontSize: 14,
         minHeight: 'auto',
         height: 260

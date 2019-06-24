@@ -34,9 +34,9 @@ function Item(props: Props): JSX.Element
       onClick={(e) => props.handleReferenceClick(e)}
     >
       <li className='item' style={{position: 'relative'}}>
-        <span className='props'>Title: <span className='title'>{props.data.title}</span></span>
-        <span className='props'>Author: <span className='author'>{props.data.author}</span></span>
-        <span className='props'>Ref. ID: <span className="id">{props.id}</span></span>
+        <span className='props'>Title: <b>{props.data.title}</b></span>
+        <span className='props'>Author: {props.data.author}</span>
+        <span className='props'>Ref. ID: <b>{props.id}</b></span>
         <span className='props' style={ref_type_style}>{props.ref_type}</span>
       </li>
     </div>

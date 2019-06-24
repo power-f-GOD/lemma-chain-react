@@ -28,6 +28,7 @@ export interface StateObject
   payload: Payload;
   errOccurred: boolean;
   errMsg: string;
+  endpointLink: string;
 }
 
 
@@ -58,7 +59,8 @@ class Widget extends React.Component<{}, StateObject>
     refIsLoading: false,
     payload: Get_HardCoded_Refs(),
     errOccurred: false,
-    errMsg: ''
+    errMsg: '',
+    endpointLink: 'http://68.183.123.0:1323'
   };
 
   height = 0;
@@ -153,7 +155,7 @@ class Widget extends React.Component<{}, StateObject>
         refs: [{}]
       }});
       
-      fetch(`http://68.183.123.0:1323/${refID}`, init)
+      fetch(`${this.state.endpointLink}/${refID}`, init)
         .then((response: Response) => response.json())
         .then((data: Payload) =>
         {
@@ -268,20 +270,23 @@ class Widget extends React.Component<{}, StateObject>
     if (/(Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone)/i.test(window.navigator.userAgent))
       this.isViewedWithMobile = true;
 
-    //delay till isViewedWithMobile is set 
-    setTimeout(() =>
-    {
-      //now set value of constant Widget height which will also be used in computing loader wrapper height in Dropdown.js
-      this.height = this.findNode(this).offsetHeight;                      
-      this.dropdown = this.findNode(this, '.dropdown');     
-      this.activeTabLink = this.findNode(this, '.active-tab-link');
-      this.activeTab = this.findNode(this, '.required-tab'); 
+    //now set value of constant Widget height which will also be used in computing loader wrapper height in Dropdown.js
+    this.height = this.findNode(this).offsetHeight;                      
+    this.dropdown = this.findNode(this, '.dropdown');     
+    this.activeTabLink = this.findNode(this, '.active-tab-link');
+    this.activeTab = this.findNode(this, '.required-tab');
 
-      //HACK: unset history initial (first state) dropdown height from 0 to current activeTab height to prevent dropdown from resizing to 0 on click of back button assuming history index is at 0 (first state).
+    //HACK: unset history initial (first state) dropdown height from 0 to current activeTab height to prevent dropdown from resizing to 0 on click of back button assuming history index is at 0 (first state).
+    //PS: Wait or delay till fonts are loaded before getting height of activeTab in order not to get a height below height of tab with loaded fonts since height is set to auto
+    window.onload = (): any =>
+    {
+      //set maximum height of dropdown to height of three items [before adding scroll bar]
+      let heightRef = this.findNode(this, '.item-wrapper')[0].offsetHeight;
+      this.findNode(this, '.tab').forEach((tab: any) => tab.style.maxHeight = `${heightRef * 3}px`);
       this.history[0].dropdownCurHeight = this.resizeDropdownHeightTo(this.activeTab);
-      //HACK: prevent caret-icon-flip bug if gone back in time to first state i.e. if history index is at 0 on 'back button' click
-      this.history[0].dropdownIsCollapsed = false;                       
-    }, 100);
+    }
+    //HACK: prevent caret-icon-flip bug if gone back in time to first state i.e. if history index is at 0 on 'back button' click
+    this.history[0].dropdownIsCollapsed = false;
   }
 
 

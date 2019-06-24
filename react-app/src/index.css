@@ -3,12 +3,19 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin: 0;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 20px;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   background: #333;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  font-family: "Google Sans", "Roboto Mono", "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
 }
 
 #root {
@@ -24,13 +31,19 @@ body {
   transition: 0.3s, transform 0.15s, -webkit-transform 0.15s;
   outline: none;
   opacity: 1;
+  letter-spacing: 0.75px;
+}
+
+#root {
+  width: 88vw;
+  max-width: 500px;
+  margin: 30px 0;
+  position: relative;
+  height: 45px;
 }
 
 .widget {
-  width: 88vw;
-  margin: 50px 0;
-  min-width: 350px;
-  max-width: 500px;
+  width: 100%;
   background: white;
   border-radius: 5px !important;
   overflow: hidden;
@@ -98,7 +111,7 @@ body {
   border: none;
   cursor: pointer;
   font-size: 14px;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  font-family: "Google Sans", "Roboto Mono", "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
   font-weight: bold;
   color: #eee;
   background: #d264d2;
@@ -167,14 +180,13 @@ body {
   padding: 0;
   margin: 0;
   width: 100%;
-  max-height: 327px;
   overflow-y: auto;
   cursor: pointer;
   opacity: 0;
   height: 0;
   visibility: hidden;
-  -webkit-transition: 1s, opacity 0.5s;
-  transition: 1s, opacity 0.5s;
+  -webkit-transition: 1s;
+  transition: 1s;
 }
 
 .widget ul.tab .item-wrapper {

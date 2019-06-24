@@ -1,5 +1,5 @@
 
-$font: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+$font: 'Google Sans', 'Roboto Mono', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 $hover-grey: #bbb;
 $active-el-bgcolor: white;
 $purple-bg: rgb(145, 0, 145);
@@ -17,8 +17,10 @@ $tab-link-color: #eee;
 body
 {
   display: flex;
-  margin: 0;
+  flex-direction: column;
+  margin: 20px;
   justify-content: center;
+  align-items: center;
   background: #333;
   font-family: $font;
 }
@@ -31,18 +33,26 @@ body
   transition: 0.3s, transform 0.15s;
   outline: none;
   opacity: 1;
+  letter-spacing: 0.75px;
+}
+
+#root
+{
+  width: 88vw;
+  max-width: 500px;
+  margin: 30px 0;
+  position: relative;
+  height: 45px;
 }
 
 .widget
 {
-  width: 88vw;
-  margin: 50px 0;
-  min-width: 350px;
-  max-width: 500px;
+  width: 100%;
   background: $active-el-bgcolor;
   border-radius: 5px !important;
   overflow: hidden;
   position: relative;
+  // height: auto;
   z-index: 0;             //set this to avoid border radius from setting to 0 on ref load
   box-shadow: 0 5px 10px #111, 
               0 10px 20px #111,
@@ -174,13 +184,12 @@ body
     padding: 0;
     margin: 0;
     width: 100%;
-    max-height: 327px;
     overflow-y: auto;
     cursor: pointer;
     opacity: 0;
     height: 0;
     visibility: hidden;
-    transition: 1s, opacity 0.5s;
+    transition: 1s;
     
     
     &.tab
