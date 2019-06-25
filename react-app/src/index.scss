@@ -60,7 +60,7 @@ body
   .dropdown
   {
     height: auto;
-    transition: 0.35s;
+    transition: 0.3s;
   }
   
   .ref-tab-wrapper
@@ -81,7 +81,7 @@ body
     .caret-icon
     {
       font-weight: bold;
-      transition: 0.35s;
+      transition: 0.3s;
       transform: rotate(90deg);
     }
 
@@ -112,7 +112,7 @@ body
       color: $tab-link-color;
       background: $tab-link-bgcolor;
       position: relative;
-      transition: 0.35s;
+      transition: 0.3s;
 
       &.back-btn,
       &.graph-tab-link
@@ -183,7 +183,7 @@ body
   {
     border-radius: 0 0 5px 5px;
     overflow: hidden;
-    transition: 0.35s;
+    transition: 0.3s;
 
 
     ul
@@ -209,7 +209,7 @@ body
           background: white;
           border-bottom: 1px solid #ddd;
           letter-spacing: $default-letter-spacing;
-          transition: 0.35s;
+          transition: 0.3s;
   
           li
           {

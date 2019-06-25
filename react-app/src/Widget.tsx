@@ -128,7 +128,8 @@ class Widget extends React.Component<{}, StateObject>
             'Content-Type': 'application/json',
             'X-AUTH-ACCOUNT': 'alpha',
             'X-AUTH-PASSWORD': 'password123'
-          }
+          },
+          mode: 'cors'
         };
 
     //first set loading to true to visualize fadeout
@@ -142,8 +143,10 @@ class Widget extends React.Component<{}, StateObject>
         id: '',
         refs: [{}]
       }});
+
+      let url = `${this.endpointLink}/${refID}`;
       
-      fetch(`${this.endpointLink}/${refID}`, init)
+      fetch(url, init)
         .then((response: Response) => response.json())
         .then((data: Payload) =>
         {

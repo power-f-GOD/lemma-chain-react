@@ -28,7 +28,7 @@ export default function Loader(props: Props)
         display: 'inline-block',
         borderRadius: '50%',
         marginRight: 5,
-        boxShadow: '1px 1px 2px #555'
+        boxShadow: '1px 1px 1px #333'
       },
       loaderWrapperStyle: CSSProperties = 
       {

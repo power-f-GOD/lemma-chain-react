@@ -50,8 +50,8 @@ body {
 
 .widget .dropdown {
   height: auto;
-  -webkit-transition: 0.35s;
-  transition: 0.35s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 
 .widget .ref-tab-wrapper {
@@ -75,8 +75,8 @@ body {
 
 .widget .ref-tab-wrapper .caret-icon {
   font-weight: bold;
-  -webkit-transition: 0.35s;
-  transition: 0.35s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
   -webkit-transform: rotate(90deg);
           transform: rotate(90deg);
 }
@@ -116,8 +116,8 @@ body {
   color: #eee;
   background: #d264d2;
   position: relative;
-  -webkit-transition: 0.35s;
-  transition: 0.35s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 
 .widget .tab-links-wrapper button.back-btn, .widget .tab-links-wrapper button.graph-tab-link {
@@ -178,8 +178,8 @@ body {
 .widget .tabs-wrapper {
   border-radius: 0 0 5px 5px;
   overflow: hidden;
-  -webkit-transition: 0.35s;
-  transition: 0.35s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 
 .widget .tabs-wrapper ul {
@@ -201,8 +201,8 @@ body {
   background: white;
   border-bottom: 1px solid #ddd;
   letter-spacing: 0.75px;
-  -webkit-transition: 0.35s;
-  transition: 0.35s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 
 .widget .tabs-wrapper ul.tab .item-wrapper li {
