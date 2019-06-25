@@ -229,7 +229,6 @@ body {
 
 .widget .tabs-wrapper ul.tab .item-wrapper:hover {
   background: #ddd;
-  padding-left: 25px;
   border-bottom-color: #bbb;
 }
 
