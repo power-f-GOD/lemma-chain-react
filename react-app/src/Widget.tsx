@@ -119,18 +119,7 @@ class Widget extends React.Component<{}, StateObject>
    */
   handleReferenceClick = (e: React.MouseEvent<HTMLDivElement>): void =>
   {
-    let refID: any = e.currentTarget.dataset.id,
-        init: RequestInit = {
-          method: 'GET',
-          cache: 'no-cache',
-          //PLACEHOLDER: header props values should be gotten from the users session (or maybe not) and not hardcoded as this
-          headers: {
-            'Content-Type': 'application/json',
-            'X-AUTH-ACCOUNT': 'alpha',
-            'X-AUTH-PASSWORD': 'password123'
-          },
-          mode: 'cors'
-        };
+    let refID: any = e.currentTarget.dataset.id;
 
     //first set loading to true to visualize fadeout
     this.setState({refIsLoading: true});
@@ -146,7 +135,7 @@ class Widget extends React.Component<{}, StateObject>
 
       let url = `${this.endpointLink}/${refID}`;
       
-      fetch(url, init)
+      fetch(url)
         .then((response: Response) => response.json())
         .then((data: Payload) =>
         {
