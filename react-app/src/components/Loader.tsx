@@ -27,8 +27,7 @@ export default function Loader(props: Props)
         background: props.attributes.color || '#333',
         display: 'inline-block',
         borderRadius: '50%',
-        marginRight: 5,
-        boxShadow: '1px 1px 1px #333'
+        marginRight: 5
       },
       loaderWrapperStyle: CSSProperties = 
       {

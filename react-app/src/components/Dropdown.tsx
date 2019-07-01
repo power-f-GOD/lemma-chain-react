@@ -3,13 +3,13 @@ import TabLinks from './TabLinks';
 import Item from './Item';
 import Loader from './Loader';
 import DisplayStatusMessage from './DisplayStatusMessage';
-import { StateObject } from '../Widget';
+import { State } from '../Widget';
 
 
 
 export interface Props
 {
-  state: StateObject;
+  state: State;
   [key: string]: any;
 }
 

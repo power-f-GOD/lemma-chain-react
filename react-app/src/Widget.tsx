@@ -16,7 +16,7 @@ interface Payload
 
 
 
-export interface StateObject
+export interface State
 {
   dropdownIsCollapsed: boolean;
   dropdownCurHeight: number;
@@ -32,7 +32,7 @@ export interface StateObject
 
 
 
-class Widget extends React.Component<{}, StateObject>
+class Widget extends React.Component<{}, State>
 {
   /**
    * dropdownIsCollapsed: boolean for dropdown toggle
@@ -47,7 +47,7 @@ class Widget extends React.Component<{}, StateObject>
    * history: An array of state objects; will hold the different state changes in order to enable and set state going back in time
    */
 
-  state: StateObject = 
+  state: State = 
   {
     dropdownIsCollapsed: true,
     dropdownCurHeight: 0,
@@ -71,10 +71,10 @@ class Widget extends React.Component<{}, StateObject>
 
   activeTab: HTMLUListElement | any = null;
 
-  endpointLink: string = /localhost/.test(window.location.href) ? 'http://localhost:1323' : 'http//68.183.123.0:1323';
+  endpointLink: string = /localhost/.test(window.location.href) ? 'localhost:1323' : '68.183.123.0:1323';
 
   //copy initial/first state object and set at index 0 of history
-  history: StateObject[] = [Object.assign({}, this.state)]; 
+  history: State[] = [Object.assign({}, this.state)]; 
 
   
 
@@ -133,7 +133,7 @@ class Widget extends React.Component<{}, StateObject>
         refs: [{}]
       }});
 
-      let url = `${this.endpointLink}/${refID}`;
+      let url = `http://${this.endpointLink}/${refID}`;
       
       fetch(url)
         .then((response: Response) => response.json())
