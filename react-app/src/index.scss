@@ -38,8 +38,8 @@ body
 
 #root
 {
-  width: 88vw;
-  max-width: 500px;
+  width: 89vw;
+  max-width: 475px;
   margin: 30px 0;
   position: relative;
   height: 45px;
@@ -98,11 +98,12 @@ body
     display: flex;
     position: relative;
     z-index: 1;
+    height: auto;
 
     button
     {
       width: 50%;
-      padding: 14px 10px;
+      padding: 15px 10px;
       display: inline-flex;
       justify-content: space-around;
       align-items: center;
@@ -111,6 +112,7 @@ body
       font-size: 14px;
       font-family: $font;
       font-weight: bold;
+      height: 46px;
       letter-spacing: $default-letter-spacing;
       color: $tab-link-color;
       background: $tab-link-bgcolor;
@@ -138,7 +140,6 @@ body
       &.graph-tab-link
       {
         font-size: 20px;
-        padding: 4px;
         background: $graph-tab-link-bgcolor;
         color: $graph-tab-link-color !important;
         
@@ -154,6 +155,12 @@ body
       {
         border-right: 2px solid $tab-link-bgcolor;
         border-left: 2px solid $tab-link-bgcolor;
+
+        &:hover
+        {
+          background: $tab-link-hover-bgcolor;
+          color: white;
+        }
         
         &.active-tab-link
         {
@@ -175,13 +182,7 @@ body
         }
       }
 
-      &:hover
-      {
-        background: $tab-link-hover-bgcolor; 
-        transform: scale(1.04);
-        color: white;
-        z-index: 1;
-      }
+      
     }
   }
 

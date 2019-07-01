@@ -31,8 +31,8 @@ body {
 }
 
 #root {
-  width: 88vw;
-  max-width: 500px;
+  width: 89vw;
+  max-width: 475px;
   margin: 30px 0;
   position: relative;
   height: 45px;
@@ -97,11 +97,12 @@ body {
   display: flex;
   position: relative;
   z-index: 1;
+  height: auto;
 }
 
 .widget .tab-links-wrapper button {
   width: 50%;
-  padding: 14px 10px;
+  padding: 15px 10px;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -115,6 +116,7 @@ body {
   font-size: 14px;
   font-family: "Google Sans", "Roboto Mono", "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
   font-weight: bold;
+  height: 46px;
   letter-spacing: 0.75px;
   color: #eee;
   background: #d264d2;
@@ -140,7 +142,6 @@ body {
 
 .widget .tab-links-wrapper button.graph-tab-link {
   font-size: 20px;
-  padding: 4px;
   background: #910091;
   color: yellow !important;
 }
@@ -158,6 +159,11 @@ body {
   border-left: 2px solid #d264d2;
 }
 
+.widget .tab-links-wrapper button.recommended-tab-link:hover, .widget .tab-links-wrapper button.required-tab-link:hover {
+  background: #eb7deb;
+  color: white;
+}
+
 .widget .tab-links-wrapper button.recommended-tab-link.active-tab-link, .widget .tab-links-wrapper button.required-tab-link.active-tab-link {
   background: white;
   color: #910091;
@@ -173,14 +179,6 @@ body {
   content: ' ‹';
   font-size: 15px;
   color: inherit;
-}
-
-.widget .tab-links-wrapper button:hover {
-  background: #eb7deb;
-  -webkit-transform: scale(1.04);
-          transform: scale(1.04);
-  color: white;
-  z-index: 1;
 }
 
 .widget .tabs-wrapper {
