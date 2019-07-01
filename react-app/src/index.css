@@ -95,8 +95,6 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-shadow: -10px 1px 10px #ccc;
-          box-shadow: -10px 1px 10px #ccc;
   position: relative;
   z-index: 1;
 }
@@ -153,6 +151,11 @@ body {
 
 .widget .tab-links-wrapper button[class^=active] {
   background: white;
+}
+
+.widget .tab-links-wrapper button.recommended-tab-link, .widget .tab-links-wrapper button.required-tab-link {
+  border-right: 2px solid #d264d2;
+  border-left: 2px solid #d264d2;
 }
 
 .widget .tab-links-wrapper button.recommended-tab-link.active-tab-link, .widget .tab-links-wrapper button.required-tab-link.active-tab-link {

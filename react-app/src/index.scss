@@ -96,7 +96,6 @@ body
   .tab-links-wrapper
   {
     display: flex;
-    box-shadow: -10px 1px 10px #ccc;
     position: relative;
     z-index: 1;
 
@@ -117,6 +116,7 @@ body
       background: $tab-link-bgcolor;
       position: relative;
       transition: 0.3s;
+      
 
       &.back-btn,
       &.graph-tab-link
@@ -152,6 +152,9 @@ body
       &.recommended-tab-link,
       &.required-tab-link
       {
+        border-right: 2px solid $tab-link-bgcolor;
+        border-left: 2px solid $tab-link-bgcolor;
+        
         &.active-tab-link
         {
           background: $active-el-bgcolor;
