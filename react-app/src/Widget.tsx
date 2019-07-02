@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Dropdown from './components/Dropdown';
 import Get_HardCoded_Refs from './JSON_MockUp_Sample';
 import Loader from './components/Loader';
-import vis from 'vis';
+import vis, { Network } from 'vis';
 import { setTimeout } from 'timers';
 
 
@@ -249,22 +249,35 @@ class Widget extends React.Component<{}, State>
   /**
    * @param getGraphNodesAndEdges: gets and pushes graph nodes and edges to network for visualization
    */
-  getGraphNodesAndEdges = (ref: Payload): void =>
+  getGraphNodesAndEdges = (_ref: Payload): void =>
   {
-    let [refHasParents, parents] = [ref.refs ? true : false, ref.refs],
+    let ref: any = Object.assign({}, _ref),
+        refHasParents = _ref.refs ? true : false,
+        //making a copy of refs (parents) to avoid modifying actual parents
+        parents = _ref.refs.map((parent: any) => Object.assign({}, parent)),
         colors = {
+          self: {bg: '#a111a0', bdr: '#710070'},
           required: {bg: '#ff9c10', bdr: '#ef7c00'},
           recommended: {bg: '#20dcff', bdr: '#10bcf0'},
           alien: {bg: '#c0c0c0', bdr: '#b0b0b0'}
         };
+    
+    //using titles of books (refs) as parent/ref id's to avoid appending duplicate book titles to network
+    parents.forEach((parent: any) => {
+      parent._id = parent.id;
+      parent.id = parent.data.title;
+      return parent;
+    });
+    ref._id = ref.id;
+    ref.id = ref.data.title;
 
-    //returns node properties e.g. color, font, background, border etc.
+    //returns object of node properties e.g. color, font, background, border etc.
     let nodeProps = (_ref: Payload): object => 
     {
       let color: any = {};
 
       //i.e. if ref is not alien to current ref (book), proceed to add required/recommended colors
-      if (this.state.payload.refs.find((ref: any) => _ref.id === ref.id))
+      if (this.state.payload.refs.find((ref: any) => _ref.data.title === ref.data.title))
       {
         color.bg = _ref.ref_type === 'required' ? colors.required.bg : colors.recommended.bg;
         color.bdr = _ref.ref_type === 'required' ? colors.required.bdr : colors.recommended.bdr;
@@ -278,17 +291,19 @@ class Widget extends React.Component<{}, State>
         font: {
           size: 16,
           face: 'Google Sans, Roboto Mono, Trebuchet MS',
-          color: !_ref.ref_type ? 'purple' : color.bdr
+          color: !_ref.ref_type ? colors.self.bdr : color.bdr,
+          strokeWidth: 1,
+          strokeColor: 'white'
         },
         color: {
-          background: !_ref.ref_type ? '#cc00cc' : color.bg,
-          border: !_ref.ref_type ? '#a110a1' : color.bdr,
+          background: !_ref.ref_type ? colors.self.bg : color.bg,
+          border: !_ref.ref_type ? colors.self.bdr : color.bdr,
           hover: {
             background: 'white',
-            border: !_ref.ref_type ? '#a110a1' : color.bdr
+            border: !_ref.ref_type ? colors.self.bdr : color.bdr
           },
           highlight: {
-            border: !_ref.ref_type ? '#cc00cc' : color.bdr,
+            border: !_ref.ref_type ? colors.self.bdr : color.bdr,
             background: 'white'
           }
         },
@@ -302,15 +317,16 @@ class Widget extends React.Component<{}, State>
       let parent: any;
       for (parent of parents)
       {
-        if (!this.graph.nodes.find((_obj: any) => _obj.id === parent.id))
-          this.graph.nodes.push(Object.assign({
-            label: parent.id.length > 10 ? `${parent.id.substr(0, 10)}...` : parent.id,
+        if (!this.graph.nodes.find((_obj: any) => _obj.data.title === parent.data.title))
+          this.graph.nodes.unshift(Object.assign({
+            title: `${parent.data.title} #text`,
+            label: parent.data.title.length > 10 ? `${parent.data.title.substr(0, 10)}...` : parent.data.title,
             ...nodeProps(parent)
           }, parent));
 
-        this.graph.edges.push({
-          from: ref.id,
-          to: parent.id,
+        this.graph.edges.unshift({
+          from: ref.data.title,
+          to: parent.data.title,
           arrows: 'to'
         });
         //QUOTE OF THE CENTURY: "To iterate is human, recurse divine."
@@ -318,11 +334,11 @@ class Widget extends React.Component<{}, State>
       }
     }
 
-    if (refHasParents && !this.graph.nodes.find((_obj: any) => _obj.id === ref.id))
+    if (refHasParents && !this.graph.nodes.find((_obj: any) => _obj.data.title === ref.data.title))
     {
-      //first push current node (ref) to nodes before pushing other nodes
-      this.graph.nodes.push(Object.assign({
-        label: ref.id,
+      //first add current node (ref) to nodes before pushing other nodes to network
+      this.graph.nodes.unshift(Object.assign({
+        label: ref.data.title.replace(/\s(\w+)\s(\w+)/, ' $1\n$2'),
         ...nodeProps(ref)
       }, ref));
       pushNodesAndEdges();
@@ -333,6 +349,9 @@ class Widget extends React.Component<{}, State>
 
 
 
+  /**
+   * @param visualizeGraph: renders graph to DOM
+   */
   visualizeGraph = (): void =>
   {
     this.graph = {
@@ -354,9 +373,14 @@ class Widget extends React.Component<{}, State>
         },
         options = {
           nodes: {borderWidth: 1.5},
-          interaction: {hover: true}
+          interaction: {hover: true},
+          manipulation: {enabled: true}
         },
-        network = new vis.Network(container, data, options);
+        network: Network = new vis.Network(container, data, options);
+    
+    network.on('showPopup', id => {
+      console.log(this.graph.nodes.find((obj: any) => obj.id == id));
+    });
   }
 
 
