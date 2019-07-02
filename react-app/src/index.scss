@@ -1,0 +1,372 @@
+
+$font: 'Google Sans', 'Roboto Mono', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+$hover-grey: #bbb;
+$active-el-bgcolor: white;
+$purple-bg: rgb(145, 0, 145);
+$purple-bg-hover: rgb(116, 0, 116);
+$default-font-size: 15px;
+$graph-tab-link-bgcolor: $purple-bg;
+$graph-tab-link-color: yellow;
+$graph-tab-link-hover-bgcolor: rgb(32, 199, 245);
+$tab-link-bgcolor: rgb(210, 100, 210);
+$tab-link-hover-bgcolor: rgb(235, 125, 235);
+$tab-link-color: #eee;
+$default-letter-spacing: 0.75px;
+
+
+
+body
+{
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  font-family: $font;
+  letter-spacing: $default-letter-spacing;
+  color: black;
+}
+
+#root { width: auto; }
+
+*
+{
+  box-sizing: border-box;
+  outline: none;
+}
+
+#root
+{
+  width: 89vw;
+  max-width: 475px;
+  margin: 30px 0;
+  position: relative;
+  height: 45px;
+}
+
+.widget
+{
+  width: 100%;
+  background: $active-el-bgcolor;
+  border-radius: 3px !important;
+  overflow: hidden;
+  position: relative;
+  z-index: 0;             //set this to avoid border radius from setting to 0 on ref load
+  box-shadow: 0px 2px 5px #ccc, 
+              0 3px 10px #ddd,
+              0 4px 15px #ddd,
+              0 5px 20px #ddd;
+  transition: 0.3s;
+  // border: 1px solid red;
+
+  .dropdown
+  {
+    height: auto;
+    transition: 0.3s;
+  }
+  
+  .ref-tab-wrapper
+  {
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    background: $purple-bg;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+    transition: 0.3s;
+    
+    
+    &:hover
+    { background: $purple-bg-hover; }
+
+    .caret-icon
+    {
+      font-weight: bold;
+      transition: 0.3s;
+      transform: rotate(90deg);
+    }
+
+    .flip-caret-icon
+    { transform: rotate(270deg); }
+  }
+
+  .tab-links-wrapper
+  {
+    display: flex;
+    position: relative;
+    z-index: 1;
+    height: auto;
+
+    button
+    {
+      width: 50%;
+      padding: 15px 10px;
+      display: inline-flex;
+      justify-content: space-around;
+      align-items: center;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-family: $font;
+      font-weight: bold;
+      height: 46px;
+      letter-spacing: $default-letter-spacing;
+      color: $tab-link-color;
+      background: $tab-link-bgcolor;
+      position: relative;
+      transition: 0.3s;
+      
+
+      &.back-btn,
+      &.graph-tab-link
+      {
+        width: 55px;
+        padding: 0;
+      }
+
+      &.back-btn
+      {
+        font-size: 18px;
+        background: $purple-bg;
+        color: white !important;
+        
+        &:hover
+        { background: $purple-bg-hover; }
+      }
+
+      &.graph-tab-link
+      {
+        font-size: 20px;
+        background: $graph-tab-link-bgcolor;
+        color: $graph-tab-link-color !important;
+        
+        &:hover
+        { background: $graph-tab-link-hover-bgcolor !important; }
+      }
+
+      &[class^=active]
+      { background: $active-el-bgcolor; }
+
+      &.recommended-tab-link,
+      &.required-tab-link
+      {
+        border-right: 2px solid $tab-link-bgcolor;
+        border-left: 2px solid $tab-link-bgcolor;
+
+        &:hover
+        {
+          background: $tab-link-hover-bgcolor;
+          color: white;
+        }
+        
+        &.active-tab-link
+        {
+          background: $active-el-bgcolor;
+          color: $purple-bg;
+
+          &:before
+          {
+            content: '› ';
+            font-size: $default-font-size;
+            color: inherit;
+          }
+          &:after
+          {
+            content: ' ‹';
+            font-size: $default-font-size;
+            color: inherit;
+          }
+        }
+      }
+
+      
+    }
+  }
+
+
+  .tabs-wrapper
+  {
+    border-radius: 0 0 4px 4px;
+    overflow: hidden;
+    transition: 0.3s;
+
+
+    ul
+    {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      overflow-y: auto;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      position: absolute;
+      transition: 0.4s;
+      border-radius: 0 0 4px 4px;
+      border: 2px solid $tab-link-bgcolor;
+      border-top: none;
+      
+      
+      &.tab
+      {
+        .item-wrapper
+        {
+          padding: 22px 18px;
+          width: 100%;
+          background: white;
+          border-bottom: 1px solid #eee;
+          letter-spacing: $default-letter-spacing;
+          transition: 0.3s;
+          color: black;
+  
+          li
+          {
+            margin-left: 18px;
+            list-style-type: decimal;
+            padding-left: 10px;
+  
+            span
+            {
+              &.props
+              { display: block; }
+  
+              &.props:nth-child(1),
+              &.props:nth-child(2)
+              { margin-bottom: 5px; }
+  
+              &.title,
+              &.id
+              { font-weight: bold; }
+  
+              &.props:nth-child(3)
+              { font-size: 14px; }
+            }
+          }
+  
+          &:hover
+          {
+            background: #eee;
+            border-bottom-color: #d8d8d8;
+          }
+        }
+      }
+  
+      &.active-tab
+      {
+        height: auto;
+        opacity: 1;
+        visibility: visible;
+      }
+  
+      .graph-wrapper
+      {
+        text-align: center;
+        min-height: 250px;
+        padding: 10px;
+        position: relative;
+        
+        h5 { margin: 5px 0 10px 0; }
+
+        #graph
+        {
+          width: 100%;
+          height: 250px;
+          border: 1px solid #eee;
+        }
+
+        #graph-key
+        {
+          position: absolute;
+          bottom: 15px;
+          left: 18px;
+          font-size: 9px;
+          text-align: left;
+
+          .key {
+            height: 10px;
+            width: 10px;
+            background: orange;
+            display: inline-block;
+            margin: 0;
+          }
+
+          .key-book
+          { background: #a110a1; }
+
+          .key-required
+          { background: #ef7c00; }
+
+          .key-recommended
+          { background: #10bcf0; }
+
+          .key-alien
+          { background: #b0b0b0; }
+        }
+      }
+    }
+  }
+}
+
+
+.fade-out
+{
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+
+.loader-circle
+{
+  animation: scale 1s infinite;
+}
+
+.loader-circle:nth-of-type(1)
+{ animation-delay: 0.25s; }
+
+.loader-circle:nth-of-type(2)
+{ animation-delay: 0.5s; }
+
+.loader-circle:nth-of-type(3)
+{ animation-delay: 0.75s; }
+
+@keyframes scale
+{
+  0% {transform: scale(1.0)}
+  50% {transform: scale(0.25)}
+  100% {transform: scale(1.0)}
+}
+
+
+.isViewedWithMobile
+{
+  .graph-tab,
+  .graph-tab-link
+  { display: none !important; }
+}
+
+.useCustomScrollBar
+{
+  &::-webkit-scrollbar
+  { width: 10px; }
+
+  &::-webkit-scrollbar-track
+  {
+    background: $tab-link-bgcolor;
+    border-radius: 0 0 0 4px;
+  }
+
+  &::-webkit-scrollbar-thumb
+  {
+    background: $purple-bg-hover;
+    border-radius: 0 0 4px 4px;
+  }
+}
+
+
+
+
+
+
