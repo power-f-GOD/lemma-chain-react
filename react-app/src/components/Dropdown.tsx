@@ -29,7 +29,7 @@ function Dropdown(props: Props)
             <span className='key key-book'></span> book<br />
             <span className='key key-required'></span> required<br />
             <span className='key key-recommended'></span> recommended<br />
-            <span className='key key-alien'></span> alien
+            <span className='key key-alien'></span> other
           </div>
         </div>;
 
