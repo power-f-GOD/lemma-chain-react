@@ -30,6 +30,8 @@ export interface State
   payload: Payload;
   errOccurred: boolean;
   errMsg: string;
+  graphNodeIsHovered: boolean;
+  nodeIsActive: boolean
 }
 
 
@@ -60,7 +62,9 @@ class Widget extends React.Component<{}, State>
     refIsLoading: false,
     payload: Get_HardCoded_Refs(),
     errOccurred: false,
-    errMsg: ''
+    errMsg: '',
+    graphNodeIsHovered: false,
+    nodeIsActive: false
   };
 
   height = 0;
@@ -272,7 +276,7 @@ class Widget extends React.Component<{}, State>
     ref.id = ref.data.title;
 
     //returns object of node properties e.g. color, font, background, border etc.
-    let nodeProps = (_ref: Payload): object => 
+    let nodeProps = (_ref: Payload) => 
     {
       let color: any = {};
 
@@ -317,28 +321,36 @@ class Widget extends React.Component<{}, State>
       let parent: any;
       for (parent of parents)
       {
+        //prepare and push nodes for visualization
         if (!this.graph.nodes.find((_obj: any) => _obj.data.title === parent.data.title))
           this.graph.nodes.unshift(Object.assign({
-            title: `${parent.data.title} #text`,
-            label: parent.data.title.length > 10 ? `${parent.data.title.substr(0, 10)}...` : parent.data.title,
+            title: parent.data.title,
+            label: parent.data.title.length > 10 ? `${parent.data.title.substr(0, 10).trim()}...` : parent.data.title,
             ...nodeProps(parent)
           }, parent));
 
+        //prepare and push edges for visualization
         this.graph.edges.unshift({
           from: ref.data.title,
           to: parent.data.title,
-          arrows: 'to'
+          label: parent.ref_type === 'required' ? 'rq' : 'rc',
+          arrows: 'to',
+          length: 150,
+          font: {...nodeProps(parent).font, size: 9}
         });
-        //QUOTE OF THE CENTURY: "To iterate is human, recurse divine."
+
+        //QUOTE OF THE CENTURY: "To iterate is human, to recurse divine." - L. Peter Deutsch :D
         this.getGraphNodesAndEdges(parent);
       }
     }
 
+    //i.e. if 'current' book (ref) has parents and itself has not yet been added to nodes (network), proceed to add
     if (refHasParents && !this.graph.nodes.find((_obj: any) => _obj.data.title === ref.data.title))
     {
       //first add current node (ref) to nodes before pushing other nodes to network
-      this.graph.nodes.unshift(Object.assign({
-        label: ref.data.title.replace(/\s(\w+)\s(\w+)/, ' $1\n$2'),
+      this.graph.nodes.unshift(Object.assign(
+      {
+        label: ref.data.title.replace(/\s(\w+|\d+)\s(\w+|\d+)/, ' $1\n$2'),
         ...nodeProps(ref)
       }, ref));
       pushNodesAndEdges();
@@ -361,26 +373,61 @@ class Widget extends React.Component<{}, State>
 
     this.getGraphNodesAndEdges(this.state.payload);
 
-        // create an array with nodes
+        //create an array with nodes
     let nodes = new vis.DataSet(this.graph.nodes),
-        // create an array with edges
+        //create an array with edges
         edges = new vis.DataSet(this.graph.edges),
-        // create a network
         container: HTMLDivElement = this.findNode(this, '#graph'),
+        //set graph data
         data = {
           nodes: nodes,
           edges: edges
         },
+        //set graph options
         options = {
           nodes: {borderWidth: 1.5},
-          interaction: {hover: true},
-          manipulation: {enabled: true}
+          interaction: {hover: true}
         },
-        network: Network = new vis.Network(container, data, options);
+        //create a network
+        network: Network = new vis.Network(container, data, options),
+        graphTooltipEl: HTMLDivElement = this.findNode(this, '.graph-tooltip');
+        
+    let moveAndUpdateGraphTooltip = (params: any): void => 
+        {
+          let label: string = !params.node ? params.nodes[0] : params.node,
+              currentNode = this.graph.nodes.find((node: any) => label === node.data.title);
+          graphTooltipEl.innerHTML = `${currentNode.data.title}<br /><i style='font-size: 10px;'>${currentNode.data.author}</i>`;
+          graphTooltipEl.style.left = `${Math.ceil(params.pointer.DOM.x - 10)}px`;
+          graphTooltipEl.style.top = `${Math.ceil(params.pointer.DOM.y - 15)}px`;
+        };
     
-    network.on('showPopup', id => {
-      console.log(this.graph.nodes.find((obj: any) => obj.id == id));
+    //network nodes event listeners
+    network.on('selectNode', params =>
+    {
+      this.setState({
+        graphNodeIsHovered: true,
+        nodeIsActive: true
+      })
+      moveAndUpdateGraphTooltip(params);
     });
+    network.on('deselectNode', () => 
+      this.setState({
+        graphNodeIsHovered: false,
+        nodeIsActive: false
+      })
+    );
+    network.on('hoverNode', params => 
+    {
+      if (!this.state.nodeIsActive)
+      {
+        this.setState({graphNodeIsHovered: true});
+        moveAndUpdateGraphTooltip(params);
+      }
+    });
+    network.on('blurNode', () => this.setState({graphNodeIsHovered: this.state.nodeIsActive ? true : false}));
+    network.on('zoom', () => this.setState({graphNodeIsHovered: false}));
+    network.on('dragStart', () => this.setState({graphNodeIsHovered: false}));
+    network.on('dragEnd', () => this.setState({graphNodeIsHovered: false}));
   }
 
 

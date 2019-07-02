@@ -22,15 +22,16 @@ function Dropdown(props: Props)
       ifCanVisualizeGraph: boolean = (requiredRefExists || recommendedRefExists) && !props.state.errOccurred,
       renderGraph: React.ReactElement = 
         <div className='tab-items-wrapper graph-wrapper'>
-          <h5 className='title'>Graph (Node) Visualization of Ref:</h5>
+          <h5 className='title'>Graph (Node) Visualization of Refs:</h5>
           <div id='graph'></div>
           <div id='graph-key'>
             Key:<br />
             <span className='key key-book'></span> book<br />
-            <span className='key key-required'></span> required<br />
-            <span className='key key-recommended'></span> recommended<br />
+            <span className='key key-required'></span> required (rq)<br />
+            <span className='key key-recommended'></span> recommended (rc)<br />
             <span className='key key-alien'></span> other
           </div>
+          <span className={`graph-tooltip ${props.state.graphNodeIsHovered ? '' : 'fade-out'}`}></span>
         </div>;
 
 

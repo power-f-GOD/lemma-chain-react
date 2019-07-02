@@ -308,6 +308,39 @@ body
           .key-alien
           { background: #b0b0b0; }
         }
+
+        .graph-tooltip 
+        {
+          visibility: visible;
+          background-color: #222;
+          display: inline-flex;
+          flex-wrap: nowrap;
+          flex-direction: column;
+          color: #fff;
+          font-size: 13px;
+          border-radius: 3px;
+          padding: 5px 8px;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          opacity: 1;
+          box-shadow: 1px 1px 4px #555;
+          transition: 0.35s;
+
+          &::after 
+          {
+            content: " ";
+            position: absolute;
+            top: 95%; /* At the bottom of the tooltip */
+            left: 25px;
+            margin-left: -10px;
+            border-width: 10px;
+            border-left-width: 5px;
+            border-right-width: 5px;
+            border-style: solid;
+            border-color: #222 transparent transparent transparent;
+          }
+        }
       }
     }
   }

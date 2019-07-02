@@ -300,6 +300,46 @@ body {
   background: #b0b0b0;
 }
 
+.widget .tabs-wrapper ul .graph-wrapper .graph-tooltip {
+  visibility: visible;
+  background-color: #222;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  color: #fff;
+  font-size: 13px;
+  border-radius: 3px;
+  padding: 5px 8px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  opacity: 1;
+  -webkit-box-shadow: 1px 1px 4px #555;
+          box-shadow: 1px 1px 4px #555;
+  -webkit-transition: 0.35s;
+  transition: 0.35s;
+}
+
+.widget .tabs-wrapper ul .graph-wrapper .graph-tooltip::after {
+  content: " ";
+  position: absolute;
+  top: 95%;
+  /* At the bottom of the tooltip */
+  left: 25px;
+  margin-left: -10px;
+  border-width: 10px;
+  border-left-width: 5px;
+  border-right-width: 5px;
+  border-style: solid;
+  border-color: #222 transparent transparent transparent;
+}
+
 .fade-out {
   opacity: 0 !important;
   visibility: hidden !important;
