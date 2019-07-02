@@ -5,4 +5,7 @@
 [0702/042428.676:ERROR:crash_report_database_win.cc(428)] unexpected header
 [0702/072821.611:ERROR:crash_report_database_win.cc(428)] unexpected header
 [0702/114840.016:ERROR:crash_report_database_win.cc(428)] unexpected header
+<<<<<<< HEAD
 [0702/121842.775:ERROR:crash_report_database_win.cc(428)] unexpected header
+=======
+>>>>>>> b35119f5af2c8aef35166cf4c73c923741b0831d

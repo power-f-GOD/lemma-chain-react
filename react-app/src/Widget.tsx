@@ -308,7 +308,7 @@ class Widget extends React.Component<{}, State>
           }
         },
         shape: 'dot',
-        size: 18
+        size: 20
       };
     };
 
