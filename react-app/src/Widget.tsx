@@ -396,9 +396,9 @@ class Widget extends React.Component<{}, State>
         {
           let label: string = !params.node ? params.nodes[0] : params.node,
               currentNode = this.graph.nodes.find((node: any) => label === node.data.title);
-          graphTooltipEl.innerHTML = `${currentNode.data.title}<br /><i style='font-size: 10px;'>${currentNode.data.author}</i>`;
+          graphTooltipEl.innerHTML = `${currentNode.data.title}<br /><i style='font-size: 10px;'>${!params.node ? currentNode.data.author : ''}</i>`;
           graphTooltipEl.style.left = `${Math.ceil(params.pointer.DOM.x - 10)}px`;
-          graphTooltipEl.style.top = `${Math.ceil(params.pointer.DOM.y - 15)}px`;
+          graphTooltipEl.style.top = `${Math.ceil(params.pointer.DOM.y - (!params.node ? 15 : 0))}px`;
         };
     
     //network nodes event listeners
