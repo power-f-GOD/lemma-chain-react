@@ -22,7 +22,8 @@ function Dropdown(props: Props)
       ifCanVisualizeGraph: boolean = (requiredRefExists || recommendedRefExists) && !props.state.errOccurred,
       renderGraph: React.ReactElement = 
         <div className='tab-items-wrapper graph-wrapper'>
-          <h1 className='title'>GRAPH BE VISUALIZED!</h1>
+          <h5 className='title'>Graph (Node) Visualization of Ref:</h5>
+          <div id='graph'></div>
         </div>;
 
 

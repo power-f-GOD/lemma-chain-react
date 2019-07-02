@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Dropdown from './components/Dropdown';
 import Get_HardCoded_Refs from './JSON_MockUp_Sample';
 import Loader from './components/Loader';
+import vis from 'vis';
 
 
 
@@ -257,12 +258,120 @@ class Widget extends React.Component<{}, State>
     }
     //HACK: prevent caret-icon-flip bug if gone back in time to first state i.e. if history index is at 0 on 'back button' click
     this.history[0].dropdownIsCollapsed = false;
+
+    let node: Object[] = [],
+        edge: Object[] = [];
+
+    function getNodesAndEdges(obj: Payload)
+    {
+      let [objHasParents, parents] = [obj.refs ? true : false, obj.refs],
+          color = {
+            required: {bg: 'darkorange', bdr: '#d77e10'},
+            recommended: {bg: 'skyblue', bdr: 'rgb(12, 179, 225)'}
+          };
+
+      let nodeProps = (obj: Payload) => ({
+        font: {
+          size: 16,
+          face: 'Google Sans, Roboto Mono, Trebuchet MS',
+          color: !obj.ref_type ? 'purple' : (obj.ref_type === 'required' ? color.required.bdr : color.recommended.bdr)
+        },
+        color: {
+          background: !obj.ref_type ? 'purple' : (obj.ref_type === 'required' ? color.required.bg : color.recommended.bg),
+          border: !obj.ref_type ? 'rgb(215, 105, 215)' : (obj.ref_type === 'required' ? color.required.bdr : color.recommended.bdr),
+          hover: {
+            background: 'white',
+            border: !obj.ref_type ? '#c253c2' : (obj.ref_type === 'required' ? color.required.bdr : color.recommended.bdr)
+          },
+          highlight: {
+            border: !obj.ref_type ? '#c253c2' : (obj.ref_type === 'required' ? color.required.bdr : color.recommended.bdr),
+            background: 'white'
+          }
+        },
+        shape: 'dot',
+        size: 18
+      });
+
+      let parent: any;
+
+      if (objHasParents && !node.find((_obj: any) => _obj.id === obj.id))
+      {
+        node.push(Object.assign({
+          label: obj.id,
+          ...nodeProps(obj)
+        }, obj));
+        
+        pushNodesAndEdges();
+      }
+      else if (objHasParents)
+        pushNodesAndEdges();
+
+      // console.log(edge);
+
+      function pushNodesAndEdges()
+      {
+        for (parent of parents)
+        {
+          if (!node.find((_obj: any) => _obj.id === parent.id))
+            node.push(Object.assign({
+              label: parent.id.length > 10 ? `${parent.id.substr(0, 10)}...` : parent.id,
+              ...nodeProps(parent)
+            }, parent));
+
+          edge.push({
+            from: obj.id,
+            to: parent.id,
+            arrows: 'to'
+          });
+          
+          getNodesAndEdges(parent);
+        }
+      }
+    }
+
+    getNodesAndEdges(this.state.payload);
+
+    
+
+    // create an array with nodes
+    let nodes = 
+    // new vis.DataSet([
+    //   {id: 1, label: 'Node 1'},
+    //   {id: 2, label: 'Node 2'},
+    //   {id: 3, label: 'Node 3'},
+    //   {id: 4, label: 'Node 4'},
+    //   {id: 5, label: 'Node 5'}
+    // ]);
+    new vis.DataSet(node);
+
+    // create an array with edges
+    let edges = 
+    // new vis.DataSet([
+    //   {from: 1, to: 3},
+    //   {from: 1, to: 2},
+    //   {from: 2, to: 4},
+    //   {from: 2, to: 5},
+    //   {from: 3, to: 3}
+    // ]);
+    new vis.DataSet(edge);
+
+    // create a network
+    let container: HTMLDivElement = this.findNode(this, '#graph');
+    let data = {
+      nodes: nodes,
+      edges: edges
+    };
+    let options = {
+      nodes: {borderWidth: 1.5},
+      interaction: {hover: true}
+    };
+    let network = new vis.Network(container, data, options);
   }
 
 
 
   render()
-  {
+  { 
     let refIDWrapperStyle: CSSProperties =
         {
           position: 'relative',
@@ -310,4 +419,8 @@ class Widget extends React.Component<{}, State>
 
 
 export default Widget;
+
+
+
+
 
