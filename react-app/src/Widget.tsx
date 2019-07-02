@@ -4,6 +4,7 @@ import Dropdown from './components/Dropdown';
 import Get_HardCoded_Refs from './JSON_MockUp_Sample';
 import Loader from './components/Loader';
 import vis from 'vis';
+import { setTimeout } from 'timers';
 
 
 
@@ -63,6 +64,11 @@ class Widget extends React.Component<{}, State>
   };
 
   height = 0;
+
+  graph: any = {
+    nodes: [],
+    edges: []
+  }
 
   isViewedWithMobile: boolean = false;
 
@@ -159,6 +165,8 @@ class Widget extends React.Component<{}, State>
           }
           //update history
           this.history.push(Object.assign({}, this.state));
+          //delay till state payload is set before visualizing to avoid errors
+          setTimeout(() => this.visualizeGraph(), 300);
         })
         .catch(err => {
           //just for proper English sentence casing and grammar
@@ -202,9 +210,12 @@ class Widget extends React.Component<{}, State>
     //reset active tab and tabLink to active tab and tabLink in the past
     this.activeTab = this.findNode(this, `.${this.history[pastIndex].activeTabName}`);
     this.activeTabLink = this.findNode(this, `.${this.history[pastIndex].activeTabLinkName}`);
-  
+ 
     //remove/delete past future having travelled back in time
-    this.history.pop();                 
+    this.history.pop();
+
+    //delay till state payload is set before visualizing to avoid errors
+    setTimeout(() => this.visualizeGraph(), 300);
   }
 
 
@@ -235,6 +246,121 @@ class Widget extends React.Component<{}, State>
 
 
 
+  /**
+   * @param getGraphNodesAndEdges: gets and pushes graph nodes and edges to network for visualization
+   */
+  getGraphNodesAndEdges = (ref: Payload): void =>
+  {
+    let [refHasParents, parents] = [ref.refs ? true : false, ref.refs],
+        colors = {
+          required: {bg: '#ff9c10', bdr: '#ef7c00'},
+          recommended: {bg: '#20dcff', bdr: '#10bcf0'},
+          alien: {bg: '#c0c0c0', bdr: '#b0b0b0'}
+        };
+
+    //returns node properties e.g. color, font, background, border etc.
+    let nodeProps = (_ref: Payload): object => 
+    {
+      let color: any = {};
+
+      //i.e. if ref is not alien to current ref (book), proceed to add required/recommended colors
+      if (this.state.payload.refs.find((ref: any) => _ref.id === ref.id))
+      {
+        color.bg = _ref.ref_type === 'required' ? colors.required.bg : colors.recommended.bg;
+        color.bdr = _ref.ref_type === 'required' ? colors.required.bdr : colors.recommended.bdr;
+      }
+      else {
+        color.bg = colors.alien.bg;
+        color.bdr = colors.alien.bdr;
+      }
+
+      return {
+        font: {
+          size: 16,
+          face: 'Google Sans, Roboto Mono, Trebuchet MS',
+          color: !_ref.ref_type ? 'purple' : color.bdr
+        },
+        color: {
+          background: !_ref.ref_type ? '#cc00cc' : color.bg,
+          border: !_ref.ref_type ? '#a110a1' : color.bdr,
+          hover: {
+            background: 'white',
+            border: !_ref.ref_type ? '#a110a1' : color.bdr
+          },
+          highlight: {
+            border: !_ref.ref_type ? '#cc00cc' : color.bdr,
+            background: 'white'
+          }
+        },
+        shape: 'dot',
+        size: 18
+      };
+    };
+
+    let pushNodesAndEdges = (): void =>
+    {
+      let parent: any;
+      for (parent of parents)
+      {
+        if (!this.graph.nodes.find((_obj: any) => _obj.id === parent.id))
+          this.graph.nodes.push(Object.assign({
+            label: parent.id.length > 10 ? `${parent.id.substr(0, 10)}...` : parent.id,
+            ...nodeProps(parent)
+          }, parent));
+
+        this.graph.edges.push({
+          from: ref.id,
+          to: parent.id,
+          arrows: 'to'
+        });
+        //QUOTE OF THE CENTURY: "To iterate is human, recurse divine."
+        this.getGraphNodesAndEdges(parent);
+      }
+    }
+
+    if (refHasParents && !this.graph.nodes.find((_obj: any) => _obj.id === ref.id))
+    {
+      //first push current node (ref) to nodes before pushing other nodes
+      this.graph.nodes.push(Object.assign({
+        label: ref.id,
+        ...nodeProps(ref)
+      }, ref));
+      pushNodesAndEdges();
+    }
+    else if (refHasParents)
+      pushNodesAndEdges();
+  }
+
+
+
+  visualizeGraph = (): void =>
+  {
+    this.graph = {
+      nodes: [],
+      edges: []
+    };
+
+    this.getGraphNodesAndEdges(this.state.payload);
+
+        // create an array with nodes
+    let nodes = new vis.DataSet(this.graph.nodes),
+        // create an array with edges
+        edges = new vis.DataSet(this.graph.edges),
+        // create a network
+        container: HTMLDivElement = this.findNode(this, '#graph'),
+        data = {
+          nodes: nodes,
+          edges: edges
+        },
+        options = {
+          nodes: {borderWidth: 1.5},
+          interaction: {hover: true}
+        },
+        network = new vis.Network(container, data, options);
+  }
+
+
+
   componentDidMount()
   {
     //check what device user is running
@@ -258,114 +384,9 @@ class Widget extends React.Component<{}, State>
     }
     //HACK: prevent caret-icon-flip bug if gone back in time to first state i.e. if history index is at 0 on 'back button' click
     this.history[0].dropdownIsCollapsed = false;
-
-    let node: Object[] = [],
-        edge: Object[] = [];
-
-    function getNodesAndEdges(obj: Payload)
-    {
-      let [objHasParents, parents] = [obj.refs ? true : false, obj.refs],
-          color = {
-            required: {bg: 'darkorange', bdr: '#d77e10'},
-            recommended: {bg: 'skyblue', bdr: 'rgb(12, 179, 225)'}
-          };
-
-      let nodeProps = (obj: Payload) => ({
-        font: {
-          size: 16,
-          face: 'Google Sans, Roboto Mono, Trebuchet MS',
-          color: !obj.ref_type ? 'purple' : (obj.ref_type === 'required' ? color.required.bdr : color.recommended.bdr)
-        },
-        color: {
-          background: !obj.ref_type ? 'purple' : (obj.ref_type === 'required' ? color.required.bg : color.recommended.bg),
-          border: !obj.ref_type ? 'rgb(215, 105, 215)' : (obj.ref_type === 'required' ? color.required.bdr : color.recommended.bdr),
-          hover: {
-            background: 'white',
-            border: !obj.ref_type ? '#c253c2' : (obj.ref_type === 'required' ? color.required.bdr : color.recommended.bdr)
-          },
-          highlight: {
-            border: !obj.ref_type ? '#c253c2' : (obj.ref_type === 'required' ? color.required.bdr : color.recommended.bdr),
-            background: 'white'
-          }
-        },
-        shape: 'dot',
-        size: 18
-      });
-
-      let parent: any;
-
-      if (objHasParents && !node.find((_obj: any) => _obj.id === obj.id))
-      {
-        node.push(Object.assign({
-          label: obj.id,
-          ...nodeProps(obj)
-        }, obj));
-        
-        pushNodesAndEdges();
-      }
-      else if (objHasParents)
-        pushNodesAndEdges();
-
-      // console.log(edge);
-
-      function pushNodesAndEdges()
-      {
-        for (parent of parents)
-        {
-          if (!node.find((_obj: any) => _obj.id === parent.id))
-            node.push(Object.assign({
-              label: parent.id.length > 10 ? `${parent.id.substr(0, 10)}...` : parent.id,
-              ...nodeProps(parent)
-            }, parent));
-
-          edge.push({
-            from: obj.id,
-            to: parent.id,
-            arrows: 'to'
-          });
-          
-          getNodesAndEdges(parent);
-        }
-      }
-    }
-
-    getNodesAndEdges(this.state.payload);
-
-    
-
-    // create an array with nodes
-    let nodes = 
-    // new vis.DataSet([
-    //   {id: 1, label: 'Node 1'},
-    //   {id: 2, label: 'Node 2'},
-    //   {id: 3, label: 'Node 3'},
-    //   {id: 4, label: 'Node 4'},
-    //   {id: 5, label: 'Node 5'}
-    // ]);
-    new vis.DataSet(node);
-
-    // create an array with edges
-    let edges = 
-    // new vis.DataSet([
-    //   {from: 1, to: 3},
-    //   {from: 1, to: 2},
-    //   {from: 2, to: 4},
-    //   {from: 2, to: 5},
-    //   {from: 3, to: 3}
-    // ]);
-    new vis.DataSet(edge);
-
-    // create a network
-    let container: HTMLDivElement = this.findNode(this, '#graph');
-    let data = {
-      nodes: nodes,
-      edges: edges
-    };
-    let options = {
-      nodes: {borderWidth: 1.5},
-      interaction: {hover: true}
-    };
-    let network = new vis.Network(container, data, options);
+  
+    //delay till state payload is set before visualizing to avoid errors
+    setTimeout(() => this.visualizeGraph(), 300);
   }
 
 

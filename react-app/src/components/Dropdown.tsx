@@ -24,6 +24,13 @@ function Dropdown(props: Props)
         <div className='tab-items-wrapper graph-wrapper'>
           <h5 className='title'>Graph (Node) Visualization of Ref:</h5>
           <div id='graph'></div>
+          <div id='graph-key'>
+            Key:<br />
+            <span className='key key-book'></span> book<br />
+            <span className='key key-required'></span> required<br />
+            <span className='key key-recommended'></span> recommended<br />
+            <span className='key key-alien'></span> alien
+          </div>
         </div>;
 
 
