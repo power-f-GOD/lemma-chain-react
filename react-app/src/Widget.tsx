@@ -289,7 +289,7 @@ class Widget extends React.Component<{}, State>
 
       return {
         font: {
-          size: 16,
+          size: 14,
           face: 'Google Sans, Roboto Mono, Trebuchet MS',
           color: !_ref.ref_type ? colors.self.bdr : color.bdr,
           strokeWidth: 1,
@@ -308,7 +308,7 @@ class Widget extends React.Component<{}, State>
           }
         },
         shape: 'dot',
-        size: 20
+        size: 16
       };
     };
 
