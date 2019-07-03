@@ -89,7 +89,7 @@ class Widget extends React.Component<{}, State>
 
   
 
-  handleDropdownToggle = (): void =>
+  handleDropdownToggle = (e: React.MouseEvent<HTMLElement>): void =>
   {
     this.setState(prevState =>
     {
@@ -251,9 +251,9 @@ class Widget extends React.Component<{}, State>
 
 
   /**
-   * @param getGraphNodesAndEdges: gets and pushes graph nodes and edges to network for visualization
+   * @param setGraphNodesAndEdges: gets and pushes graph nodes and edges to network for visualization
    */
-  getGraphNodesAndEdges = (_ref: Payload): void =>
+  setGraphNodesAndEdges = (_ref: Payload): void =>
   {
     let ref: any = Object.assign({}, _ref),
         refHasParents = _ref.refs ? true : false,
@@ -276,7 +276,7 @@ class Widget extends React.Component<{}, State>
     ref.id = ref.data.title;
 
     //returns object of node properties e.g. color, font, background, border etc.
-    let nodeProps = (_ref: Payload) => 
+    let nodeProps = (_ref: Payload): object => 
     {
       let color: any = {};
 
@@ -318,15 +318,17 @@ class Widget extends React.Component<{}, State>
 
     let pushNodesAndEdges = (): void =>
     {
-      let parent: any;
+      let parent: Payload;
       for (parent of parents)
       {
+        let _nodeProps: any = nodeProps(parent);
+
         //prepare and push nodes for visualization
         if (!this.graph.nodes.find((_obj: any) => _obj.data.title === parent.data.title))
           this.graph.nodes.unshift(Object.assign({
             title: parent.data.title,
             label: parent.data.title.length > 10 ? `${parent.data.title.substr(0, 10).trim()}...` : parent.data.title,
-            ...nodeProps(parent)
+            ..._nodeProps
           }, parent));
 
         //prepare and push edges for visualization
@@ -336,11 +338,11 @@ class Widget extends React.Component<{}, State>
           label: parent.ref_type === 'required' ? 'rq' : 'rc',
           arrows: 'to',
           length: 150,
-          font: {...nodeProps(parent).font, size: 9}
+          font: {..._nodeProps.font, size: 9}
         });
 
         //QUOTE OF THE CENTURY: "To iterate is human, to recurse divine." - L. Peter Deutsch :D
-        this.getGraphNodesAndEdges(parent);
+        this.setGraphNodesAndEdges(parent);
       }
     }
 
@@ -371,7 +373,7 @@ class Widget extends React.Component<{}, State>
       edges: []
     };
 
-    this.getGraphNodesAndEdges(this.state.payload);
+    this.setGraphNodesAndEdges(this.state.payload);
 
         //create an array with nodes
     let nodes = new vis.DataSet(this.graph.nodes),
@@ -394,8 +396,10 @@ class Widget extends React.Component<{}, State>
         
     let moveAndUpdateGraphTooltip = (params: any): void => 
         {
+          //params.node implies event is triggered by node-hover event while params.nodes[0] implies event is triggered by node-click event
           let label: string = !params.node ? params.nodes[0] : params.node,
               currentNode = this.graph.nodes.find((node: any) => label === node.data.title);
+
           graphTooltipEl.innerHTML = 
             `${currentNode.data.title}<br />
             <i style='font-size: 11px;'>
@@ -404,8 +408,8 @@ class Widget extends React.Component<{}, State>
             <span style='font-size: 9px;'>
               ${!params.node ? currentNode._id : ''}
             </span>`;
-          graphTooltipEl.style.left = `${Math.ceil(params.pointer.DOM.x - 10)}px`;
-          graphTooltipEl.style.top = `${Math.ceil(params.pointer.DOM.y - (!params.node ? 15 : 0))}px`;
+          graphTooltipEl.style.left = `${Math.ceil(params.pointer.DOM.x) - 10}px`;
+          graphTooltipEl.style.top = `${Math.ceil(params.pointer.DOM.y) - (!params.node ? 15 : 0)}px`;
         };
     
     //network nodes event listeners

@@ -33,15 +33,15 @@ export default function DisplayStatusMessage(props: any)
         <><b>Suggest:</b> Must be a network issue. Check internet connection then try again.</>,
       errMsg: React.ReactFragment = 
         <>
-          Sorry. Could not load <b>{props.ref_type}</b> references for this book.<br /><b>ErrorMessage:</b> {props.errMsg}<br /><br />
-          {/fail|fetch|error/i.test(props.errMsg) ? suggestMsg : ''}
+          Sorry. Could not load <b>{props.ref_type}</b> references for this book.<br /><br />
+          {/fetch/i.test(props.errMsg) ? suggestMsg : 'An unexpected error occurred. Please, try again.'}
         </>,
       nothingToShowMessage: React.ReactFragment =
         <>Nothing to show.<br />Book has no <b>{props.ref_type}</b> references.</>,
       graphStatusMessage: React.ReactFragment =
         <>
           Sorry. Can't visualize <b>graph</b>.<br />
-          <b>{props.errMsg ? 'ErrorMessage:' : 'Reason:'}</b> {props.errMsg || 'Book has no parent refs.'}
+          <b>{props.errMsg ? '' : 'Reason: Book has no parent refs.'}</b>
         </>;
 
 

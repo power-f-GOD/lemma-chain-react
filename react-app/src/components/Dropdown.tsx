@@ -26,10 +26,10 @@ function Dropdown(props: Props)
           <div id='graph'></div>
           <div id='graph-key'>
             Key:<br />
-            <span className='key key-book'></span> book<br />
+            <span className='key key-book'></span> current ref.<br />
             <span className='key key-required'></span> required (rq)<br />
             <span className='key key-recommended'></span> recommended (rc)<br />
-            <span className='key key-alien'></span> other
+            <span className='key key-alien'></span> alien
           </div>
           <span className={`graph-tooltip ${props.state.graphNodeIsHovered ? '' : 'fade-out'}`}></span>
         </div>;

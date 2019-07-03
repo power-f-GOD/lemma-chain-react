@@ -40,13 +40,12 @@ body {
 
 .widget {
   width: 100%;
-  background: white;
   border-radius: 3px !important;
   overflow: hidden;
   position: relative;
   z-index: 0;
-  -webkit-box-shadow: 0px 2px 5px #ccc,  0 3px 10px #ddd, 0 4px 15px #ddd, 0 5px 20px #ddd;
-          box-shadow: 0px 2px 5px #ccc,  0 3px 10px #ddd, 0 4px 15px #ddd, 0 5px 20px #ddd;
+  -webkit-box-shadow: 0 2px 30px rgba(20, 20, 20, 0.075), 0 4px 30px rgba(20, 20, 20, 0.075), 0 6px 30px rgba(20, 20, 20, 0.075), 0 8px 40px rgba(20, 20, 20, 0.075);
+          box-shadow: 0 2px 30px rgba(20, 20, 20, 0.075), 0 4px 30px rgba(20, 20, 20, 0.075), 0 6px 30px rgba(20, 20, 20, 0.075), 0 8px 40px rgba(20, 20, 20, 0.075);
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
@@ -55,6 +54,9 @@ body {
   height: auto;
   -webkit-transition: 0.3s;
   transition: 0.3s;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  background: white;
 }
 
 .widget .ref-tab-wrapper {
@@ -72,6 +74,10 @@ body {
   z-index: 2;
   -webkit-transition: 0.3s;
   transition: 0.3s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .widget .ref-tab-wrapper:hover {
@@ -183,9 +189,9 @@ body {
 
 .widget .tabs-wrapper {
   border-radius: 0 0 4px 4px;
-  overflow: hidden;
   -webkit-transition: 0.3s;
   transition: 0.3s;
+  width: 500px;
 }
 
 .widget .tabs-wrapper ul {
@@ -199,7 +205,7 @@ body {
   position: absolute;
   -webkit-transition: 0.4s;
   transition: 0.4s;
-  border-radius: 0 0 4px 4px;
+  border-radius: 0 0 5px 5px;
   border: 2px solid #d264d2;
   border-top: none;
 }
@@ -254,6 +260,7 @@ body {
   padding: 10px;
   position: relative;
   background: #eee;
+  color: black;
 }
 
 .widget .tabs-wrapper ul .graph-wrapper h5 {

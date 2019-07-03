@@ -48,15 +48,14 @@ body
 .widget
 {
   width: 100%;
-  background: $active-el-bgcolor;
   border-radius: 3px !important;
   overflow: hidden;
   position: relative;
   z-index: 0;             //set this to avoid border radius from setting to 0 on ref load
-  box-shadow: 0px 2px 5px #ccc, 
-              0 3px 10px #ddd,
-              0 4px 15px #ddd,
-              0 5px 20px #ddd;
+  box-shadow: 0 2px 30px rgba(20, 20, 20, 0.075), 
+              0 4px 30px rgba(20, 20, 20, 0.075),
+              0 6px 30px rgba(20, 20, 20, 0.075),
+              0 8px 40px rgba(20, 20, 20, 0.075);
   transition: 0.3s;
   // border: 1px solid red;
 
@@ -64,6 +63,9 @@ body
   {
     height: auto;
     transition: 0.3s;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    background: white;
   }
   
   .ref-tab-wrapper
@@ -77,6 +79,7 @@ body
     position: relative;
     z-index: 2;
     transition: 0.3s;
+    user-select: none;
     
     
     &:hover
@@ -190,8 +193,8 @@ body
   .tabs-wrapper
   {
     border-radius: 0 0 4px 4px;
-    overflow: hidden;
     transition: 0.3s;
+    width: 500px;
 
 
     ul
@@ -205,7 +208,7 @@ body
       visibility: hidden;
       position: absolute;
       transition: 0.4s;
-      border-radius: 0 0 4px 4px;
+      border-radius: 0 0 5px 5px;
       border: 2px solid $tab-link-bgcolor;
       border-top: none;
       
@@ -268,6 +271,7 @@ body
         padding: 10px;
         position: relative;
         background: #eee;
+        color: black;
         
         h5 { margin: 5px 0 10px 0; }
 
