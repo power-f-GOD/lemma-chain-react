@@ -91,6 +91,10 @@ class Widget extends React.Component<{}, State>
 
   handleDropdownToggle = (e: React.MouseEvent<HTMLElement>): void =>
   {
+    
+    // if (e.currentTarget.className.match('ref-identifier'))
+    console.log(e.currentTarget.className);
+
     this.setState(prevState =>
     {
       let {dropdownIsCollapsed} = prevState,
@@ -229,8 +233,8 @@ class Widget extends React.Component<{}, State>
    */
   resizeDropdownHeightTo(activeTab: any, constHeight = this.height): number
   {
-    //i.e. if the argument, activeTab, is an element and not a number (0)...
-    return activeTab !== 0 ? (activeTab.offsetHeight + constHeight) : 0;
+    //i.e. if the argument, activeTab, is an element and not a number (0)... PS: Add 2px for border-bottom extension
+    return activeTab !== 0 ? (activeTab.offsetHeight + constHeight) + 2 : 0;
   }
 
 
@@ -461,7 +465,9 @@ class Widget extends React.Component<{}, State>
     {
       //set maximum height of dropdown to height of three items [before adding scroll bar]
       let heightRef = this.findNode(this, '.item-wrapper')[0].offsetHeight;
-      this.findNode(this, '.tab').forEach((tab: any) => tab.style.maxHeight = `${heightRef * 3}px`);
+
+      console.log(heightRef)
+      this.findNode(this, '.tab').forEach((tab: any) => tab.style.maxHeight = `${heightRef * 3 + 2}px`);
       this.history[0].dropdownCurHeight = this.resizeDropdownHeightTo(this.activeTab);
     }
     //HACK: prevent caret-icon-flip bug if gone back in time to first state i.e. if history index is at 0 on 'back button' click

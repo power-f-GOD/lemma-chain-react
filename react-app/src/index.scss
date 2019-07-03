@@ -1,5 +1,5 @@
 
-$font: 'Google Sans', 'Roboto Mono', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+$font: 'Google Sans', 'Roboto Mono', 'Lucida Sans Unicode', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 $hover-grey: #bbb;
 $active-el-bgcolor: white;
 $purple-bg: rgb(145, 0, 145);
@@ -106,7 +106,7 @@ body
     button
     {
       width: 50%;
-      padding: 15px 10px;
+      padding: 14px 10px;
       display: inline-flex;
       justify-content: space-around;
       align-items: center;
@@ -115,7 +115,7 @@ body
       font-size: 14px;
       font-family: $font;
       font-weight: bold;
-      height: 46px;
+      height: auto;
       letter-spacing: $default-letter-spacing;
       color: $tab-link-color;
       background: $tab-link-bgcolor;
@@ -127,7 +127,7 @@ body
       &.graph-tab-link
       {
         width: 55px;
-        padding: 0;
+        padding: 10px 0;
       }
 
       &.back-btn
@@ -192,7 +192,6 @@ body
 
   .tabs-wrapper
   {
-    border-radius: 0 0 4px 4px;
     transition: 0.3s;
     width: 500px;
 
@@ -208,7 +207,7 @@ body
       visibility: hidden;
       position: absolute;
       transition: 0.4s;
-      border-radius: 0 0 5px 5px;
+      border-radius: 0 0 4px 4px;
       border: 2px solid $tab-link-bgcolor;
       border-top: none;
       

@@ -15,7 +15,7 @@ body {
       -ms-flex-align: center;
           align-items: center;
   background: white;
-  font-family: "Google Sans", "Roboto Mono", "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  font-family: "Google Sans", "Roboto Mono", "Lucida Sans Unicode", "Trebuchet MS", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
   letter-spacing: 0.75px;
   color: black;
 }
@@ -108,7 +108,7 @@ body {
 
 .widget .tab-links-wrapper button {
   width: 50%;
-  padding: 15px 10px;
+  padding: 14px 10px;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -120,9 +120,9 @@ body {
   border: none;
   cursor: pointer;
   font-size: 14px;
-  font-family: "Google Sans", "Roboto Mono", "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  font-family: "Google Sans", "Roboto Mono", "Lucida Sans Unicode", "Trebuchet MS", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
   font-weight: bold;
-  height: 46px;
+  height: auto;
   letter-spacing: 0.75px;
   color: #eee;
   background: #d264d2;
@@ -133,7 +133,7 @@ body {
 
 .widget .tab-links-wrapper button.back-btn, .widget .tab-links-wrapper button.graph-tab-link {
   width: 55px;
-  padding: 0;
+  padding: 10px 0;
 }
 
 .widget .tab-links-wrapper button.back-btn {
@@ -188,7 +188,6 @@ body {
 }
 
 .widget .tabs-wrapper {
-  border-radius: 0 0 4px 4px;
   -webkit-transition: 0.3s;
   transition: 0.3s;
   width: 500px;
@@ -205,7 +204,7 @@ body {
   position: absolute;
   -webkit-transition: 0.4s;
   transition: 0.4s;
-  border-radius: 0 0 5px 5px;
+  border-radius: 0 0 4px 4px;
   border: 2px solid #d264d2;
   border-top: none;
 }
