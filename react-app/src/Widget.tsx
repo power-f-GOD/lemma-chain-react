@@ -8,9 +8,9 @@ import { setTimeout } from 'timers';
 
 
 
-interface Payload
+export interface Payload
 {
-  data: {title: string, author: string};
+  data: {title: string, authors: string[]};
   id: string;
   refs: Array<object>;
   [key: string]: any;
@@ -31,7 +31,8 @@ export interface State
   errOccurred: boolean;
   errMsg: string;
   graphNodeIsHovered: boolean;
-  nodeIsActive: boolean
+  graphNodeIsActive: boolean;
+  tooltipIsActive: boolean;
 }
 
 
@@ -64,7 +65,8 @@ class Widget extends React.Component<{}, State>
     errOccurred: false,
     errMsg: '',
     graphNodeIsHovered: false,
-    nodeIsActive: false
+    graphNodeIsActive: false,
+    tooltipIsActive: false
   };
 
   height = 0;
@@ -89,22 +91,41 @@ class Widget extends React.Component<{}, State>
 
   
 
-  handleDropdownToggle = (e: React.MouseEvent<HTMLElement>): void =>
+  handleDropdownToggle = (e: any) =>
   {
     
-    // if (e.currentTarget.className.match('ref-identifier'))
-    console.log(e.currentTarget.className);
+    if (e.target.className.match('ref-identifier'))
+      this.setState({tooltipIsActive: !this.state.tooltipIsActive});
+    else {
+      this.setState(prevState =>
+      {
+        let {dropdownIsCollapsed} = prevState,
+            dropdownNewHeight = this.resizeDropdownHeightTo(dropdownIsCollapsed ? this.activeTab : 0);
 
-    this.setState(prevState =>
-    {
-      let {dropdownIsCollapsed} = prevState,
-          dropdownNewHeight = this.resizeDropdownHeightTo(dropdownIsCollapsed ? this.activeTab : 0);
+        return {
+          dropdownIsCollapsed: !dropdownIsCollapsed,
+          dropdownCurHeight: dropdownNewHeight
+        };
+      });
+    }
+  }
 
-      return {
-        dropdownIsCollapsed: !dropdownIsCollapsed,
-        dropdownCurHeight: dropdownNewHeight
-      };
-    });
+
+
+  copyRefID = (e: React.MouseEvent<HTMLButtonElement>) =>
+  {
+    let tooltip = e.currentTarget,
+        refIDInputEl = this.findNode(this, '#refIDCopy');
+    
+    refIDInputEl.select();
+    document.execCommand("copy");
+    tooltip.innerHTML = 'Ref. ID copied to clipboard';
+    setTimeout(() => {
+      this.setState({tooltipIsActive: false});
+      setTimeout(() => {
+        tooltip.innerHTML = 'Copy Ref. ID';
+      }, 300);
+    }, 1400);
   }
 
 
@@ -143,7 +164,7 @@ class Widget extends React.Component<{}, State>
     {
       //clear/empty initial payload before updating it
       this.setState({payload: {
-        data: { title: '', author: ''},
+        data: { title: '', authors: []},
         id: '',
         refs: [{}]
       }});
@@ -269,15 +290,6 @@ class Widget extends React.Component<{}, State>
           recommended: {bg: '#20dcff', bdr: '#10bcf0'},
           alien: {bg: '#c0c0c0', bdr: '#b0b0b0'}
         };
-    
-    //using titles of books (refs) as parent/ref id's to avoid appending duplicate book titles to network
-    parents.forEach((parent: any) => {
-      parent._id = parent.id;
-      parent.id = parent.data.title;
-      return parent;
-    });
-    ref._id = ref.id;
-    ref.id = ref.data.title;
 
     //returns object of node properties e.g. color, font, background, border etc.
     let nodeProps = (_ref: Payload): object => 
@@ -285,7 +297,7 @@ class Widget extends React.Component<{}, State>
       let color: any = {};
 
       //i.e. if ref is not alien to current ref (book), proceed to add required/recommended colors
-      if (this.state.payload.refs.find((ref: any) => _ref.data.title === ref.data.title))
+      if (this.state.payload.refs.find((ref: any) => _ref.id === ref.id))
       {
         color.bg = _ref.ref_type === 'required' ? colors.required.bg : colors.recommended.bg;
         color.bdr = _ref.ref_type === 'required' ? colors.required.bdr : colors.recommended.bdr;
@@ -327,8 +339,9 @@ class Widget extends React.Component<{}, State>
       {
         let _nodeProps: any = nodeProps(parent);
 
-        //prepare and push nodes for visualization
-        if (!this.graph.nodes.find((_obj: any) => _obj.data.title === parent.data.title))
+        //prepare and push nodes for visualization. 
+        //PS: If parent (ref) doesn't already exist in network, push to network
+        if (!this.graph.nodes.find((node: any) => node.id === parent.id))
           this.graph.nodes.unshift(Object.assign({
             title: parent.data.title,
             label: parent.data.title.length > 10 ? `${parent.data.title.substr(0, 10).trim()}...` : parent.data.title,
@@ -337,11 +350,10 @@ class Widget extends React.Component<{}, State>
 
         //prepare and push edges for visualization
         this.graph.edges.unshift({
-          from: ref.data.title,
-          to: parent.data.title,
-          label: parent.ref_type === 'required' ? 'rq' : 'rc',
+          from: ref.id,
+          to: parent.id,
           arrows: 'to',
-          length: 150,
+          length: 50,
           font: {..._nodeProps.font, size: 9}
         });
 
@@ -351,7 +363,7 @@ class Widget extends React.Component<{}, State>
     }
 
     //i.e. if 'current' book (ref) has parents and itself has not yet been added to nodes (network), proceed to add
-    if (refHasParents && !this.graph.nodes.find((_obj: any) => _obj.data.title === ref.data.title))
+    if (refHasParents && !this.graph.nodes.find((node: any) => node.id === ref.id))
     {
       //first add current node (ref) to nodes before pushing other nodes to network
       this.graph.nodes.unshift(Object.assign(
@@ -400,17 +412,17 @@ class Widget extends React.Component<{}, State>
         
     let moveAndUpdateGraphTooltip = (params: any): void => 
         {
-          //params.node implies event is triggered by node-hover event while params.nodes[0] implies event is triggered by node-click event
+          //'params.node' implies event is triggered by node-hover event while 'params.nodes[0]' implies event is triggered by node-click event
           let label: string = !params.node ? params.nodes[0] : params.node,
-              currentNode = this.graph.nodes.find((node: any) => label === node.data.title);
+              currentNode = this.graph.nodes.find((node: any) => label === node.id);
 
           graphTooltipEl.innerHTML = 
             `${currentNode.data.title}<br />
             <i style='font-size: 11px;'>
-              ${!params.node ? currentNode.data.author : ''}
+              ${!params.node ? currentNode.data.authors.join(', ') : ''}
             </i>
             <span style='font-size: 9px;'>
-              ${!params.node ? currentNode._id : ''}
+              ${!params.node ? currentNode.id : ''}
             </span>`;
           graphTooltipEl.style.left = `${Math.ceil(params.pointer.DOM.x) - 10}px`;
           graphTooltipEl.style.top = `${Math.ceil(params.pointer.DOM.y) - (!params.node ? 15 : 0)}px`;
@@ -421,25 +433,25 @@ class Widget extends React.Component<{}, State>
     {
       this.setState({
         graphNodeIsHovered: true,
-        nodeIsActive: true
+        graphNodeIsActive: true
       })
       moveAndUpdateGraphTooltip(params);
     });
     network.on('deselectNode', () => 
       this.setState({
         graphNodeIsHovered: false,
-        nodeIsActive: false
+        graphNodeIsActive: false
       })
     );
     network.on('hoverNode', params => 
     {
-      if (!this.state.nodeIsActive)
+      if (!this.state.graphNodeIsActive)
       {
         this.setState({graphNodeIsHovered: true});
         moveAndUpdateGraphTooltip(params);
       }
     });
-    network.on('blurNode', () => this.setState({graphNodeIsHovered: this.state.nodeIsActive ? true : false}));
+    network.on('blurNode', () => this.setState({graphNodeIsHovered: this.state.graphNodeIsActive ? true : false}));
     network.on('zoom', () => this.setState({graphNodeIsHovered: false}));
     network.on('dragStart', () => this.setState({graphNodeIsHovered: false}));
     network.on('dragEnd', () => this.setState({graphNodeIsHovered: false}));
@@ -459,15 +471,20 @@ class Widget extends React.Component<{}, State>
     this.activeTabLink = this.findNode(this, '.active-tab-link');
     this.activeTab = this.findNode(this, '.required-tab');
 
-    //HACK: unset history initial (first state) dropdown height from 0 to current activeTab height to prevent dropdown from resizing to 0 on click of back button assuming history index is at 0 (first state).
     //PS: Wait or delay till fonts are loaded before getting height of activeTab in order not to get a height below height of tab with loaded fonts since height is set to auto
     window.onload = (): any =>
     {
+      //hide clipboard if anywhere else in document/page is clicked
+      document.body.onclick = (e: any) => 
+      {
+        if (!/tool-tip|ref-identifier/.test(e.target.className))
+          this.setState({tooltipIsActive: false});
+      }
+      
       //set maximum height of dropdown to height of three items [before adding scroll bar]
       let heightRef = this.findNode(this, '.item-wrapper')[0].offsetHeight;
-
-      console.log(heightRef)
       this.findNode(this, '.tab').forEach((tab: any) => tab.style.maxHeight = `${heightRef * 3 + 2}px`);
+      //HACK: unset history initial (first state) dropdown height from 0 to current activeTab height to prevent dropdown from resizing to 0 on click of back button assuming history index is at 0 (first state).
       this.history[0].dropdownCurHeight = this.resizeDropdownHeightTo(this.activeTab);
     }
     //HACK: prevent caret-icon-flip bug if gone back in time to first state i.e. if history index is at 0 on 'back button' click
@@ -490,6 +507,10 @@ class Widget extends React.Component<{}, State>
 
     return (
       <div className={`widget ${this.isViewedWithMobile ? 'isViewedWithMobile' : ''}`}>
+        <button
+          className={`tool-tip ${this.state.tooltipIsActive ? '' : 'fade-out'}`}
+          onClick={this.copyRefID}>Copy Ref. ID
+        </button>
         <section className='ref-tab-wrapper' onClick={this.handleDropdownToggle}>
           <span>LC</span>
           <span style={refIDWrapperStyle}>
@@ -500,6 +521,20 @@ class Widget extends React.Component<{}, State>
                 transition: '0.3s'
               }}>
               {this.state.refID}
+              {/*HACK: This is for copying to clipboard as node.select() doesn't work for non-input elements, and TypeScript throws some error when trying to 'window.getSelection()'*/}
+              <input
+                type='text'
+                value={this.state.refID}
+                id='refIDCopy'
+                style={{
+                  position: 'absolute',
+                  width: 1,
+                  height: 1,
+                  border: 'none',
+                  top: -100
+                }}
+                onChange={(e) => e.target.value = this.state.refID}
+              />
             </span>
             <Loader
               refIsLoading={this.state.refIsLoading}

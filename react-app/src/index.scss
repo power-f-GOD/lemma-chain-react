@@ -1,5 +1,5 @@
 
-$font: 'Google Sans', 'Roboto Mono', 'Lucida Sans Unicode', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+$font: 'Google Sans', 'Roboto Mono', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 $hover-grey: #bbb;
 $active-el-bgcolor: white;
 $purple-bg: rgb(145, 0, 145);
@@ -34,6 +34,7 @@ body
 {
   box-sizing: border-box;
   outline: none;
+  font-family: $font;
 }
 
 #root
@@ -50,8 +51,6 @@ body
   width: 100%;
   border-radius: 3px !important;
   overflow: hidden;
-  position: relative;
-  z-index: 0;             //set this to avoid border radius from setting to 0 on ref load
   box-shadow: 0 2px 30px rgba(20, 20, 20, 0.075), 
               0 4px 30px rgba(20, 20, 20, 0.075),
               0 6px 30px rgba(20, 20, 20, 0.075),
@@ -113,7 +112,6 @@ body
       border: none;
       cursor: pointer;
       font-size: 14px;
-      font-family: $font;
       font-weight: bold;
       height: auto;
       letter-spacing: $default-letter-spacing;
@@ -311,42 +309,60 @@ body
           .key-alien
           { background: #b0b0b0; }
         }
-
-        .graph-tooltip 
-        {
-          visibility: visible;
-          background-color: #222;
-          display: inline-flex;
-          flex-wrap: nowrap;
-          flex-direction: column;
-          color: #fff;
-          font-size: 14px;
-          border-radius: 3px;
-          padding: 5px 8px;
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          opacity: 1;
-          box-shadow: 1px 1px 4px #555;
-          transition: 0.35s;
-
-          &::after 
-          {
-            content: " ";
-            position: absolute;
-            top: 95%; /* At the bottom of the tooltip */
-            left: 25px;
-            margin-left: -10px;
-            border-width: 10px;
-            border-left-width: 5px;
-            border-right-width: 5px;
-            border-style: solid;
-            border-color: #222 transparent transparent transparent;
-          }
-        }
       }
     }
   }
+}
+
+
+.graph-tooltip,
+.tool-tip 
+{
+  visibility: visible;
+  background-color: #222;
+  display: inline-flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 3px;
+  padding: 6px 8px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  opacity: 1;
+  border: none;
+  box-shadow: 2px 2px 5px rgba(20, 20, 20, 0.5);
+  transition: 0.35s;
+
+  &::after 
+  {
+    content: " ";
+    position: absolute;
+    top: 95%; /* At the bottom of the tooltip */
+    left: 25px;
+    margin-left: -10px;
+    border-width: 10px;
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-style: solid;
+    border-color: #222 transparent transparent transparent;
+  }
+}
+
+.tool-tip
+{
+  top: -20px;
+  z-index: 5;
+  cursor: pointer;
+
+  &:hover
+  { 
+    background: white; color: #222;
+  }
+
+  &::after
+  { border: none; }
 }
 
 

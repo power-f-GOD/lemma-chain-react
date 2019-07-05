@@ -15,7 +15,7 @@ body {
       -ms-flex-align: center;
           align-items: center;
   background: white;
-  font-family: "Google Sans", "Roboto Mono", "Lucida Sans Unicode", "Trebuchet MS", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  font-family: "Google Sans", "Roboto Mono", "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
   letter-spacing: 0.75px;
   color: black;
 }
@@ -28,6 +28,7 @@ body {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   outline: none;
+  font-family: "Google Sans", "Roboto Mono", "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
 }
 
 #root {
@@ -42,8 +43,6 @@ body {
   width: 100%;
   border-radius: 3px !important;
   overflow: hidden;
-  position: relative;
-  z-index: 0;
   -webkit-box-shadow: 0 2px 30px rgba(20, 20, 20, 0.075), 0 4px 30px rgba(20, 20, 20, 0.075), 0 6px 30px rgba(20, 20, 20, 0.075), 0 8px 40px rgba(20, 20, 20, 0.075);
           box-shadow: 0 2px 30px rgba(20, 20, 20, 0.075), 0 4px 30px rgba(20, 20, 20, 0.075), 0 6px 30px rgba(20, 20, 20, 0.075), 0 8px 40px rgba(20, 20, 20, 0.075);
   -webkit-transition: 0.3s;
@@ -120,7 +119,6 @@ body {
   border: none;
   cursor: pointer;
   font-size: 14px;
-  font-family: "Google Sans", "Roboto Mono", "Lucida Sans Unicode", "Trebuchet MS", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
   font-weight: bold;
   height: auto;
   letter-spacing: 0.75px;
@@ -306,7 +304,8 @@ body {
   background: #b0b0b0;
 }
 
-.widget .tabs-wrapper ul .graph-wrapper .graph-tooltip {
+.graph-tooltip,
+.tool-tip {
   visibility: visible;
   background-color: #222;
   display: -webkit-inline-box;
@@ -321,18 +320,20 @@ body {
   color: #fff;
   font-size: 14px;
   border-radius: 3px;
-  padding: 5px 8px;
+  padding: 6px 8px;
   position: absolute;
   left: 50%;
   top: 50%;
   opacity: 1;
-  -webkit-box-shadow: 1px 1px 4px #555;
-          box-shadow: 1px 1px 4px #555;
+  border: none;
+  -webkit-box-shadow: 2px 2px 5px rgba(20, 20, 20, 0.5);
+          box-shadow: 2px 2px 5px rgba(20, 20, 20, 0.5);
   -webkit-transition: 0.35s;
   transition: 0.35s;
 }
 
-.widget .tabs-wrapper ul .graph-wrapper .graph-tooltip::after {
+.graph-tooltip::after,
+.tool-tip::after {
   content: " ";
   position: absolute;
   top: 95%;
@@ -344,6 +345,21 @@ body {
   border-right-width: 5px;
   border-style: solid;
   border-color: #222 transparent transparent transparent;
+}
+
+.tool-tip {
+  top: -20px;
+  z-index: 5;
+  cursor: pointer;
+}
+
+.tool-tip:hover {
+  background: white;
+  color: #222;
+}
+
+.tool-tip::after {
+  border: none;
 }
 
 .fade-out {
