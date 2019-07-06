@@ -15,6 +15,9 @@ function Item(props: Payload): JSX.Element
         <span className='props'>Title: <b>{props.data.title}</b></span>
         <span className='props'>Author: {props.data.authors.join(', ')}</span>
         <span className='props'>Ref. ID: <b>{props.id}</b></span>
+        <a href='#!' target='' className='extern-link'>
+          <img className='extern-link-icon' src="link.png" alt="link" />
+        </a>
       </li>
     </div>
   );

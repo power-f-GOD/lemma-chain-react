@@ -70,7 +70,7 @@ body {
   color: white;
   cursor: pointer;
   position: relative;
-  z-index: 2;
+  z-index: 3;
   -webkit-transition: 0.3s;
   transition: 0.3s;
   -webkit-user-select: none;
@@ -101,7 +101,7 @@ body {
   display: -ms-flexbox;
   display: flex;
   position: relative;
-  z-index: 1;
+  z-index: 2;
   height: auto;
 }
 
@@ -205,10 +205,12 @@ body {
   border-radius: 0 0 4px 4px;
   border: 2px solid #d264d2;
   border-top: none;
+  z-index: 0;
 }
 
 .widget .tabs-wrapper ul.tab .item-wrapper {
   padding: 22px 18px;
+  padding-right: 10px;
   width: 100%;
   background: white;
   border-bottom: 1px solid #eee;
@@ -222,6 +224,8 @@ body {
   margin-left: 18px;
   list-style-type: decimal;
   padding-left: 10px;
+  padding-right: 28px;
+  position: relative;
 }
 
 .widget .tabs-wrapper ul.tab .item-wrapper li span.props {
@@ -240,6 +244,26 @@ body {
   font-size: 14px;
 }
 
+.widget .tabs-wrapper ul.tab .item-wrapper li a.extern-link {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-block;
+  width: auto;
+}
+
+.widget .tabs-wrapper ul.tab .item-wrapper li a.extern-link img {
+  width: 20px;
+  opacity: 0.3;
+  border-radius: 10px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.widget .tabs-wrapper ul.tab .item-wrapper li a.extern-link img:hover {
+  opacity: 0.7;
+}
+
 .widget .tabs-wrapper ul.tab .item-wrapper:hover {
   background: #eee;
   border-bottom-color: #d8d8d8;
@@ -249,6 +273,7 @@ body {
   height: auto;
   opacity: 1;
   visibility: visible;
+  z-index: 1;
 }
 
 .widget .tabs-wrapper ul .graph-wrapper {
@@ -323,7 +348,7 @@ body {
   padding: 6px 8px;
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: -25%;
   opacity: 1;
   border: none;
   -webkit-box-shadow: 2px 2px 5px rgba(20, 20, 20, 0.5);

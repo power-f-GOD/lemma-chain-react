@@ -41,7 +41,7 @@ export default function DisplayStatusMessage(props: any)
       graphStatusMessage: React.ReactFragment =
         <>
           Sorry. Can't visualize <b>graph</b>.<br />
-          <b>{props.errMsg ? '' : 'Reason: Book has no parent refs.'}</b>
+          <b>{props.errMsg ? '' : 'Reason: '}</b>{props.errMsg ? '' : 'Book has no parent refs.'}
         </>;
 
 

@@ -211,7 +211,768 @@ export default function Get_HardCoded_Refs()
                     }
                 ]
             },
-            
+            {
+                "data": {
+                    "authors": [
+                        "Jane Austen"
+                    ],
+                    "title": "Pride and Prejudice"
+                },
+                "id": "@clarah/9yt4lcli2j",
+                "ref_type": "recommended",
+                "refs": [
+                    {
+                        "data": {
+                            "authors": [
+                                "Dan Brown"
+                            ],
+                            "title": "The Da Vinci Code"
+                        },
+                        "id": "myin9aksq",
+                        "ref_type": "recommended",
+                        "refs": []
+                    },
+                    {
+                        "data": {
+                            "authors": [
+                                "Jane Austen"
+                            ],
+                            "title": "Pride and Prejudice"
+                        },
+                        "id": "r9t9rc4ip",
+                        "ref_type": "required",
+                        "refs": []
+                    },
+                    {
+                        "data": {
+                            "authors": [
+                                "J. R. R. Tolkien"
+                            ],
+                            "title": "The Hobbit"
+                        },
+                        "id": "@johny/35t8qc8i5",
+                        "ref_type": "required",
+                        "refs": [
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Dan Brown"
+                                    ],
+                                    "title": "The Da Vinci Code"
+                                },
+                                "id": "myin9aksq",
+                                "ref_type": "recommended",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Jane Austen"
+                                    ],
+                                    "title": "Pride and Prejudice"
+                                },
+                                "id": "r9t9rc4ip",
+                                "ref_type": "required",
+                                "refs": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "authors": [
+                                "J. R. R. Tolkien"
+                            ],
+                            "title": "The Two Towers"
+                        },
+                        "id": "@johny/jjtn4cdirv",
+                        "ref_type": "recommended",
+                        "refs": [
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Dan Brown"
+                                    ],
+                                    "title": "The Da Vinci Code"
+                                },
+                                "id": "myin9aksq",
+                                "ref_type": "required",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Jane Austen"
+                                    ],
+                                    "title": "Pride and Prejudice"
+                                },
+                                "id": "r9t9rc4ip",
+                                "ref_type": "required",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "J. R. R. Tolkien"
+                                    ],
+                                    "title": "The Hobbit"
+                                },
+                                "id": "35t8qc8i5",
+                                "ref_type": "recommended",
+                                "refs": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "authors": [
+                                "Yann Martel"
+                            ],
+                            "title": "Life of Pi"
+                        },
+                        "id": "d2tm8cyi99",
+                        "ref_type": "recommended",
+                        "refs": []
+                    },
+                    {
+                        "data": {
+                            "authors": [
+                                "J. D. Salinger"
+                            ],
+                            "title": "The Catcher in the Rye"
+                        },
+                        "id": "qqt2kcrip2",
+                        "ref_type": "required",
+                        "refs": [
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Dan Brown"
+                                    ],
+                                    "title": "The Da Vinci Code"
+                                },
+                                "id": "myin9aksq",
+                                "ref_type": "required",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Jane Austen"
+                                    ],
+                                    "title": "Pride and Prejudice"
+                                },
+                                "id": "r9t9rc4ip",
+                                "ref_type": "required",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "J. R. R. Tolkien"
+                                    ],
+                                    "title": "The Hobbit"
+                                },
+                                "id": "35t8qc8i5",
+                                "ref_type": "recommended",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "J. R. R. Tolkien"
+                                    ],
+                                    "title": "The Two Towers"
+                                },
+                                "id": "jjtn4cdirv",
+                                "ref_type": "required",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Yann Martel"
+                                    ],
+                                    "title": "Life of Pi"
+                                },
+                                "id": "d2tm8cyi99",
+                                "ref_type": "recommended",
+                                "refs": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "authors": [
+                        "Charles Dickens"
+                    ],
+                    "title": "A Christmas Carol"
+                },
+                "id": "@self/kwtd8crun",
+                "ref_type": "recommended",
+                "refs": [
+                    {
+                        "data": {
+                            "authors": [
+                                "Dan Brown"
+                            ],
+                            "title": "The Da Vinci Code"
+                        },
+                        "id": "myin9aksq",
+                        "ref_type": "required",
+                        "refs": []
+                    },
+                    {
+                        "data": {
+                            "authors": [
+                                "Jane Austen"
+                            ],
+                            "title": "Pride and Prejudice"
+                        },
+                        "id": "r9t9rc4ip",
+                        "ref_type": "required",
+                        "refs": []
+                    },
+                    {
+                        "data": {
+                            "authors": [
+                                "J. R. R. Tolkien"
+                            ],
+                            "title": "The Two Towers"
+                        },
+                        "id": "@johny/jjtn4cdirv",
+                        "ref_type": "recommended",
+                        "refs": [
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Dan Brown"
+                                    ],
+                                    "title": "The Da Vinci Code"
+                                },
+                                "id": "myin9aksq",
+                                "ref_type": "required",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Jane Austen"
+                                    ],
+                                    "title": "Pride and Prejudice"
+                                },
+                                "id": "r9t9rc4ip",
+                                "ref_type": "required",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "J. R. R. Tolkien"
+                                    ],
+                                    "title": "The Hobbit"
+                                },
+                                "id": "35t8qc8i5",
+                                "ref_type": "recommended",
+                                "refs": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "authors": [
+                                "J. D. Salinger"
+                            ],
+                            "title": "The Catcher in the Rye"
+                        },
+                        "id": "qqt2kcrip2",
+                        "ref_type": "recommended",
+                        "refs": [
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Dan Brown"
+                                    ],
+                                    "title": "The Da Vinci Code"
+                                },
+                                "id": "myin9aksq",
+                                "ref_type": "required",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Jane Austen"
+                                    ],
+                                    "title": "Pride and Prejudice"
+                                },
+                                "id": "r9t9rc4ip",
+                                "ref_type": "required",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "J. R. R. Tolkien"
+                                    ],
+                                    "title": "The Hobbit"
+                                },
+                                "id": "35t8qc8i5",
+                                "ref_type": "recommended",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "J. R. R. Tolkien"
+                                    ],
+                                    "title": "The Two Towers"
+                                },
+                                "id": "jjtn4cdirv",
+                                "ref_type": "required",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Yann Martel"
+                                    ],
+                                    "title": "Life of Pi"
+                                },
+                                "id": "d2tm8cyi99",
+                                "ref_type": "recommended",
+                                "refs": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "authors": [
+                                "George Orwell"
+                            ],
+                            "title": "1984"
+                        },
+                        "id": "@clarah/yltblczidp",
+                        "ref_type": "required",
+                        "refs": [
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Dan Brown"
+                                    ],
+                                    "title": "The Da Vinci Code"
+                                },
+                                "id": "myin9aksq",
+                                "ref_type": "recommended",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Jane Austen"
+                                    ],
+                                    "title": "Pride and Prejudice"
+                                },
+                                "id": "r9t9rc4ip",
+                                "ref_type": "required",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Yann Martel"
+                                    ],
+                                    "title": "Life of Pi"
+                                },
+                                "id": "d2tm8cyi99",
+                                "ref_type": "recommended",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Jane Austen"
+                                    ],
+                                    "title": "Pride and Prejudice"
+                                },
+                                "id": "9yt4lcli2j",
+                                "ref_type": "recommended",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "J. R. R. Tolkien"
+                                    ],
+                                    "title": "The Hobbit"
+                                },
+                                "id": "4dty1cdij7",
+                                "ref_type": "required",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "J. R. R. Tolkien"
+                                    ],
+                                    "title": "The Hobbit"
+                                },
+                                "id": "@clarah/bmt1jc2iz5",
+                                "ref_type": "required",
+                                "refs": [
+                                    {
+                                        "data": {
+                                            "authors": [
+                                                "Jane Austen"
+                                            ],
+                                            "title": "Pride and Prejudice"
+                                        },
+                                        "id": "r9t9rc4ip",
+                                        "ref_type": "required",
+                                        "refs": []
+                                    },
+                                    {
+                                        "data": {
+                                            "authors": [
+                                                "Jane Austen"
+                                            ],
+                                            "title": "Pride and Prejudice"
+                                        },
+                                        "id": "9yt4lcli2j",
+                                        "ref_type": "recommended",
+                                        "refs": []
+                                    },
+                                    {
+                                        "data": {
+                                            "authors": [
+                                                "J. R. R. Tolkien"
+                                            ],
+                                            "title": "The Hobbit"
+                                        },
+                                        "id": "4dty1cdij7",
+                                        "ref_type": "required",
+                                        "refs": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "authors": [
+                        "Charles Dickens"
+                    ],
+                    "title": "A Christmas Carol"
+                },
+                "id": "@self/74tnyc4u5",
+                "ref_type": "recommended",
+                "refs": [
+                    {
+                        "data": {
+                            "authors": [
+                                "Jane Austen"
+                            ],
+                            "title": "Pride and Prejudice"
+                        },
+                        "id": "r9t9rc4ip",
+                        "ref_type": "required",
+                        "refs": []
+                    },
+                    {
+                        "data": {
+                            "authors": [
+                                "Yann Martel"
+                            ],
+                            "title": "Life of Pi"
+                        },
+                        "id": "d2tm8cyi99",
+                        "ref_type": "recommended",
+                        "refs": []
+                    },
+                    {
+                        "data": {
+                            "authors": [
+                                "J. D. Salinger"
+                            ],
+                            "title": "The Catcher in the Rye"
+                        },
+                        "id": "qqt2kcrip2",
+                        "ref_type": "required",
+                        "refs": [
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Dan Brown"
+                                    ],
+                                    "title": "The Da Vinci Code"
+                                },
+                                "id": "myin9aksq",
+                                "ref_type": "required",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Jane Austen"
+                                    ],
+                                    "title": "Pride and Prejudice"
+                                },
+                                "id": "r9t9rc4ip",
+                                "ref_type": "required",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "J. R. R. Tolkien"
+                                    ],
+                                    "title": "The Hobbit"
+                                },
+                                "id": "35t8qc8i5",
+                                "ref_type": "recommended",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "J. R. R. Tolkien"
+                                    ],
+                                    "title": "The Two Towers"
+                                },
+                                "id": "jjtn4cdirv",
+                                "ref_type": "required",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Yann Martel"
+                                    ],
+                                    "title": "Life of Pi"
+                                },
+                                "id": "d2tm8cyi99",
+                                "ref_type": "recommended",
+                                "refs": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "authors": [
+                                "Jane Austen"
+                            ],
+                            "title": "Pride and Prejudice"
+                        },
+                        "id": "9yt4lcli2j",
+                        "ref_type": "recommended",
+                        "refs": []
+                    },
+                    {
+                        "data": {
+                            "authors": [
+                                "J. R. R. Tolkien"
+                            ],
+                            "title": "The Hobbit"
+                        },
+                        "id": "@clarah/4dty1cdij7",
+                        "ref_type": "recommended",
+                        "refs": [
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Dan Brown"
+                                    ],
+                                    "title": "The Da Vinci Code"
+                                },
+                                "id": "myin9aksq",
+                                "ref_type": "required",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Jane Austen"
+                                    ],
+                                    "title": "Pride and Prejudice"
+                                },
+                                "id": "r9t9rc4ip",
+                                "ref_type": "required",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "J. R. R. Tolkien"
+                                    ],
+                                    "title": "The Hobbit"
+                                },
+                                "id": "35t8qc8i5",
+                                "ref_type": "recommended",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Yann Martel"
+                                    ],
+                                    "title": "Life of Pi"
+                                },
+                                "id": "d2tm8cyi99",
+                                "ref_type": "recommended",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "J. D. Salinger"
+                                    ],
+                                    "title": "The Catcher in the Rye"
+                                },
+                                "id": "qqt2kcrip2",
+                                "ref_type": "required",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Jane Austen"
+                                    ],
+                                    "title": "Pride and Prejudice"
+                                },
+                                "id": "9yt4lcli2j",
+                                "ref_type": "recommended",
+                                "refs": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "authors": [
+                                "George Orwell"
+                            ],
+                            "title": "1984"
+                        },
+                        "id": "@clarah/yltblczidp",
+                        "ref_type": "recommended",
+                        "refs": [
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Dan Brown"
+                                    ],
+                                    "title": "The Da Vinci Code"
+                                },
+                                "id": "myin9aksq",
+                                "ref_type": "recommended",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Jane Austen"
+                                    ],
+                                    "title": "Pride and Prejudice"
+                                },
+                                "id": "r9t9rc4ip",
+                                "ref_type": "required",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Yann Martel"
+                                    ],
+                                    "title": "Life of Pi"
+                                },
+                                "id": "d2tm8cyi99",
+                                "ref_type": "recommended",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "Jane Austen"
+                                    ],
+                                    "title": "Pride and Prejudice"
+                                },
+                                "id": "9yt4lcli2j",
+                                "ref_type": "recommended",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "J. R. R. Tolkien"
+                                    ],
+                                    "title": "The Hobbit"
+                                },
+                                "id": "4dty1cdij7",
+                                "ref_type": "required",
+                                "refs": []
+                            },
+                            {
+                                "data": {
+                                    "authors": [
+                                        "J. R. R. Tolkien"
+                                    ],
+                                    "title": "The Hobbit"
+                                },
+                                "id": "@clarah/bmt1jc2iz5",
+                                "ref_type": "required",
+                                "refs": [
+                                    {
+                                        "data": {
+                                            "authors": [
+                                                "Jane Austen"
+                                            ],
+                                            "title": "Pride and Prejudice"
+                                        },
+                                        "id": "r9t9rc4ip",
+                                        "ref_type": "required",
+                                        "refs": []
+                                    },
+                                    {
+                                        "data": {
+                                            "authors": [
+                                                "Jane Austen"
+                                            ],
+                                            "title": "Pride and Prejudice"
+                                        },
+                                        "id": "9yt4lcli2j",
+                                        "ref_type": "recommended",
+                                        "refs": []
+                                    },
+                                    {
+                                        "data": {
+                                            "authors": [
+                                                "J. R. R. Tolkien"
+                                            ],
+                                            "title": "The Hobbit"
+                                        },
+                                        "id": "4dty1cdij7",
+                                        "ref_type": "required",
+                                        "refs": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "authors": [
+                                "Charles Dickens"
+                            ],
+                            "title": "A Christmas Carol"
+                        },
+                        "id": "kwtd8crun",
+                        "ref_type": "required",
+                        "refs": []
+                    }
+                ]
+            }
         ]
     }
   );

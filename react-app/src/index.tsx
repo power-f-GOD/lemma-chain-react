@@ -4,4 +4,22 @@ import Widget from './Widget';
 import './index.css';
 
 
-ReactDOM.render(<Widget />, document.querySelector('#root'));
+
+export interface Props
+{
+  endpointURL: string;
+}
+
+
+
+let WidgetProps: Props = {
+  endpointURL: ''
+};
+
+
+
+ReactDOM.render(
+  <Widget
+    endpointURL={WidgetProps.endpointURL ? WidgetProps.endpointURL : '68.183.123.0:1323'}
+  />,
+document.querySelector('#root'));

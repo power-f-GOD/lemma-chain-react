@@ -5,6 +5,7 @@ import Get_HardCoded_Refs from './JSON_MockUp_Sample';
 import Loader from './components/Loader';
 import vis, { Network } from 'vis';
 import { setTimeout } from 'timers';
+import { Props } from './index';
 
 
 
@@ -37,7 +38,7 @@ export interface State
 
 
 
-class Widget extends React.Component<{}, State>
+class Widget extends React.Component<Props, State>
 {
   /**
    * dropdownIsCollapsed: boolean for dropdown toggle
@@ -84,7 +85,7 @@ class Widget extends React.Component<{}, State>
 
   activeTab: HTMLUListElement | any = null;
 
-  endpointLink: string = /localhost/.test(window.location.href) ? 'localhost:1323' : '68.183.123.0:1323';
+  endpointURL: string = /localhost/.test(window.location.href) ? 'localhost:1323' : this.props.endpointURL;
 
   //copy initial/first state object and set at index 0 of history
   history: State[] = [Object.assign({}, this.state)]; 
@@ -119,13 +120,13 @@ class Widget extends React.Component<{}, State>
     
     refIDInputEl.select();
     document.execCommand("copy");
-    tooltip.innerHTML = 'Ref. ID copied to clipboard';
+    tooltip.innerHTML = 'Copied to clipboard';
     setTimeout(() => {
       this.setState({tooltipIsActive: false});
       setTimeout(() => {
-        tooltip.innerHTML = 'Copy Ref. ID';
+        tooltip.innerHTML = 'Copy';
       }, 300);
-    }, 1400);
+    }, 1500);
   }
 
 
@@ -153,8 +154,12 @@ class Widget extends React.Component<{}, State>
   /**
    * @param handleReferenceClick: Reference click handler; fetches recommended and required refs for clicked ref
    */
-  handleReferenceClick = (e: React.MouseEvent<HTMLDivElement>): void =>
+  handleReferenceClick = (e: any): void =>
   {
+    //i.e. if link is clicked, prevent click event for ref
+    if (/extern-link/.test(e.target.className))
+      return;
+    
     let refID: any = e.currentTarget.dataset.id;
 
     //first set loading to true to visualize fadeout
@@ -169,7 +174,7 @@ class Widget extends React.Component<{}, State>
         refs: [{}]
       }});
 
-      let url = `http://${this.endpointLink}/${refID}`;
+      let url = `http://${this.endpointURL}/${refID}`;
       
       fetch(url)
         .then((response: Response) => response.json())
@@ -281,7 +286,7 @@ class Widget extends React.Component<{}, State>
   setGraphNodesAndEdges = (_ref: Payload): void =>
   {
     let ref: any = Object.assign({}, _ref),
-        refHasParents = _ref.refs ? true : false,
+        refHasParents = _ref.refs.length > 0 ? true : false,
         //making a copy of refs (parents) to avoid modifying actual parents
         parents = _ref.refs.map((parent: any) => Object.assign({}, parent)),
         colors = {
@@ -297,7 +302,7 @@ class Widget extends React.Component<{}, State>
       let color: any = {};
 
       //i.e. if ref is not alien to current ref (book), proceed to add required/recommended colors
-      if (this.state.payload.refs.find((ref: any) => _ref.id === ref.id))
+      if (this.state.payload.refs.find((ref: any) => _ref.id.replace(/.*\/(.*)/, '$1') === ref.id.replace(/.*\/(.*)/, '$1')))
       {
         color.bg = _ref.ref_type === 'required' ? colors.required.bg : colors.recommended.bg;
         color.bdr = _ref.ref_type === 'required' ? colors.required.bdr : colors.recommended.bdr;
@@ -341,17 +346,23 @@ class Widget extends React.Component<{}, State>
 
         //prepare and push nodes for visualization. 
         //PS: If parent (ref) doesn't already exist in network, push to network
-        if (!this.graph.nodes.find((node: any) => node.id === parent.id))
+        if (!this.graph.nodes.find((node: any) => node.id.replace(/.*\/(.*)/, '$1') === parent.id.replace(/.*\/(.*)/, '$1')))
+        {
           this.graph.nodes.unshift(Object.assign({
+            _id: parent.id,
             title: parent.data.title,
             label: parent.data.title.length > 10 ? `${parent.data.title.substr(0, 10).trim()}...` : parent.data.title,
             ..._nodeProps
           }, parent));
+          //extract hashID part of refID
+          this.graph.nodes[0].id = parent.id.replace(/.*\/(.*)/, '$1');
+        }
+          
 
         //prepare and push edges for visualization
         this.graph.edges.unshift({
-          from: ref.id,
-          to: parent.id,
+          from: ref.id.replace(/.*\/(.*)/, '$1'),
+          to: parent.id.replace(/.*\/(.*)/, '$1'),
           arrows: 'to',
           length: 50,
           font: {..._nodeProps.font, size: 9}
@@ -363,14 +374,17 @@ class Widget extends React.Component<{}, State>
     }
 
     //i.e. if 'current' book (ref) has parents and itself has not yet been added to nodes (network), proceed to add
-    if (refHasParents && !this.graph.nodes.find((node: any) => node.id === ref.id))
+    if (refHasParents && !this.graph.nodes.find((node: any) => node.id.replace(/.*\/(.*)/, '$1') === ref.id.replace(/.*\/(.*)/, '$1')))
     {
       //first add current node (ref) to nodes before pushing other nodes to network
       this.graph.nodes.unshift(Object.assign(
       {
+        _id: ref.id,
         label: ref.data.title.replace(/\s(\w+|\d+)\s(\w+|\d+)/, ' $1\n$2'),
         ...nodeProps(ref)
       }, ref));
+      //extract hashID part of refID
+      this.graph.nodes[0].id = ref.id.replace(/.*\/(.*)/, '$1');
       pushNodesAndEdges();
     }
     else if (refHasParents)
@@ -390,6 +404,10 @@ class Widget extends React.Component<{}, State>
     };
 
     this.setGraphNodesAndEdges(this.state.payload);
+
+    //if no nodes exist (which implies no parent(s)), do not proceed to visualize graph to avoid errors
+    if (this.graph.nodes.length < 1)
+      return;
 
         //create an array with nodes
     let nodes = new vis.DataSet(this.graph.nodes),
@@ -422,7 +440,7 @@ class Widget extends React.Component<{}, State>
               ${!params.node ? currentNode.data.authors.join(', ') : ''}
             </i>
             <span style='font-size: 9px;'>
-              ${!params.node ? currentNode.id : ''}
+              ${!params.node ? currentNode._id : ''}
             </span>`;
           graphTooltipEl.style.left = `${Math.ceil(params.pointer.DOM.x) - 10}px`;
           graphTooltipEl.style.top = `${Math.ceil(params.pointer.DOM.y) - (!params.node ? 15 : 0)}px`;
@@ -509,7 +527,7 @@ class Widget extends React.Component<{}, State>
       <div className={`widget ${this.isViewedWithMobile ? 'isViewedWithMobile' : ''}`}>
         <button
           className={`tool-tip ${this.state.tooltipIsActive ? '' : 'fade-out'}`}
-          onClick={this.copyRefID}>Copy Ref. ID
+          onClick={this.copyRefID}>Copy
         </button>
         <section className='ref-tab-wrapper' onClick={this.handleDropdownToggle}>
           <span>LC</span>
