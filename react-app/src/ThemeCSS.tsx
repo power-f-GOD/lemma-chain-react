@@ -4,11 +4,12 @@ let colors: any = _colors;
 
 
 
-const THEME_COLOR = _colors.blue.name;
+//change theme colour to colour name/code you wish to see effect
+const THEME_COLOR: string = _colors.blue.name;
 
-const DROPDOWN_BGCOLOR = '#ffffff',
-      GRAPH_TABLINK_COLOR = 'yellow',
-      GRAPH_TABLINK_HOVER_BG = 'rgb(32, 199, 245)';
+const DROPDOWN_BGCOLOR: string = '#ffffff',
+      GRAPH_TABLINK_COLOR: string = 'yellow',
+      GRAPH_TABLINK_HOVER_BG: string = 'rgb(32, 199, 245)';
 
 
 
