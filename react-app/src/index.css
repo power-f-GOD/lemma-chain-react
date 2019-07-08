@@ -17,11 +17,7 @@ body {
   background: white;
   font-family: "Google Sans", "Roboto Mono", "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
   letter-spacing: 0.75px;
-  color: black;
-}
-
-#root {
-  width: auto;
+  color: #000000;
 }
 
 * {
@@ -43,6 +39,7 @@ body {
   width: 100%;
   border-radius: 3px !important;
   overflow: hidden;
+  color: black;
   -webkit-box-shadow: 0 2px 30px rgba(20, 20, 20, 0.075), 0 4px 30px rgba(20, 20, 20, 0.075), 0 6px 30px rgba(20, 20, 20, 0.075), 0 8px 40px rgba(20, 20, 20, 0.075);
           box-shadow: 0 2px 30px rgba(20, 20, 20, 0.075), 0 4px 30px rgba(20, 20, 20, 0.075), 0 6px 30px rgba(20, 20, 20, 0.075), 0 8px 40px rgba(20, 20, 20, 0.075);
   -webkit-transition: 0.3s;
@@ -58,7 +55,7 @@ body {
   background: white;
 }
 
-.widget .ref-tab-wrapper {
+.widget .dropdown-toggle-bar {
   padding: 12px 15px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -66,7 +63,7 @@ body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  background: #910091;
+  background: #777;
   color: white;
   cursor: pointer;
   position: relative;
@@ -79,11 +76,11 @@ body {
           user-select: none;
 }
 
-.widget .ref-tab-wrapper:hover {
-  background: #740074;
+.widget .dropdown-toggle-bar:hover {
+  background: #555;
 }
 
-.widget .ref-tab-wrapper .caret-icon {
+.widget .dropdown-toggle-bar .caret-icon {
   font-weight: bold;
   -webkit-transition: 0.3s;
   transition: 0.3s;
@@ -91,7 +88,7 @@ body {
           transform: rotate(90deg);
 }
 
-.widget .ref-tab-wrapper .flip-caret-icon {
+.widget .dropdown-toggle-bar .flip-caret-icon {
   -webkit-transform: rotate(270deg);
           transform: rotate(270deg);
 }
@@ -122,7 +119,7 @@ body {
   font-weight: bold;
   height: auto;
   letter-spacing: 0.75px;
-  color: #eee;
+  color: #eeeeee;
   background: #d264d2;
   position: relative;
   -webkit-transition: 0.3s;
@@ -136,17 +133,17 @@ body {
 
 .widget .tab-links-wrapper button.back-btn {
   font-size: 18px;
-  background: #910091;
+  background: #777;
   color: white !important;
 }
 
 .widget .tab-links-wrapper button.back-btn:hover {
-  background: #740074;
+  background: #555;
 }
 
 .widget .tab-links-wrapper button.graph-tab-link {
   font-size: 20px;
-  background: #910091;
+  background: #777;
   color: yellow !important;
 }
 
@@ -170,7 +167,7 @@ body {
 
 .widget .tab-links-wrapper button.recommended-tab-link.active-tab-link, .widget .tab-links-wrapper button.required-tab-link.active-tab-link {
   background: white;
-  color: #910091;
+  color: #777;
 }
 
 .widget .tab-links-wrapper button.recommended-tab-link.active-tab-link:before, .widget .tab-links-wrapper button.required-tab-link.active-tab-link:before {
@@ -212,12 +209,12 @@ body {
   padding: 22px 18px;
   padding-right: 10px;
   width: 100%;
-  background: white;
-  border-bottom: 1px solid #eee;
+  background: inherit;
+  border-bottom: 1px solid #eeeeee;
   letter-spacing: 0.75px;
   -webkit-transition: 0.3s;
   transition: 0.3s;
-  color: black;
+  color: inherit;
 }
 
 .widget .tabs-wrapper ul.tab .item-wrapper li {
@@ -255,7 +252,7 @@ body {
 .widget .tabs-wrapper ul.tab .item-wrapper li a.extern-link img {
   width: 20px;
   opacity: 0.3;
-  border-radius: 10px;
+  border-radius: 5px;
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
@@ -265,7 +262,7 @@ body {
 }
 
 .widget .tabs-wrapper ul.tab .item-wrapper:hover {
-  background: #eee;
+  background: #eeeeee;
   border-bottom-color: #d8d8d8;
 }
 
@@ -281,8 +278,8 @@ body {
   min-height: 250px;
   padding: 10px;
   position: relative;
-  background: #eee;
-  color: black;
+  background: #eeeeee;
+  color: inherit;
 }
 
 .widget .tabs-wrapper ul .graph-wrapper h5 {
@@ -457,7 +454,7 @@ body {
 }
 
 .useCustomScrollBar::-webkit-scrollbar-thumb {
-  background: #740074;
+  background: #555;
   border-radius: 0 0 4px 4px;
 }
 /*# sourceMappingURL=index.css.map */

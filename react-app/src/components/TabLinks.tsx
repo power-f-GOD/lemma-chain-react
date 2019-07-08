@@ -1,5 +1,6 @@
 import React from 'react';
 import { Props } from './Dropdown';
+import { getCSSProps } from '../ThemeCSS';
 
 
 
@@ -32,7 +33,7 @@ export default function TabLinks(props: Props)
           ${/graph/.test(props.state.activeTabName) ? 'active-tab-link' : ''}`}
         title='View graph'
         data-tab-name='graph-tab'
-        style={{background: /graph/.test(props.state.activeTabName) ? 'rgb(12, 179, 225)' : ''}}
+        style={{background: /graph/.test(props.state.activeTabName) ? getCSSProps().graphTablinkHoverBg : ''}}
         onClick={props.handleTabToggle}
       >★</button>
     </div>

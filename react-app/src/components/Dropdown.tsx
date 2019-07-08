@@ -4,6 +4,7 @@ import Item from './Item';
 import Loader from './Loader';
 import DisplayStatusMessage from './DisplayStatusMessage';
 import { State } from '../Widget';
+import { getCSSProps } from '../ThemeCSS';
 
 
 
@@ -47,7 +48,7 @@ function Dropdown(props: Props)
           refIsLoading={props.state.refIsLoading}
           attributes={{
             size: 12,
-            color: 'rgb(145, 0, 145)',
+            color: getCSSProps().themeBg,
             rider: 'Loading References...',
             type: 'major',
             wrapperHeight: props.state.dropdownCurHeight - props.height
@@ -72,6 +73,7 @@ function Dropdown(props: Props)
                       data={ref.data}
                       id={ref.id}
                       refs={ref.refs}
+                      externLink='#!'
                       key={key}
                       handleReferenceClick={props.handleReferenceClick}
                     />
@@ -102,6 +104,7 @@ function Dropdown(props: Props)
                       data={ref.data}
                       id={ref.id}
                       refs={ref.refs}
+                      externLink='#!'
                       key={key}
                       handleReferenceClick={props.handleReferenceClick}
                     />

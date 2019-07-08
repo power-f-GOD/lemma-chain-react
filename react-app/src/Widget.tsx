@@ -529,7 +529,7 @@ class Widget extends React.Component<Props, State>
           className={`tool-tip ${this.state.tooltipIsActive ? '' : 'fade-out'}`}
           onClick={this.copyRefID}>Copy
         </button>
-        <section className='ref-tab-wrapper' onClick={this.handleDropdownToggle}>
+        <section className='dropdown-toggle-bar' onClick={this.handleDropdownToggle}>
           <span>LC</span>
           <span style={refIDWrapperStyle}>
             <span

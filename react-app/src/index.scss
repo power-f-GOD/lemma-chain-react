@@ -1,16 +1,17 @@
 
 $font: 'Google Sans', 'Roboto Mono', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-$hover-grey: #bbb;
-$active-el-bgcolor: white;
-$purple-bg: rgb(145, 0, 145);
-$purple-bg-hover: rgb(116, 0, 116);
+$dropdown-bg: rgb(255, 255, 255);
+$active-el-bgcolor: $dropdown-bg;
+$theme-bg-color: #777;
+$theme-bg-color-hover: #555;
 $default-font-size: 15px;
-$graph-tab-link-bgcolor: $purple-bg;
-$graph-tab-link-color: yellow;
+$graph-tab-link-bgcolor: $theme-bg-color;
+$graph-tab-link-color: rgb(255, 255, 0);
 $graph-tab-link-hover-bgcolor: rgb(32, 199, 245);
 $tab-link-bgcolor: rgb(210, 100, 210);
 $tab-link-hover-bgcolor: rgb(235, 125, 235);
-$tab-link-color: #eee;
+$tab-link-color: rgb(238, 238, 238);
+$item-wrapper-border-bottom-hover-color: rgb(216, 216, 216);
 $default-letter-spacing: 0.75px;
 
 
@@ -22,13 +23,12 @@ body
   margin: 20px;
   justify-content: center;
   align-items: center;
-  background: white;
+  background: $dropdown-bg;
   font-family: $font;
   letter-spacing: $default-letter-spacing;
-  color: black;
+  color: #000000;
+  // color: #ff4500;
 }
-
-#root { width: auto; }
 
 *
 {
@@ -51,6 +51,7 @@ body
   width: 100%;
   border-radius: 3px !important;
   overflow: hidden;
+  color: black;
   box-shadow: 0 2px 30px rgba(20, 20, 20, 0.075), 
               0 4px 30px rgba(20, 20, 20, 0.075),
               0 6px 30px rgba(20, 20, 20, 0.075),
@@ -64,16 +65,16 @@ body
     transition: 0.3s;
     border-top: none;
     border-radius: 0 0 4px 4px;
-    background: white;
+    background: $dropdown-bg;
   }
   
-  .ref-tab-wrapper
+  .dropdown-toggle-bar
   {
     padding: 12px 15px;
     display: flex;
     justify-content: space-between;
-    background: $purple-bg;
-    color: white;
+    background: $theme-bg-color;
+    color: $dropdown-bg;
     cursor: pointer;
     position: relative;
     z-index: 3;
@@ -82,7 +83,7 @@ body
     
     
     &:hover
-    { background: $purple-bg-hover; }
+    { background: $theme-bg-color-hover; }
 
     .caret-icon
     {
@@ -131,11 +132,11 @@ body
       &.back-btn
       {
         font-size: 18px;
-        background: $purple-bg;
-        color: white !important;
+        background: $theme-bg-color;
+        color: $dropdown-bg !important;
         
         &:hover
-        { background: $purple-bg-hover; }
+        { background: $theme-bg-color-hover; }
       }
 
       &.graph-tab-link
@@ -160,13 +161,13 @@ body
         &:hover
         {
           background: $tab-link-hover-bgcolor;
-          color: white;
+          color: $dropdown-bg;
         }
         
         &.active-tab-link
         {
           background: $active-el-bgcolor;
-          color: $purple-bg;
+          color: $theme-bg-color;
 
           &:before
           {
@@ -182,8 +183,6 @@ body
           }
         }
       }
-
-      
     }
   }
 
@@ -218,11 +217,12 @@ body
           padding: 22px 18px;
           padding-right: 10px;
           width: 100%;
-          background: white;
-          border-bottom: 1px solid #eee;
+          background: inherit;
+          border-bottom: 1px solid $tab-link-color;
           letter-spacing: $default-letter-spacing;
           transition: 0.3s;
-          color: black;
+          color: inherit;
+          // color: rgb(255, 20, 147);
   
           li
           {
@@ -261,7 +261,7 @@ body
               {
                 width: 20px;
                 opacity: 0.3;
-                border-radius: 10px;
+                border-radius: 5px;
                 transition: 0.3s;
 
                 &:hover
@@ -272,8 +272,8 @@ body
   
           &:hover
           {
-            background: #eee;
-            border-bottom-color: #d8d8d8;
+            background: $tab-link-color;
+            border-bottom-color: $item-wrapper-border-bottom-hover-color;
           }
         }
       }
@@ -292,8 +292,8 @@ body
         min-height: 250px;
         padding: 10px;
         position: relative;
-        background: #eee;
-        color: black;
+        background: $tab-link-color;
+        color: inherit;
         
         h5 { margin: 5px 0 10px 0; }
 
@@ -302,7 +302,7 @@ body
           width: 100%;
           height: 250px;
           border: 1px solid #ddd;
-          background: white;
+          background: $dropdown-bg;
           border-radius: 4px;
         }
 
@@ -383,7 +383,7 @@ body
 
   &:hover
   { 
-    background: white; color: #222;
+    background: $dropdown-bg; color: #222;
   }
 
   &::after
@@ -440,10 +440,171 @@ body
 
   &::-webkit-scrollbar-thumb
   {
-    background: $purple-bg-hover;
+    background: $theme-bg-color-hover;
     border-radius: 0 0 4px 4px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// $active-el-bgcolor: $dropdown-bg;
+// $theme-bg-color: rgb(145, 0, 145);
+// $theme-bg-color-hover: rgb(116, 0, 116);
+// $default-font-size: 15px;
+// $graph-tab-link-bgcolor: $theme-bg-color;
+// $graph-tab-link-color: yellow;
+// $graph-tab-link-hover-bgcolor: rgb(32, 199, 245);
+// $tab-link-bgcolor: rgb(210, 100, 210);
+// $tab-link-hover-bgcolor: rgb(235, 125, 235);
+// $tab-link-color: rgb(238, 238, 238);
+// $item-wrapper-border-bottom-hover-color: rgb(216, 216, 216);
+
+
+
+// .widget
+// {
+//   .dropdown
+//   { background: $dropdown-bg; }
+  
+//   .dropdown-toggle-bar
+//   {
+//     background: $theme-bg-color;
+//     color: $dropdown-bg;
+    
+//     &:hover
+//     { background: $theme-bg-color-hover; }
+//   }
+
+//   .tab-links-wrapper
+//   {
+//     button
+//     {
+//       color: $tab-link-color;
+//       background: $tab-link-bgcolor;
+
+//       &.back-btn
+//       {
+//         background: $theme-bg-color;
+//         color: $dropdown-bg !important;
+        
+//         &:hover
+//         { background: $theme-bg-color-hover; }
+//       }
+
+//       &.graph-tab-link
+//       {
+//         background: $graph-tab-link-bgcolor;
+//         color: $graph-tab-link-color !important;
+        
+//         &:hover
+//         { background: $graph-tab-link-hover-bgcolor !important; }
+//       }
+
+//       &[class^=active]
+//       { background: $active-el-bgcolor; }
+
+//       &.recommended-tab-link,
+//       &.required-tab-link
+//       {
+//         border-color: $tab-link-bgcolor;
+
+//         &:hover
+//         {
+//           background: $tab-link-hover-bgcolor;
+//           color: $dropdown-bg;
+//         }
+        
+//         &.active-tab-link
+//         {
+//           background: $active-el-bgcolor;
+//           color: $theme-bg-color;
+//         }
+//       }
+//     }
+//   }
+
+//   .tabs-wrapper
+//   {
+//     transition: 0.3s;
+
+//     ul
+//     {
+//       border-color: $tab-link-bgcolor;
+      
+//       &.tab
+//       {
+//         .item-wrapper
+//         {
+//           border-bottom: 1px solid $tab-link-color;
+  
+//           &:hover
+//           {
+//             background: $tab-link-color;
+//             border-bottom-color: #d8d8d8;
+//           }
+//         }
+//       }
+  
+//       .graph-wrapper
+//       {
+//         background: $tab-link-color;
+//         color: inherit;
+        
+//         h5 { margin: 5px 0 10px 0; }
+
+//         .key-book
+//         { background: rgb(161, 17, 160); }
+
+//         .key-required
+//         { background: #ef7c00; }
+
+//         .key-recommended
+//         { background: #10bcf0; }
+
+//         .key-alien
+//         { background: #b0b0b0; }
+        
+//       }
+//     }
+//   }
+// }
+
+
+// .useCustomScrollBar
+// {
+//   &::-webkit-scrollbar-track
+//   { background: $tab-link-bgcolor; }
+
+//   &::-webkit-scrollbar-thumb
+//   { background: $theme-bg-color-hover; }
+// }
 
 
 
