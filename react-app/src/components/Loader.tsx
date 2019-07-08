@@ -28,7 +28,8 @@ export default function Loader(props: Props)
         background: props.attributes.color || '#333',
         display: 'inline-block',
         borderRadius: '50%',
-        marginRight: 5
+        boxShadow: '0.5px 0.5px 1px rgba(0, 0, 0, 0.2)',
+        marginRight: 5,
       },
       loaderWrapperStyle: CSSProperties = 
       {
@@ -43,7 +44,8 @@ export default function Loader(props: Props)
         textAlign: 'center',
         height: props.attributes.wrapperHeight,
         flexDirection: 'column',
-        color: props.attributes.color
+        color: props.attributes.color,
+        textShadow: '0.5px 0.5px 1px rgba(0, 0, 0, 0.2)'
       },
       loaderStyle: CSSProperties = 
       {

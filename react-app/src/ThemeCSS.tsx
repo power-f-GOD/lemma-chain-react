@@ -1,7 +1,11 @@
+import _colors from './colors.json';
+
+let colors: any = _colors;
 
 
-export const THEME_COLOR = '#ff4500';//'rgb(55, 20, 147)';//'rgb(255, 255, 0)';
-//'rgb(145, 0, 145)';
+
+const THEME_COLOR = _colors.blue.name;
+
 const DROPDOWN_BGCOLOR = '#ffffff',
       GRAPH_TABLINK_COLOR = 'yellow',
       GRAPH_TABLINK_HOVER_BG = 'rgb(32, 199, 245)';
@@ -16,19 +20,22 @@ cssProps.themeBgHover = getColorVariant([-29, -29, -29]).variant;
 let toggleBarBg = getColorVariant([0, 0, 0]);
 
 console.log(toggleBarBg.rgbVals.reduce((a, b) => a + b))
-cssProps.toggleBarBg = toggleBarBg.rgbVals.reduce((a, b) => a + b) < 382.5 ? 'rgb(255, 255, 255)' : 'rgb(0, 0, 0)';
+cssProps.toggleBarBg = toggleBarBg.rgbVals.reduce((a, b) => a + b) < 475 ? 'white' : 'black';
 cssProps.dropdownBg = DROPDOWN_BGCOLOR;
 
 let dropdownBg = getColorVariant([0, 0, 0], cssProps.dropdownBg);
 
-cssProps.dropdownColor = dropdownBg.rgbVals.reduce((a, b) => a + b) < 382.5 ? 'rgb(255, 255, 255)' : 'rgb(0, 0, 0)';
+cssProps.dropdownColor = dropdownBg.rgbVals.reduce((a, b) => a + b) < 475 ? 'white' : 'black';
 cssProps.activeElBg = cssProps.dropdownBg;
+console.log(toggleBarBg.rgbVals.reduce((a, b) => a + b))
+cssProps.activeTablinkColor = toggleBarBg.rgbVals.reduce((a, b) => a + b) > 510 ? getColorVariant([-48, -48, -48]).variant : toggleBarBg.variant;
 cssProps.graphTabLinkBg = THEME_COLOR;
 cssProps.graphTablinkColor = GRAPH_TABLINK_COLOR;
 cssProps.graphTablinkHoverBg = GRAPH_TABLINK_HOVER_BG;
 cssProps.tablinkBg = getColorVariant([65, 100, 65]).variant;
 cssProps.tablinkHoverBg = getColorVariant([90, 125, 90]).variant;
-cssProps.tablinkColor = getColorVariant([-12, -12, -12], cssProps.dropdownBg).variant;
+cssProps.tablinkColor = toggleBarBg.rgbVals.reduce((a, b) => a + b) > 510 ? getColorVariant([-12, -12, -12]).variant : getColorVariant([-12, -12, -12], cssProps.dropdownBg).variant;
+cssProps.tablinkHoverColor = getColorVariant([-24, -24, -24], cssProps.tablinkColor).variant;
 cssProps.itemHoverBg = getColorVariant([-12, -12, -12], cssProps.dropdownBg).variant;
 cssProps.itemBorderBottomColor = getColorVariant([-20, -20, -20], cssProps.dropdownBg).variant;
 cssProps.itemBorderBottomHoverColor = getColorVariant([-20, -20, -20], cssProps.itemBorderBottomColor).variant;
@@ -67,7 +74,9 @@ export function getColorVariant(rgbDiff: number[], color: string = THEME_COLOR):
       b: number,
       variant: string;
 
-  if (/#[0-9a-f]{3,6}/i.test(color))
+  if (/^[a-zA-Z]{3,}$/i.test(color))
+    rgbVals = colors[color].rgbVal;
+  else if (/#[0-9a-f]{3,6}/i.test(color))
     rgbVals = color.replace(/#([0-9a-f]{1,2})([0-9a-f]{1,2})([0-9a-f]{1,2})/ig, '$1 $2 $3')
                 .split(' ').map((hex) => Number(parseInt(hex, 16).toString(10)));
   else if (/rgb\(\d{1,3},\s?\d{1,3},\s?\d{1,3}\)/i.test(color))
@@ -138,14 +147,14 @@ function ThemeCSSText(cssProps: any): string
     .widget .tab-links-wrapper button.recommended-tab-link:hover,
     .widget .tab-links-wrapper button.required-tab-link:hover {
       background: ${cssProps.tablinkHoverBg};
-      color: ${cssProps.dropdownBg};
+      color: ${cssProps.tablinkHoverColor} !important;
     }
     
     .widget .tab-links-wrapper button.recommended-tab-link.active-tab-link,
     .widget .tab-links-wrapper button.required-tab-link.active-tab-link
     {
       background: ${cssProps.dropdownBg};
-      color: ${cssProps.themeBg};
+      color: ${cssProps.activeTablinkColor} !important;
     }
     
     .widget .tabs-wrapper ul 
@@ -190,3 +199,6 @@ function ThemeCSSText(cssProps: any): string
 
   return cssText;
 }
+
+
+

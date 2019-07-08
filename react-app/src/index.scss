@@ -162,12 +162,13 @@ body
         {
           background: $tab-link-hover-bgcolor;
           color: $dropdown-bg;
+          // color: rgb(255, 0, 0);
         }
         
         &.active-tab-link
         {
           background: $active-el-bgcolor;
-          color: $theme-bg-color;
+          // color: $theme-bg-color;
 
           &:before
           {

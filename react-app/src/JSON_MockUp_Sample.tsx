@@ -169,6 +169,40 @@ export default function Get_HardCoded_Refs()
             {
                 "data": {
                     "authors": [
+                        "J. R. R. Tolkien"
+                    ],
+                    "title": "The Hobbit"
+                },
+                "id": "@johny/35t8qc8i5",
+                "ref_type": "recommended",
+                "refs": [
+                    {
+                        "data": {
+                            "authors": [
+                                "Dan Brown"
+                            ],
+                            "title": "The Da Vinci Code"
+                        },
+                        "id": "myin9aksq",
+                        "ref_type": "recommended",
+                        "refs": []
+                    },
+                    {
+                        "data": {
+                            "authors": [
+                                "Jane Austen"
+                            ],
+                            "title": "Pride and Prejudice"
+                        },
+                        "id": "r9t9rc4ip",
+                        "ref_type": "required",
+                        "refs": []
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "authors": [
                         "Jane Austen"
                     ],
                     "title": "Pride and Prejudice"
@@ -197,40 +231,6 @@ export default function Get_HardCoded_Refs()
                         "id": "r9t9rc4ip",
                         "ref_type": "required",
                         "refs": []
-                    },
-                    {
-                        "data": {
-                            "authors": [
-                                "J. R. R. Tolkien"
-                            ],
-                            "title": "The Hobbit"
-                        },
-                        "id": "@johny/35t8qc8i5",
-                        "ref_type": "required",
-                        "refs": [
-                            {
-                                "data": {
-                                    "authors": [
-                                        "Dan Brown"
-                                    ],
-                                    "title": "The Da Vinci Code"
-                                },
-                                "id": "myin9aksq",
-                                "ref_type": "recommended",
-                                "refs": []
-                            },
-                            {
-                                "data": {
-                                    "authors": [
-                                        "Jane Austen"
-                                    ],
-                                    "title": "Pride and Prejudice"
-                                },
-                                "id": "r9t9rc4ip",
-                                "ref_type": "required",
-                                "refs": []
-                            }
-                        ]
                     },
                     {
                         "data": {
