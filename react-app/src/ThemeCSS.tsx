@@ -1,11 +1,13 @@
 import colors from './colors.json';
+import widgetconfig from './widgetconfig.json';
+
 
 const COLORS: any = colors;
 
 
 
 //change theme colour to colour name/code you wish to, to see effect. PS: You can also use colors.COLOUR_NAME.name (e.g. colors.blue.name) to get colour hints
-const THEME_COLOR: string = '' || 'rgb(145, 0, 145)',
+const THEME_COLOR: string = 'blue' || 'rgb(145, 0, 145)',
       DROPDOWN_BGCOLOR: string = '' || 'white',
       GRAPH_TABLINK_COLOR: string = '', //suggested: yellow
       GRAPH_TABLINK_HOVER_BG: string = ''; //suggested: rgb(32, 199, 245)

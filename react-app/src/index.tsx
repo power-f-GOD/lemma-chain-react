@@ -8,7 +8,7 @@ import getThemeCSSText from './ThemeCSS';
 
 export interface Props
 {
-  endpointURL: string;
+  serverHostURL: string;
   maxWidth: number;
   maxHeight: number;
 }
@@ -19,7 +19,7 @@ export interface Props
 //PS: Put in own values in empty string (before double pipe symbols) to alter widget props or leave blank to use default
 let widgetProps: Props = 
 {
-  endpointURL: '' || '68.183.123.0:1323',       //lemma-chain server host
+  serverHostURL: '' || '68.183.123.0:1323',       //lemma-chain server host
   maxHeight: 0,
   maxWidth: 0
 };
@@ -28,7 +28,7 @@ let widgetProps: Props =
 
 ReactDOM.render(
   <Widget
-    endpointURL={widgetProps.endpointURL}
+    serverHostURL={widgetProps.serverHostURL}
     maxHeight={widgetProps.maxHeight}
     maxWidth={widgetProps.maxWidth}
   />,

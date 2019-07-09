@@ -1,0 +1,13 @@
+{
+  "widgetServerHost": {
+    "local": "",
+    "custom": "",
+    "default": "68.183.123.0:1323"
+  },
+  "themeColor": "",
+  "dropdownBgColor": "",
+  "graphTablinkColor": "",
+  "graphTablinkHoverBg": "",
+  "widgetMaxWidth": "",
+  "widgetMaxNumOfRefsDisplayedAtOnce": 3
+}

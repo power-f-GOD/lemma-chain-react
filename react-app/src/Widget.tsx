@@ -1,17 +1,22 @@
 import React, { ReactInstance, CSSProperties } from 'react';
 import ReactDOM from 'react-dom';
 import Dropdown from './components/Dropdown';
-import Get_HardCoded_Refs from './JSON_MockUp_Sample';
 import Loader from './components/Loader';
 import vis, { Network } from 'vis';
 import { setTimeout } from 'timers';
 import { Props } from './index';
+import Get_HardCoded_Refs from './JSON_MockUp_Sample';
+import { getCSSProps } from './ThemeCSS';
 
 
 
 export interface Payload
 {
-  data: {title: string, authors: string[]};
+  data: {
+    title: string,
+    authors: string[],
+    url?: string;
+  };
   id: string;
   refs: Array<object>;
   [key: string]: any;
@@ -57,12 +62,20 @@ class Widget extends React.Component<Props, State>
   {
     dropdownIsCollapsed: true,
     dropdownCurHeight: 0,
-    refID: '@alpha/1v1t2ulhg',
+    refID: '@powerofgod/17t8kcjuw',
     activeTabName: 'required-tab',
     activeTabLinkName: 'required-tab-link',
     historyExists: false,
-    refIsLoading: false,
-    payload: Get_HardCoded_Refs(),
+    refIsLoading: true,
+    payload: {
+      data: {
+        title: '',
+        authors: [''],
+        url: ''
+      },
+      id: '',
+      refs: [{}]
+    },
     errOccurred: false,
     errMsg: '',
     graphNodeIsHovered: false,
@@ -85,10 +98,10 @@ class Widget extends React.Component<Props, State>
 
   activeTab: HTMLUListElement | any = null;
 
-  endpointURL: string = /localhost/.test(window.location.href) ? 'localhost:1323' : this.props.endpointURL;
+  serverHostURL: string = /localhost/.test(window.location.href) ? 'localhost:1323' : this.props.serverHostURL;
 
   //copy initial/first state object and set at index 0 of history
-  history: State[] = [Object.assign({}, this.state)]; 
+  history: State[] = []; 
 
   
 
@@ -167,59 +180,32 @@ class Widget extends React.Component<Props, State>
 
     setTimeout(() => 
     {
-      //clear/empty initial payload before updating it
-      this.setState({payload: {
-        data: { title: '', authors: []},
-        id: '',
-        refs: [{}]
-      }});
-
-      let url = `http://${this.endpointURL}/${refID}`;
-      
-      fetch(url)
-        .then((response: Response) => response.json())
-        .then((data: Payload) =>
+      let ref: any;
+      for (ref of this.state.payload.refs)
+      {
+        if (ref.id === refID)
         {
-          //throw Error (i.e. do not proceed to try populating UI) if server returns an error [message]
-          if (Object.keys(data).includes('error'))
-            throw new Error(data.error);
-          else {
-            this.setState({
-              refID: refID,
-              payload: data
-            });
-            //using another setState method here to update dropdown height to activeTab-height after it has been populated to avoid setting a height of 0 assuming it's done in the previous setState method
-            this.setState({
-              errOccurred: false,
-              dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
-              historyExists: true,
-              refIsLoading: false,
-              dropdownIsCollapsed: false
-            });
-          }
-          //update history
-          this.history.push(Object.assign({}, this.state));
-          //delay till state payload is set before visualizing to avoid errors
-          setTimeout(() => this.visualizeGraph(), 300);
-        })
-        .catch(err => {
-          //just for proper English sentence casing and grammar
-          let errMsg = String(err).replace(/(\w+)?error:/i, '').trim(),
-              appendDot = errMsg.substr(-1) !== '.' ? `${errMsg}.` : errMsg,
-              grammarfiedErrMsg = appendDot.charAt(0).toUpperCase() + appendDot.substr(1,);
-          
           this.setState({
-            errOccurred: true,
-            errMsg: `${grammarfiedErrMsg}`,
-            dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab),
-            historyExists: true,
-            refIsLoading: false,
-            dropdownIsCollapsed: false
+            refID: ref.id,
+            payload: ref
           });
-          //update history
-          this.history.push(Object.assign({}, this.state));
-        });
-    }, 150);
+          setTimeout(() => 
+          {
+            this.setState({
+              refIsLoading: false,
+              historyExists: true,
+              dropdownCurHeight: this.resizeDropdownHeightTo(this.activeTab)
+            });
+            //update history
+            this.history.push(Object.assign({}, this.state));
+            //delay till state payload is set before visualizing to avoid errors
+            setTimeout(() => this.visualizeGraph(), 200);
+          }, 300)
+          break;
+        }
+        else continue;
+      }
+    }, 300);
   }
 
 
@@ -249,7 +235,7 @@ class Widget extends React.Component<Props, State>
     this.history.pop();
 
     //delay till state payload is set before visualizing to avoid errors
-    setTimeout(() => this.visualizeGraph(), 300);
+    setTimeout(() => this.visualizeGraph(), 200);
   }
 
 
@@ -285,21 +271,24 @@ class Widget extends React.Component<Props, State>
    */
   setGraphNodesAndEdges = (_ref: Payload): void =>
   {
+    let themeCSS = getCSSProps();
     let ref: any = Object.assign({}, _ref),
         refHasParents = _ref.refs.length > 0 ? true : false,
         //making a copy of refs (parents) to avoid modifying actual parents
         parents = _ref.refs.map((parent: any) => Object.assign({}, parent)),
         colors = {
-          self: {bg: '#a111a0', bdr: '#710070'},
+          self: {bg: themeCSS.themeBg, bdr: themeCSS.themeBgHover},
           required: {bg: '#ff9c10', bdr: '#ef7c00'},
           recommended: {bg: '#20dcff', bdr: '#10bcf0'},
           alien: {bg: '#c0c0c0', bdr: '#b0b0b0'}
         };
 
+        
     //returns object of node properties e.g. color, font, background, border etc.
     let nodeProps = (_ref: Payload): object => 
     {
-      let color: any = {};
+      let color: any = {},
+          isCurrentRef: boolean = _ref.id === this.state.refID;
 
       //i.e. if ref is not alien to current ref (book), proceed to add required/recommended colors
       if (this.state.payload.refs.find((ref: any) => _ref.id.replace(/.*\/(.*)/, '$1') === ref.id.replace(/.*\/(.*)/, '$1')))
@@ -316,19 +305,19 @@ class Widget extends React.Component<Props, State>
         font: {
           size: 14,
           face: 'Google Sans, Roboto Mono, Trebuchet MS',
-          color: !_ref.ref_type ? colors.self.bdr : color.bdr,
+          color: isCurrentRef ? colors.self.bdr : color.bdr,
           strokeWidth: 1,
           strokeColor: 'white'
         },
         color: {
-          background: !_ref.ref_type ? colors.self.bg : color.bg,
-          border: !_ref.ref_type ? colors.self.bdr : color.bdr,
+          background: isCurrentRef ? colors.self.bg : color.bg,
+          border: isCurrentRef ? colors.self.bdr : color.bdr,
           hover: {
             background: 'white',
-            border: !_ref.ref_type ? colors.self.bdr : color.bdr
+            border: isCurrentRef ? colors.self.bdr : color.bdr
           },
           highlight: {
-            border: !_ref.ref_type ? colors.self.bdr : color.bdr,
+            border: isCurrentRef ? colors.self.bdr : color.bdr,
             background: 'white'
           }
         },
@@ -339,14 +328,24 @@ class Widget extends React.Component<Props, State>
 
     let pushNodesAndEdges = (): void =>
     {
-      let parent: Payload;
+      let parent: Payload, node: any;
       for (parent of parents)
       {
-        let _nodeProps: any = nodeProps(parent);
+        let _nodeProps: any = nodeProps(parent),
+            nodeExists: boolean = false;
 
         //prepare and push nodes for visualization. 
         //PS: If parent (ref) doesn't already exist in network, push to network
-        if (!this.graph.nodes.find((node: any) => node.id.replace(/.*\/(.*)/, '$1') === parent.id.replace(/.*\/(.*)/, '$1')))
+        for (let node of this.graph.nodes)
+        {
+          if (node.id.replace(/.*\/(.*)/, '$1') === parent.id.replace(/.*\/(.*)/, '$1'))
+          {
+            nodeExists = true;
+            break;
+          }
+        }
+
+        if (!nodeExists)
         {
           this.graph.nodes.unshift(Object.assign({
             _id: parent.id,
@@ -477,39 +476,106 @@ class Widget extends React.Component<Props, State>
 
 
 
-  componentDidMount()
+  async componentDidMount()
   {
     //check what device user is running
     if (/(Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone)/i.test(window.navigator.userAgent))
       this.isViewedWithMobile = true;
 
-    //now set value of constant Widget height which will also be used in computing loader wrapper height in Dropdown.js
-    this.height = this.findNode(this).offsetHeight;                      
+    //now set value of constant Widget height which will also be used in computing loader wrapper height in Dropdown.tsx
+    this.height = this.findNode(this).offsetHeight;
     this.dropdown = this.findNode(this, '.dropdown');     
     this.activeTabLink = this.findNode(this, '.active-tab-link');
     this.activeTab = this.findNode(this, '.required-tab');
-
-    //PS: Wait or delay till fonts are loaded before getting height of activeTab in order not to get a height below height of tab with loaded fonts since height is set to auto
-    window.onload = (): any =>
+    
+    this.setState({refIsLoading: true});
+    
+    try
     {
-      //hide clipboard if anywhere else in document/page is clicked
+      await fetch(`http://${this.serverHostURL}/${this.state.refID}`)
+        .then((response: Response) => response.json())
+        .then((data: Payload) =>
+        {
+          //throw Error (i.e. do not proceed to try populating UI) if server returns an error [message]
+          if (Object.keys(data).includes('error'))
+            throw new Error(data.error);
+          else 
+          {
+            this.setState({ payload: data });
+            //using another setState method here to update dropdown height to activeTab-height after it has been populated to avoid setting a height of 0 assuming it's done in the previous setState method
+            this.setState({
+              errOccurred: false,
+              refIsLoading: false,
+              dropdownCurHeight: !this.state.dropdownIsCollapsed ? this.resizeDropdownHeightTo(this.activeTab) : this.state.dropdownCurHeight
+            });
+          }
+          //delay till state payload is set before visualizing to avoid errors
+          setTimeout(() => this.visualizeGraph(), 200);
+        })
+    }
+    //NOTE: This block of code must be re-edited for production. It was modified just for testing purposes
+    //TO-DO: Remodify code: Make url prop not optional in Payload interface at very top...
+    catch (e) 
+    {
+      //TO-DO: delete this line in production
+      alert('Could not establish connection. Got hard-coded refs instead.');
+
+      //just for proper English grammar sentence casing
+      let errMsg = String(e).replace(/(\w+)?error:/i, '').trim(),
+          appendDot = errMsg.substr(-1) !== '.' ? `${errMsg}.` : errMsg,
+          grammarfiedErrMsg = appendDot.charAt(0).toUpperCase() + appendDot.substr(1,);
+
+      this.setState({
+        //TO-DO: delete this line in production
+        payload: Get_HardCoded_Refs(),
+        //TO-DO: uncomment this line in production
+        // errOccurred: true,
+        errMsg: `${grammarfiedErrMsg}`,
+        refIsLoading: false
+      });
+      //HACK: The following setTimeout function is for a case where user toggles dropdown while Lemma Chain is still fetching data and has not yet resolved
+      //PS: Delay till after above state props is set in order to correctly set dropdown height
+      setTimeout(() => 
+      {
+        this.setState({
+          dropdownCurHeight: !this.state.dropdownIsCollapsed ? this.resizeDropdownHeightTo(this.activeTab) : this.state.dropdownCurHeight
+        });
+        //TO-DO: delete this line in production
+        this.visualizeGraph();
+      }, 200);
+    }
+    finally 
+    {
+      
+      //hide clipboard tool-tip if anywhere else in document/page is clicked
       document.body.onclick = (e: any) => 
       {
         if (!/tool-tip|ref-identifier/.test(e.target.className))
           this.setState({tooltipIsActive: false});
       }
-      
-      //set maximum height of dropdown to height of three items [before adding scroll bar]
-      let heightRef = this.findNode(this, '.item-wrapper')[0].offsetHeight;
-      this.findNode(this, '.tab').forEach((tab: any) => tab.style.maxHeight = `${heightRef * 3 + 2}px`);
-      //HACK: unset history initial (first state) dropdown height from 0 to current activeTab height to prevent dropdown from resizing to 0 on click of back button assuming history index is at 0 (first state).
-      this.history[0].dropdownCurHeight = this.resizeDropdownHeightTo(this.activeTab);
+
+      let googleFontCDN = document.getElementById('font-cdn') as HTMLElement;
+
+      //HACK: This is for to wait or delay till fonts are loaded before getting height of activeTab in order not to get a height below height of tab with loaded fonts since offset height of container is set to auto and relative to size of font
+      let awaitFontLoad = async () => 
+      {
+        try { await fetch(`${googleFontCDN.getAttribute('href')}`); }
+        finally 
+        {
+          //set maximum height of dropdown to height of three items [before adding scroll bar]
+          let heightRef = this.findNode(this, '.item-wrapper')[0].offsetHeight;
+          this.findNode(this, '.tab').forEach((tab: any) => tab.style.maxHeight = `${heightRef * 3 + 2}px`);
+          
+          //HACK: unset history initial (first state) dropdown height from 0 to current activeTab height to prevent dropdown from resizing to 0 on click of back button assuming history index is at 0 (first state).
+          this.history[0].dropdownCurHeight = this.resizeDropdownHeightTo(this.activeTab);
+          this.history[0].dropdownIsCollapsed = false;
+        }
+      }
+      awaitFontLoad();
+
+      //update history
+      this.history.push(Object.assign({}, this.state));
     }
-    //HACK: prevent caret-icon-flip bug if gone back in time to first state i.e. if history index is at 0 on 'back button' click
-    this.history[0].dropdownIsCollapsed = false;
-  
-    //delay till state payload is set before visualizing to avoid errors
-    setTimeout(() => this.visualizeGraph(), 300);
   }
 
 
@@ -534,11 +600,12 @@ class Widget extends React.Component<Props, State>
           <span style={refIDWrapperStyle}>
             <span
               className='ref-identifier'
+              title={`${this.state.payload.data.title} ${this.state.refID}`}
               style={{
                 opacity: this.state.refIsLoading ? 0 : 1,
                 transition: '0.3s'
               }}>
-              {this.state.refID}
+              {this.state.refID.length > 20 ? `${this.state.refID.substr(0, 20)}...` : this.state.refID}
               {/*HACK: This is for copying to clipboard as _NODE_.select() doesn't work for non-input elements, and TypeScript throws some error when trying to 'window.getSelection()'*/}
               <input
                 type='text'

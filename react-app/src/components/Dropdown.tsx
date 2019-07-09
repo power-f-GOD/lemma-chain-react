@@ -49,7 +49,7 @@ function Dropdown(props: Props)
           attributes={{
             size: 12,
             color: getCSSProps().themeBg,
-            rider: 'Loading References...',
+            rider: props.state.payload.id ? 'Populating References...' : 'Loading References...',
             type: 'major',
             wrapperHeight: props.state.dropdownCurHeight - props.height
           }}
