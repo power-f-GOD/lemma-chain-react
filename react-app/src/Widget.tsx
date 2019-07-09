@@ -539,7 +539,7 @@ class Widget extends React.Component<Props, State>
                 transition: '0.3s'
               }}>
               {this.state.refID}
-              {/*HACK: This is for copying to clipboard as node.select() doesn't work for non-input elements, and TypeScript throws some error when trying to 'window.getSelection()'*/}
+              {/*HACK: This is for copying to clipboard as _NODE_.select() doesn't work for non-input elements, and TypeScript throws some error when trying to 'window.getSelection()'*/}
               <input
                 type='text'
                 value={this.state.refID}
