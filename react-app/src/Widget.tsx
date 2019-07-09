@@ -518,7 +518,7 @@ class Widget extends React.Component<Props, State>
     catch (e) 
     {
       //TO-DO: delete this line in production
-      alert('Could not establish connection. Got hard-coded refs instead.');
+      alert('Hi, there. \n\nLemma Chain GUI could not establish connection, hence, got hard-coded refs instead for testing purposes.\n\n-Godspower');
 
       //just for proper English grammar sentence casing
       let errMsg = String(e).replace(/(\w+)?error:/i, '').trim(),
