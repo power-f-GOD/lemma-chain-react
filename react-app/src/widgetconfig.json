@@ -1,9 +1,11 @@
 {
   "lemmaChainServerHost": "68.183.123.0:1323",
-  "themeColor": "royalblue",
-  "dropdownBgColor": "",
+  "themeColor": "blue",
+  "dropdownBg": "",
   "graphTablinkColor": "",
   "graphTablinkHoverBg": "",
+  "graphNetworkRequiredEdgeColor": "",
+  "graphNetworkRecommendedEdgeColor": "",
   "widgetMaxWidth": "",
   "widgetMaxNumOfRefsDisplayableAtOnce": 3
 }

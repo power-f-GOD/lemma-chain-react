@@ -1,3 +1,7 @@
+/**
+ * To customize or configure widget, edit values in widgetconfig.json
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Widget from './Widget';
@@ -6,34 +10,7 @@ import getThemeCSSText from './ThemeCSS';
 
 
 
-export interface Props
-{
-  serverHostURL: string;
-  maxWidth: number;
-  maxHeight: number;
-}
-
-
-
-//customize widget to taste/context
-//PS: Put in own values in empty string (before double pipe symbols) to alter widget props or leave blank to use default
-let widgetProps: Props = 
-{
-  serverHostURL: '' || '68.183.123.0:1323',       //lemma-chain server host
-  maxHeight: 0,
-  maxWidth: 0
-};
-
-
-
-ReactDOM.render(
-  <Widget
-    serverHostURL={widgetProps.serverHostURL}
-    maxHeight={widgetProps.maxHeight}
-    maxWidth={widgetProps.maxWidth}
-  />,
-  document.querySelector('#root')
-);
+ReactDOM.render(<Widget />, document.querySelector('#root'));
 
 
 

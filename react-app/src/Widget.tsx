@@ -4,7 +4,6 @@ import Dropdown from './components/Dropdown';
 import Loader from './components/Loader';
 import vis, { Network, Options } from 'vis';
 import { setTimeout } from 'timers';
-import { Props } from './index';
 import Get_HardCoded_Refs from './JSON_MockUp_Sample';
 import { getCSSProps } from './ThemeCSS';
 import widgetconfig from './widgetconfig.json';
@@ -44,7 +43,7 @@ export interface State
 
 
 
-class Widget extends React.Component<Props, State>
+class Widget extends React.Component<{}, State>
 {
   /**
    * dropdownIsCollapsed: boolean for dropdown toggle
@@ -99,10 +98,12 @@ class Widget extends React.Component<Props, State>
 
   activeTab: HTMLUListElement | any = null;
 
-  serverHostURL: string = /localhost/.test(window.location.href) ? 'localhost:1323' : this.props.serverHostURL;
+  serverHostURL: string = /localhost/.test(window.location.href) ? 'localhost:1323' : widgetconfig.lemmaChainServerHost;
 
   //copy initial/first state object and set at index 0 of history
-  history: State[] = []; 
+  history: State[] = [];
+
+  cssProps = getCSSProps();
 
   
 
@@ -271,16 +272,17 @@ class Widget extends React.Component<Props, State>
    */
   setGraphNodesAndEdges = (_ref: Payload): void =>
   {
-    let themeCSS = getCSSProps();
-    let ref: any = Object.assign({}, _ref),
+    let themeCSS = this.cssProps,
+        ref: any = Object.assign({}, _ref),
         refHasParents = _ref.refs.length > 0 ? true : false,
         //making a copy of refs (parents) to avoid modifying actual parents
         parents = _ref.refs.map((parent: any) => Object.assign({}, parent)),
         colors = {
-          self: {bg: themeCSS.themeBg, bdr: themeCSS.themeBgHover},
-          required: {bg: '#ff9c10', bdr: '#ef7c00'},
+          self: {bg: themeCSS.graphCurrentNodeBg, bdr: themeCSS.graphCurrentNodeBorderColor},
+          required: {bg: themeCSS.graphParentNodesBg, bdr: themeCSS.graphParentNodesBorderColor},
           recommended: {bg: '#20dcff', bdr: '#10bcf0'},
-          alien: {bg: '#c0c0c0', bdr: '#b0b0b0'}
+          alien: {bg: '#c0c0c0', bdr: '#b0b0b0'},
+          other: {bg: themeCSS.graphParentNodesBg, bdr: themeCSS.graphParentNodesBorderColor}
         };
 
         
@@ -291,15 +293,15 @@ class Widget extends React.Component<Props, State>
           isCurrentRef: boolean = _ref.id === this.state.refID;
 
       //i.e. if ref is not alien to current ref (book), proceed to add required/recommended colors
-      if (this.state.payload.refs.find((ref: any) => _ref.id.replace(/.*\/(.*)/, '$1') === ref.id.replace(/.*\/(.*)/, '$1')))
-      {
-        color.bg = _ref.ref_type === 'required' ? colors.required.bg : colors.recommended.bg;
-        color.bdr = _ref.ref_type === 'required' ? colors.required.bdr : colors.recommended.bdr;
-      }
-      else {
-        color.bg = colors.alien.bg;
-        color.bdr = colors.alien.bdr;
-      }
+      // if (this.state.payload.refs.find((ref: any) => _ref.id.replace(/.*\/(.*)/, '$1') === ref.id.replace(/.*\/(.*)/, '$1')))
+      // {
+      //   color.bg = _ref.ref_type === 'required' ? colors.required.bg : colors.recommended.bg;
+      //   color.bdr = _ref.ref_type === 'required' ? colors.required.bdr : colors.recommended.bdr;
+      // }
+      // else {
+        color.bg = colors.other.bg;
+        color.bdr = colors.other.bdr;
+      // }
 
       return {
         font: {
@@ -307,18 +309,18 @@ class Widget extends React.Component<Props, State>
           face: 'Google Sans, Roboto Mono, Trebuchet MS',
           color: isCurrentRef ? colors.self.bdr : color.bdr,
           strokeWidth: 1,
-          strokeColor: 'white'
+          strokeColor: this.cssProps.dropdownBg
         },
         color: {
           background: isCurrentRef ? colors.self.bg : color.bg,
           border: isCurrentRef ? colors.self.bdr : color.bdr,
           hover: {
-            background: 'white',
+            background: this.cssProps.dropdownBg,
             border: isCurrentRef ? colors.self.bdr : color.bdr
           },
           highlight: {
             border: isCurrentRef ? colors.self.bdr : color.bdr,
-            background: 'white'
+            background: this.cssProps.dropdownBg
           }
         },
         shape: 'dot',
@@ -364,7 +366,12 @@ class Widget extends React.Component<Props, State>
           to: parent.id.replace(/.*\/(.*)/, '$1'),
           arrows: 'to',
           length: 50,
-          font: {..._nodeProps.font, size: 9}
+          font: {..._nodeProps.font, size: 9},
+          color: { 
+            color: parent.ref_type === 'required' ? this.cssProps.graphNetworkRequiredEdgeColor : this.cssProps.graphNetworkRecommendedEdgeColor,
+            highlight: parent.ref_type === 'required' ? this.cssProps.graphNetworkRequiredEdgeColor : this.cssProps.graphNetworkRecommendedEdgeColor,
+            hover: parent.ref_type === 'required' ? this.cssProps.graphNetworkRequiredEdgeColor : this.cssProps.graphNetworkRecommendedEdgeColor
+          }
         });
 
         //QUOTE OF THE CENTURY: "To iterate is human, to recurse divine." - L. Peter Deutsch :D
@@ -421,6 +428,9 @@ class Widget extends React.Component<Props, State>
         //set graph options
         options: Options = {
           nodes: {borderWidth: 1.5},
+          edges: {
+            color: { inherit: false }
+          },
           interaction: {hover: true}
         },
         //create a network
@@ -473,7 +483,7 @@ class Widget extends React.Component<Props, State>
     network.on('dragEnd', () => this.setState({graphNodeIsHovered: false}));
     
     let graphIsZoomed = false,
-        initialScale = this.graph.nodes.length < 10 ? 0.95 : 0.55;
+        initialScale = this.graph.nodes.length < 10 ? 0.85 : 0.55;
 
     network.on('zoom', (params) => 
     {
