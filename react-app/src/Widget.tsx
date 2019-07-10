@@ -2,11 +2,12 @@ import React, { ReactInstance, CSSProperties } from 'react';
 import ReactDOM from 'react-dom';
 import Dropdown from './components/Dropdown';
 import Loader from './components/Loader';
-import vis, { Network } from 'vis';
+import vis, { Network, Options } from 'vis';
 import { setTimeout } from 'timers';
 import { Props } from './index';
 import Get_HardCoded_Refs from './JSON_MockUp_Sample';
 import { getCSSProps } from './ThemeCSS';
+import widgetconfig from './widgetconfig.json';
 
 
 
@@ -107,7 +108,6 @@ class Widget extends React.Component<Props, State>
 
   handleDropdownToggle = (e: any) =>
   {
-    
     if (e.target.className.match('ref-identifier'))
       this.setState({tooltipIsActive: !this.state.tooltipIsActive});
     else {
@@ -328,7 +328,7 @@ class Widget extends React.Component<Props, State>
 
     let pushNodesAndEdges = (): void =>
     {
-      let parent: Payload, node: any;
+      let parent: Payload;
       for (parent of parents)
       {
         let _nodeProps: any = nodeProps(parent),
@@ -419,7 +419,7 @@ class Widget extends React.Component<Props, State>
           edges: edges
         },
         //set graph options
-        options = {
+        options: Options = {
           nodes: {borderWidth: 1.5},
           interaction: {hover: true}
         },
@@ -469,9 +469,26 @@ class Widget extends React.Component<Props, State>
       }
     });
     network.on('blurNode', () => this.setState({graphNodeIsHovered: this.state.graphNodeIsActive ? true : false}));
-    network.on('zoom', () => this.setState({graphNodeIsHovered: false}));
     network.on('dragStart', () => this.setState({graphNodeIsHovered: false}));
     network.on('dragEnd', () => this.setState({graphNodeIsHovered: false}));
+    
+    let graphIsZoomed = false,
+        initialScale = this.graph.nodes.length < 10 ? 0.95 : 0.55;
+
+    network.on('zoom', (params) => 
+    {
+      initialScale = network.getScale();
+      this.setState({graphNodeIsHovered: false});
+    });
+    network.on('doubleClick', () => 
+    {
+      if (!graphIsZoomed)
+        network.moveTo({scale: initialScale + 0.5});
+      else
+        network.moveTo({scale: initialScale});
+      graphIsZoomed = !graphIsZoomed;
+    });
+    network.once('stabilized', () => network.moveTo({scale: initialScale}));
   }
 
 
@@ -518,7 +535,7 @@ class Widget extends React.Component<Props, State>
     catch (e) 
     {
       //TO-DO: delete this line in production
-      alert('Hi, there. \n\nLemma Chain GUI could not establish connection, hence, got hard-coded refs instead for testing purposes.\n\n-Godspower');
+      alert('Hi, there. \n\nLemma Chain GUI could not establish connection with server, hence, got hard-coded refs instead for testing purposes.\n\n- Godspower');
 
       //just for proper English grammar sentence casing
       let errMsg = String(e).replace(/(\w+)?error:/i, '').trim(),
@@ -564,8 +581,12 @@ class Widget extends React.Component<Props, State>
         {
           //set maximum height of dropdown to height of three items [before adding scroll bar]
           let heightRef = this.findNode(this, '.item-wrapper')[0].offsetHeight;
-          this.findNode(this, '.tab').forEach((tab: any) => tab.style.maxHeight = `${heightRef * 3 + 2}px`);
-          
+          this.findNode(this, '.tab').forEach((tab: any) => 
+          {
+            //exclude graph-tab from getting max-height since graph should be displayed full
+            if (!/graph-tab/.test(tab.className))
+              tab.style.maxHeight = `${heightRef * (widgetconfig.widgetMaxNumOfRefsDisplayableAtOnce || 3) + 2}px`;
+          });
           //HACK: unset history initial (first state) dropdown height from 0 to current activeTab height to prevent dropdown from resizing to 0 on click of back button assuming history index is at 0 (first state).
           this.history[0].dropdownCurHeight = this.resizeDropdownHeightTo(this.activeTab);
           this.history[0].dropdownIsCollapsed = false;
@@ -600,7 +621,7 @@ class Widget extends React.Component<Props, State>
           <span style={refIDWrapperStyle}>
             <span
               className='ref-identifier'
-              title={`${this.state.payload.data.title} ${this.state.refID}`}
+              title={`Title: ${this.state.payload.data.title}\nAuthor(s): ${this.state.payload.data.authors.join(', ')}\nRef. ID: ${this.state.refID}`}
               style={{
                 opacity: this.state.refIsLoading ? 0 : 1,
                 transition: '0.3s'

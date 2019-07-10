@@ -16,8 +16,7 @@ export default function DisplayStatusMessage(props: any)
         alignItems: 'center',
         color: '#888',
         fontSize: 14,
-        minHeight: 'auto',
-        height: 260,
+        minHeight: 200,
         opacity: props.refIsLoading ? 0 : 1,
         transition: '0.3s'
       },

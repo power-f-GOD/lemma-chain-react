@@ -7,7 +7,7 @@ import { getCSSProps } from '../ThemeCSS';
 export default function TabLinks(props: Props)
 {
   return (
-    <div className='tab-links-wrapper'>
+    <div className='tab-links-wrapper' style={{height: props.state.dropdownIsCollapsed ? 0 : 48}}>
       <button
         className='back-btn'
         title='Go back in time! ;)'

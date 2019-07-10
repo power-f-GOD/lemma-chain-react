@@ -1,13 +1,9 @@
 {
-  "widgetServerHost": {
-    "local": "",
-    "custom": "",
-    "default": "68.183.123.0:1323"
-  },
-  "themeColor": "",
+  "lemmaChainServerHost": "68.183.123.0:1323",
+  "themeColor": "royalblue",
   "dropdownBgColor": "",
   "graphTablinkColor": "",
   "graphTablinkHoverBg": "",
   "widgetMaxWidth": "",
-  "widgetMaxNumOfRefsDisplayedAtOnce": 3
+  "widgetMaxNumOfRefsDisplayableAtOnce": 3
 }

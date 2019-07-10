@@ -7,10 +7,10 @@ const COLORS: any = colors;
 
 
 //change theme colour to colour name/code you wish to, to see effect. PS: You can also use colors.COLOUR_NAME.name (e.g. colors.blue.name) to get colour hints
-const THEME_COLOR: string = 'blue' || 'rgb(145, 0, 145)',
-      DROPDOWN_BGCOLOR: string = '' || 'white',
-      GRAPH_TABLINK_COLOR: string = '', //suggested: yellow
-      GRAPH_TABLINK_HOVER_BG: string = ''; //suggested: rgb(32, 199, 245)
+const THEME_COLOR: string = widgetconfig.themeColor || 'rgb(145, 0, 145)',
+      DROPDOWN_BGCOLOR: string = widgetconfig.dropdownBgColor || 'white',
+      GRAPH_TABLINK_COLOR: string = widgetconfig.graphTablinkColor || '', //suggested: yellow
+      GRAPH_TABLINK_HOVER_BG: string = widgetconfig.graphTablinkHoverBg || ''; //suggested: rgb(32, 199, 245)
 
 
 
@@ -105,6 +105,7 @@ function ThemeCSSText(cssProps: any): string
     { 
       color: ${cssProps.dropdownColor};
       background: ${cssProps.dropdownBg};
+      border-color: ${cssProps.tablinkBg};
     }
     
     .widget .dropdown-toggle-bar 
@@ -160,9 +161,6 @@ function ThemeCSSText(cssProps: any): string
       color: ${cssProps.activeTablinkColor} !important;
     }
     
-    .widget .tabs-wrapper ul 
-    { border-color: ${cssProps.tablinkBg}; }
-    
     .widget .tabs-wrapper ul.tab .item-wrapper 
     { border-bottom: 1px solid ${cssProps.itemBorderBottomColor}; }
     
@@ -181,16 +179,16 @@ function ThemeCSSText(cssProps: any): string
       background: ${cssProps.dropdownBg};
     }
     
-    .widget .tabs-wrapper ul .graph-wrapper .key-current 
-    { background: ${cssProps.graphCurrentNodeBg}; }
+    .widget .tabs-wrapper ul .graph-wrapper #graph-key .key-current 
+    { background: ${cssProps.themeBg}; }
     
-    .widget .tabs-wrapper ul .graph-wrapper .key-required 
+    .widget .tabs-wrapper ul .graph-wrapper #graph-key .key-required 
     { background: ${cssProps.graphParentNodesBg}; }
     
-    .widget .tabs-wrapper ul .graph-wrapper .key-recommended 
+    .widget .tabs-wrapper ul .graph-wrapper #graph-key .key-recommended 
     { background: ${cssProps.graphParentNodesBg}; }
     
-    .widget .tabs-wrapper ul .graph-wrapper .key-alien
+    .widget .tabs-wrapper ul .graph-wrapper #graph-key .key-alien
     { background: ${cssProps.graphParentNodesBg}; }
     
     .useCustomScrollBar::-webkit-scrollbar-track 

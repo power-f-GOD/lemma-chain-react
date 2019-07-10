@@ -4,7 +4,7 @@ let titles: string,
     ref_types: string[],
     chars: string;
 
-titles = `The Iliad;The Hobbit;1984;Pride and Prejudice;To Kill a Mockingbird;The Da Vinci Code;The Catcher in the Rye;Life of Pi;The Two Towers;Harry Potter and the Goblet of Fire;Outlander;Never Let Me Go;Digital Fortress;A Christmas Carol;Zen and the Art of Motorcycle Maintenance;Tess of the d'Urbervilles;The Divine Comedy;The Thirteenth Tale;To the Lighthouse;The Sea of Monsters`;
+titles = `The Iliad;The Hobbit;1984;Pride and Prejudice;To Kill a Mockingbird;The Da Vinci Code;The Catcher in the Eye;Life of Pi;The Two Towers;Harry Potter and the Goblet of Fire;Outlander;Never Let Me Go;Digital Fortress;A Christmas Carol;Zen and the Art of Motorcycle Maintenance;Tess of the d'Urbervilles;The Divine Comedy;The Thirteenth Tale;To the Lighthouse;The Sea of Monsters`;
 authors = `Homer;J. R. R. Tolkien;George Orwell;Jane Austen;Harper Lee;Dan Brown;J. D. Salinger;Yann Martel;J. R. R. Tolkien;J. K. Rowling;Diana Gabaldon;Kazuo Ishiguro;Dan Brown;Charles Dickens;Robert M. Pirsig;Thomas Hardy;Dante Alighieri;Diane Setterfield;Virginia Woolf;Rick Riordan`;
 ref_types = ['required', 'recommended'];
 chars = '01234abcdefghijklmnopqrstuvwxyz56789';
@@ -60,7 +60,7 @@ export default function Get_HardCoded_Refs()
                 "J. D. Salinger",
                 "Salinger"
             ],
-            "title": "The Catcher in the Rye"
+            "title": "The Catcher in the Eye"
         },
         "id": "@powerofgod/17t8kcjuw",
         "refs": [
@@ -338,7 +338,7 @@ export default function Get_HardCoded_Refs()
                             "authors": [
                                 "J. D. Salinger"
                             ],
-                            "title": "The Catcher in the Rye"
+                            "title": "The Catcher in the Eye"
                         },
                         "id": "qqt2kcrip2",
                         "ref_type": "required",
@@ -484,7 +484,7 @@ export default function Get_HardCoded_Refs()
                             "authors": [
                                 "J. D. Salinger"
                             ],
-                            "title": "The Catcher in the Rye"
+                            "title": "The Catcher in the Eye"
                         },
                         "id": "qqt2kcrip2",
                         "ref_type": "recommended",
@@ -697,7 +697,7 @@ export default function Get_HardCoded_Refs()
                             "authors": [
                                 "J. D. Salinger"
                             ],
-                            "title": "The Catcher in the Rye"
+                            "title": "The Catcher in the Eye"
                         },
                         "id": "qqt2kcrip2",
                         "ref_type": "required",
@@ -829,7 +829,7 @@ export default function Get_HardCoded_Refs()
                                     "authors": [
                                         "J. D. Salinger"
                                     ],
-                                    "title": "The Catcher in the Rye"
+                                    "title": "The Catcher in the Eye"
                                 },
                                 "id": "qqt2kcrip2",
                                 "ref_type": "required",

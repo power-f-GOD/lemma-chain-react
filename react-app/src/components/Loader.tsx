@@ -42,6 +42,7 @@ export default function Loader(props: Props)
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
+        bottom: 0,
         height: props.attributes.wrapperHeight,
         flexDirection: 'column',
         color: props.attributes.color,

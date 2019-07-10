@@ -27,7 +27,7 @@ function Dropdown(props: Props)
           <div id='graph'></div>
           <div id='graph-key'>
             Key:<br />
-            <span className='key key-book'></span> current ref.<br />
+            <span className='key key-current'></span> current ref.<br />
             <span className='key key-required'></span> required refs.<br />
             <span className='key key-recommended'></span> recommended refs.<br />
             <span className='key key-alien'></span> alien refs.
@@ -37,7 +37,7 @@ function Dropdown(props: Props)
 
 
   return (
-    <section className='dropdown' style={{height: props.state.dropdownCurHeight}}>
+    <section className='dropdown' style={{height: props.state.dropdownCurHeight, borderBottomWidth: props.state.dropdownIsCollapsed ? 0 : 2}}>
       <TabLinks
         state={props.state}
         goBackInTime={props.goBackInTime}
@@ -62,7 +62,7 @@ function Dropdown(props: Props)
               props.state.errOccurred ?
                 <DisplayStatusMessage
                   typeofMsg='error'
-                  errMsg={props.state.errMsg}
+                  errOccurred={props.state.errOccurred}
                   ref_type='required'
                   refIsLoading={props.state.refIsLoading}
                 />
@@ -93,7 +93,7 @@ function Dropdown(props: Props)
               props.state.errOccurred ?
                 <DisplayStatusMessage
                   typeofMsg='error'
-                  errMsg={props.state.errMsg}
+                  errOccurred={props.state.errOccurred}
                   ref_type='recommended'
                   refIsLoading={props.state.refIsLoading}
                 />
@@ -112,7 +112,7 @@ function Dropdown(props: Props)
                 : <DisplayStatusMessage
                     typeofMsg='no-ref'
                     ref_type='recommended'
-                    errMsg=''
+                    errOccurred=''
                     refIsLoading={props.state.refIsLoading}
                   />
             }
@@ -126,7 +126,7 @@ function Dropdown(props: Props)
                 : <DisplayStatusMessage
                     typeofMsg='no-ref'
                     ref_type='graph'
-                    errMsg={props.state.errMsg}
+                    errOccurred={props.state.errOccurred}
                     refIsLoading={props.state.refIsLoading}
                   />
             }
