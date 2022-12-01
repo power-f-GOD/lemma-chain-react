@@ -1,0 +1,635 @@
+
+$font: 'Google Sans', 'Roboto Mono', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+$dropdown-bg: rgb(255, 255, 255);
+$active-el-bgcolor: $dropdown-bg;
+$theme-bg-color: #777;
+$theme-bg-color-hover: #555;
+$default-font-size: 15px;
+$graph-tab-link-bgcolor: $theme-bg-color;
+$graph-tab-link-color: rgb(255, 255, 0);
+$graph-tab-link-hover-bgcolor: rgb(32, 199, 245);
+$tab-link-bgcolor: rgb(210, 100, 210);
+$tab-link-hover-bgcolor: rgb(235, 125, 235);
+$tab-link-color: rgb(238, 238, 238);
+$item-wrapper-border-bottom-hover-color: rgb(216, 216, 216);
+$default-letter-spacing: 0.75px;
+
+
+
+body
+{
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  justify-content: center;
+  align-items: center;
+  background: $dropdown-bg;
+  font-family: $font;
+  letter-spacing: $default-letter-spacing;
+  color: #000000;
+  // color: #ff4500;
+}
+
+*
+{
+  box-sizing: border-box;
+  outline: none;
+  font-family: $font;
+}
+
+#root
+{
+  width: 100%;
+  max-width: 475px;
+  margin: 30px 0;
+  position: relative;
+  height: 45px;
+}
+
+.widget
+{
+  width: 100%;
+  border-radius: 3px !important;
+  overflow: hidden;
+  // position: relative;
+  color: black;
+  height: auto;
+  box-shadow: 0 2px 30px rgba(20, 20, 20, 0.075), 
+              0 4px 30px rgba(20, 20, 20, 0.075),
+              0 6px 30px rgba(20, 20, 20, 0.075),
+              0 8px 40px rgba(20, 20, 20, 0.075);
+  transition: 0.3s;
+  // border: 1px solid red;
+
+  .dropdown
+  {
+    height: auto;
+    transition: 0.3s;
+    border: 2px solid #555;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    background: $dropdown-bg;
+    overflow: hidden;
+  }
+  
+  .dropdown-toggle-bar
+  {
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    background: $theme-bg-color;
+    color: $dropdown-bg;
+    cursor: pointer;
+    position: relative;
+    height: auto;
+    z-index: 3;
+    transition: 0.3s;
+    user-select: none;
+    
+    
+    &:hover
+    { background: $theme-bg-color-hover; }
+
+    .caret-icon
+    {
+      font-weight: bold;
+      transition: 0.3s;
+      transform: rotate(90deg);
+    }
+
+    .flip-caret-icon
+    { transform: rotate(270deg); }
+  }
+
+  .tab-links-wrapper
+  {
+    display: flex;
+    position: absolute;
+    z-index: 2;
+    margin-left: -2px;
+    overflow: hidden;
+    width: 100%;
+    height: 48px;color: #3e923e;
+    transition: 0.3s;
+
+    button
+    {
+      width: 50%;
+      padding: 0 10px;
+      display: inline-flex;
+      justify-content: space-around;
+      align-items: center;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      height: auto;
+      letter-spacing: $default-letter-spacing;
+      color: $tab-link-color;
+      background: $tab-link-bgcolor;
+      position: relative;
+      transition: 0.3s;
+      
+
+      &.back-btn,
+      &.graph-tab-link
+      {
+        width: 55px;
+        padding: 10px 0;
+      }
+
+      &.back-btn
+      {
+        font-size: 18px;
+        background: $theme-bg-color;
+        color: $dropdown-bg !important;
+        
+        &:hover
+        { background: $theme-bg-color-hover; }
+      }
+
+      &.graph-tab-link
+      {
+        font-size: 20px;
+        line-height: 100%;
+        background: $graph-tab-link-bgcolor;
+        color: $graph-tab-link-color !important;
+        
+        &:hover
+        { background: $graph-tab-link-hover-bgcolor !important; }
+      }
+
+      &[class^=active]
+      { background: $active-el-bgcolor; }
+
+      &.recommended-tab-link,
+      &.required-tab-link
+      {
+        border-right: 2px solid $tab-link-bgcolor;
+        border-left: 2px solid $tab-link-bgcolor;
+
+        &:hover
+        {
+          background: $tab-link-hover-bgcolor;
+          color: $dropdown-bg;
+        }
+        
+        &.active-tab-link
+        {
+          background: $active-el-bgcolor;
+          // color: $theme-bg-color;
+
+          &:before
+          {
+            content: '› ';
+            font-size: $default-font-size;
+            color: inherit;
+          }
+          &:after
+          {
+            content: ' ‹';
+            font-size: $default-font-size;
+            color: inherit;
+          }
+        }
+      }
+    }
+  }
+
+  .tabs-container
+  {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .tabs-wrapper
+  {
+    transition: 0.3s;
+    width: 500px;
+    height: 100%;
+
+
+    ul
+    {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      overflow-y: auto;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      position: absolute;
+      bottom: 0;
+      transition: 0.4s;
+      border-radius: 0 0 4px 4px;
+      border-top: none;
+      z-index: 0;
+      
+      
+      &.tab
+      {
+        .item-wrapper
+        {
+          padding: 22px 18px;
+          padding-right: 10px;
+          width: 100%;
+          background: inherit;
+          border-bottom: 1px solid $tab-link-color;
+          letter-spacing: $default-letter-spacing;
+          transition: 0.3s;
+          color: inherit;
+          // color: rgb(255, 20, 147);
+  
+          li
+          {
+            margin-left: 18px;
+            list-style-type: decimal;
+            padding-left: 10px;
+            padding-right: 28px;
+            position: relative;
+  
+            span
+            {
+              &.props
+              { display: block; }
+  
+              &.props:nth-child(1),
+              &.props:nth-child(2)
+              { margin-bottom: 5px; }
+  
+              &.title,
+              &.id
+              { font-weight: bold; }
+  
+              &.props:nth-child(3)
+              { font-size: 14px; }
+            }
+
+            a.extern-link
+            {
+              position: absolute;
+              right: 0;
+              top: 0;
+              display: inline-block;
+              width: auto;
+
+              img
+              {
+                width: 20px;
+                opacity: 0.3;
+                border-radius: 5px;
+                transition: 0.3s;
+
+                &:hover
+                { opacity: 0.7; }
+              }
+            }
+          }
+  
+          &:hover
+          {
+            background: $tab-link-color;
+            border-bottom-color: $item-wrapper-border-bottom-hover-color;
+          }
+        }
+      }
+  
+      &.active-tab
+      {
+        height: auto;
+        opacity: 1;
+        visibility: visible;
+        z-index: 1;
+      }
+  
+      .graph-wrapper
+      {
+        text-align: center;
+        min-height: 250px;
+        padding: 10px;
+        position: relative;
+        background: $tab-link-color;
+        color: inherit;
+        
+        h5 { margin: 5px 0 10px 0; }
+
+        #graph
+        {
+          width: 100%;
+          height: 250px;
+          border: 1px solid #ddd;
+          background: $dropdown-bg;
+          border-radius: 4px;
+        }
+
+        #graph-key
+        {
+          position: absolute;
+          bottom: 15px;
+          left: 18px;
+          font-size: 9px;
+          text-align: left;
+
+          .key {
+            height: 10px;
+            width: 10px;
+            background: orange;
+            display: inline-block;
+            border-radius: 50%;
+            margin: 0;
+          }
+
+          .key-current
+          { background: transparent; }
+
+          .key-other
+          { background: transparent; }
+
+          .key-line-recommended,
+          .key-line-required
+          {
+            width: 25px;
+            height: 3px;
+            border-radius: 0;
+          }
+
+          // .key-alien
+          // { background: #b0b0b0; }
+        }
+      }
+    }
+  }
+}
+
+
+.graph-tooltip,
+.tool-tip 
+{
+  visibility: visible;
+  background-color: #222;
+  display: inline-flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 3px;
+  padding: 6px 8px;
+  position: absolute;
+  left: 50%;
+  top: -25%;
+  opacity: 1;
+  border: none;
+  box-shadow: 2px 2px 5px rgba(20, 20, 20, 0.5);
+  transition: 0.35s;
+
+  &::after 
+  {
+    content: " ";
+    position: absolute;
+    top: 95%; /* At the bottom of the tooltip */
+    left: 25px;
+    margin-left: -10px;
+    border-width: 10px;
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-style: solid;
+    border-color: #222 transparent transparent transparent;
+  }
+}
+
+.tool-tip
+{
+  top: -20px;
+  z-index: 5;
+  cursor: pointer;
+
+  &:hover
+  { 
+    background: $dropdown-bg; color: #222;
+  }
+
+  &::after
+  { border: none; }
+}
+
+
+.fade-out
+{
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+
+.loader-circle
+{
+  animation: scale 1s infinite;
+}
+
+.loader-circle:nth-of-type(1)
+{ animation-delay: 0.25s; }
+
+.loader-circle:nth-of-type(2)
+{ animation-delay: 0.5s; }
+
+.loader-circle:nth-of-type(3)
+{ animation-delay: 0.75s; }
+
+@keyframes scale
+{
+  0% {transform: scale(1.0)}
+  50% {transform: scale(0.25)}
+  100% {transform: scale(1.0)}
+}
+
+
+.isViewedWithMobile
+{
+  .graph-tab,
+  .graph-tab-link
+  { display: none !important; }
+}
+
+.useCustomScrollBar
+{
+  &::-webkit-scrollbar
+  { width: 10px; }
+
+  &::-webkit-scrollbar-track
+  {
+    background: $tab-link-bgcolor;
+    border-radius: 0 0 0 4px;
+  }
+
+  &::-webkit-scrollbar-thumb
+  {
+    background: $theme-bg-color-hover;
+    border-radius: 0 0 4px 4px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// $active-el-bgcolor: $dropdown-bg;
+// $theme-bg-color: rgb(145, 0, 145);
+// $theme-bg-color-hover: rgb(116, 0, 116);
+// $default-font-size: 15px;
+// $graph-tab-link-bgcolor: $theme-bg-color;
+// $graph-tab-link-color: yellow;
+// $graph-tab-link-hover-bgcolor: rgb(32, 199, 245);
+// $tab-link-bgcolor: rgb(210, 100, 210);
+// $tab-link-hover-bgcolor: rgb(235, 125, 235);
+// $tab-link-color: rgb(238, 238, 238);
+// $item-wrapper-border-bottom-hover-color: rgb(216, 216, 216);
+
+
+
+// .widget
+// {
+//   .dropdown
+//   { background: $dropdown-bg; }
+  
+//   .dropdown-toggle-bar
+//   {
+//     background: $theme-bg-color;
+//     color: $dropdown-bg;
+    
+//     &:hover
+//     { background: $theme-bg-color-hover; }
+//   }
+
+//   .tab-links-wrapper
+//   {
+//     button
+//     {
+//       color: $tab-link-color;
+//       background: $tab-link-bgcolor;
+
+//       &.back-btn
+//       {
+//         background: $theme-bg-color;
+//         color: $dropdown-bg !important;
+        
+//         &:hover
+//         { background: $theme-bg-color-hover; }
+//       }
+
+//       &.graph-tab-link
+//       {
+//         background: $graph-tab-link-bgcolor;
+//         color: $graph-tab-link-color !important;
+        
+//         &:hover
+//         { background: $graph-tab-link-hover-bgcolor !important; }
+//       }
+
+//       &[class^=active]
+//       { background: $active-el-bgcolor; }
+
+//       &.recommended-tab-link,
+//       &.required-tab-link
+//       {
+//         border-color: $tab-link-bgcolor;
+
+//         &:hover
+//         {
+//           background: $tab-link-hover-bgcolor;
+//           color: $dropdown-bg;
+//         }
+        
+//         &.active-tab-link
+//         {
+//           background: $active-el-bgcolor;
+//           color: $theme-bg-color;
+//         }
+//       }
+//     }
+//   }
+
+//   .tabs-wrapper
+//   {
+//     transition: 0.3s;
+
+//     ul
+//     {
+//       border-color: $tab-link-bgcolor;
+      
+//       &.tab
+//       {
+//         .item-wrapper
+//         {
+//           border-bottom: 1px solid $tab-link-color;
+  
+//           &:hover
+//           {
+//             background: $tab-link-color;
+//             border-bottom-color: #d8d8d8;
+//           }
+//         }
+//       }
+  
+//       .graph-wrapper
+//       {
+//         background: $tab-link-color;
+//         color: inherit;
+        
+//         h5 { margin: 5px 0 10px 0; }
+
+//         .key-book
+//         { background: rgb(161, 17, 160); }
+
+//         .key-required
+//         { background: #ef7c00; }
+
+//         .key-recommended
+//         { background: #10bcf0; }
+
+//         .key-alien
+//         { background: #b0b0b0; }
+        
+//       }
+//     }
+//   }
+// }
+
+
+// .useCustomScrollBar
+// {
+//   &::-webkit-scrollbar-track
+//   { background: $tab-link-bgcolor; }
+
+//   &::-webkit-scrollbar-thumb
+//   { background: $theme-bg-color-hover; }
+// }
+
+
+
+
+
+
