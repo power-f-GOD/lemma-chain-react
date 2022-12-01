@@ -1,2 +1,5 @@
 # lemma-chain-react
-# Both React and Non-react version
+
+## About the project
+
+Visit: https://thehonestscoop.com/docs/lemma-chain/
